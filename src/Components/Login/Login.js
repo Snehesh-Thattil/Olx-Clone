@@ -7,7 +7,7 @@ function Login() {
   return (
     <div>
       <div className="loginParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <img width="300px" height="150px" src={Logo} alt='Err'></img>
         <form>
           <label htmlFor="fname">Email</label>
           <br />
@@ -16,7 +16,7 @@ function Login() {
             type="email"
             id="fname"
             name="email"
-            defaultValue="John"
+          // defaultValue="John"
           />
           <br />
           <label htmlFor="lname">Password</label>
@@ -26,16 +26,16 @@ function Login() {
             type="password"
             id="lname"
             name="password"
-            defaultValue="Doe"
+          // defaultValue="Doe"
           />
           <br />
           <br />
           <button>Login</button>
         </form>
-        <a>Signup</a>
+        <a href='/signup'>New to OLX ?</a>
       </div>
     </div>
-  );
+  )
 }
 
 export default Login;
