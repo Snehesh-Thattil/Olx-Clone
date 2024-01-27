@@ -1,11 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
 import Heart from '../../assets/Heart';
 import './Post.css';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FirebaseContext } from '../../Store/ContextFiles'
+import { PostContext } from '../../Store/productContext'
 
 function Posts() {
   const { Firebase } = useContext(FirebaseContext)
+  const { setProdDtls } = useContext(PostContext)
   const [Product, setProduct] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     Firebase.firestore().collection('products').get().then((snapshot) => {
@@ -34,7 +38,10 @@ function Posts() {
           {Product.map(Product => {
 
             return (
-              <div className="card">
+              <div className="card" onClick={() => {
+                setProdDtls(Product)
+                navigate('/view')
+              }}>
                 <div className="favorite">
                   <Heart></Heart>
                 </div>
