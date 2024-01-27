@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Logo from '../../olx-logo.png';
 import './Signup.css';
-import { FirebaseContext } from '../../Store/FirebaseContext';
+import { FirebaseContext } from '../../Store/ContextFiles';
 import { useNavigate } from 'react-router-dom'
 
 export default function Signup() {
@@ -28,16 +28,12 @@ export default function Signup() {
         })
       })
     })
-    console.log(Username)
-    console.log(Email)
-    console.log(Phone)
-    console.log(Firebase)
   }
   return (
     <div>
 
       <div className="signupParentDiv">
-        <img width="300px" height="150px" src={Logo} alt='Err'></img>
+        <img width="500px" height="150px" src={Logo} alt='Err'></img>
         <form onSubmit={handleSubmit}>
           <label htmlFor="fname">Username</label>
           <br />

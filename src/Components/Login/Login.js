@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import Logo from '../../olx-logo.png';
 import { useNavigate } from 'react-router-dom'
 import './Login.css';
-import { FirebaseContext } from '../../Store/FirebaseContext';
+import { FirebaseContext } from '../../Store/ContextFiles';
 
 function Login() {
   const { Firebase } = useContext(FirebaseContext)
@@ -27,35 +27,30 @@ function Login() {
   return (
     <div>
       <div className="loginParentDiv">
-        <img width="300px" height="150px" src={Logo} alt='Err'></img>
+        <img src={Logo} alt='Err'></img>
+
         <form onSubmit={handleSubmit}>
-          <label htmlFor="fname">Email</label>
-          <br />
+          <label htmlFor="fname">Email</label><br />
           <input
             className="input"
             type="email"
             value={Email}
             onChange={(e) => setEmail(e.target.value)}
             id="fname"
-            name="email"
-          // defaultValue="John"
-          />
-          <br />
-          <label htmlFor="lname">Password</label>
-          <br />
+            name="email" /><br />
+
+          <label htmlFor="lname">Password</label><br />
           <input
             className="input"
             type="password"
             value={Passowrd}
             onChange={(e) => setPassword(e.target.value)}
             id="lname"
-            name="password"
-          // defaultValue="Doe"
-          />
-          <br />
-          <br />
+            name="password" /><br /><br />
+
           <button>Login</button>
         </form>
+
         <a href='/signup'>New to OLX ?</a>
       </div>
     </div>
