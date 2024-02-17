@@ -13,6 +13,10 @@
   align-items: center;
 }
 
+.brandName:hover {
+  cursor: pointer;
+}
+
 .placeSearch {
   width: 16em;
   height: 48px;
@@ -94,8 +98,6 @@
   margin-right: 5px;
 }
 
-.language svg {}
-
 .span {
   text-decoration: none;
   font-size: 16px;
@@ -119,6 +121,10 @@
   font-weight: bold;
   text-decoration: none;
   color: rgb(122, 98, 98);
+  cursor: pointer;
+}
+
+.logoutPage:hover {
   cursor: pointer;
 }
 

@@ -14,7 +14,7 @@ function Header() {
   const navigate = useNavigate()
 
   return (
-    <div className="headerParentDiv">
+    <div className="headerParentDiv"> 
       <div className="headerChildDiv">
 
         <div onClick={() => navigate('/')} className="brandName">
