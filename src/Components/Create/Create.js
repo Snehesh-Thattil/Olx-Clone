@@ -15,7 +15,7 @@ const Create = () => {
 
   const navigate = useNavigate()
 
-  const date = new Date()
+  const date = new Date() 
   const db = getFirestore()
   const storage = getStorage()
 
