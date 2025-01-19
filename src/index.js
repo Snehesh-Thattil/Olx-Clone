@@ -1,13 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import App from './App';
-import Context, { FirebaseContext } from './Store/ContextFiles'
-import Firebase from './Firebase/config';
+import { AuthContextWrapper, FirebaseContext } from './Store/ContextFiles'
+import {app} from './Firebase/firbase-config';
 
-ReactDOM.render(
-    <FirebaseContext.Provider value={{ Firebase }}>
-        <Context>
-            <App />
-        </Context>
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <FirebaseContext.Provider value={{ app }}>
+      <AuthContextWrapper>
+        <App />
+      </AuthContextWrapper>
     </FirebaseContext.Provider>
-    , document.getElementById('root'))
+  </React.StrictMode>
+)

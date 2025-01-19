@@ -3,25 +3,30 @@ import Logo from '../../olx-logo.png';
 import { useNavigate } from 'react-router-dom'
 import './Login.css';
 import { FirebaseContext } from '../../Store/ContextFiles';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 function Login() {
-  const { Firebase } = useContext(FirebaseContext)
-  // const db = Firebase.firestore()
-  const navigate = useNavigate()
+  const { app } = useContext(FirebaseContext)
   const [Email, setEmail] = useState('')
   const [Passowrd, setPassword] = useState('')
+  const navigate = useNavigate()
+
+  const auth = getAuth(app)
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    Firebase.auth().signInWithEmailAndPassword(Email, Passowrd).then(() => {
-      alert('Logged-In')
-    }).catch((error) => {
-      alert(error.message)
-      console.log(error.message)
-    }).then(() => {
-      navigate('/')
-    })
+    signInWithEmailAndPassword(auth, Email, Passowrd)
+      .then(() => {
+        alert('Logged-In')
+      })
+      .then(() => {
+        navigate('/')
+      })
+      .catch((error) => {
+        alert(error.message)
+        console.log(error.message)
+      })
   }
 
   return (

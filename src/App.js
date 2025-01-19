@@ -7,20 +7,31 @@ import Login from './Pages/Login'
 import Logout from './Pages/logout'
 import Create from './Pages/Create'
 import View from './Pages/ViewPost'
-import { AuthContext, FirebaseContext } from './Store/ContextFiles'
 import Post from './Store/productContext'
+import { AuthContext, FirebaseContext } from './Store/ContextFiles'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 function App() {
   const { setUser } = useContext(AuthContext)
-  const { Firebase } = useContext(FirebaseContext)
+  const { app } = useContext(FirebaseContext)
+  const auth = getAuth(app)
+
   useEffect(() => {
-    Firebase.auth().onAuthStateChanged((user) => {
-      setUser(user)
+    // New
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        console.log("User logged in:", user);
+      } else {
+        setUser(null);
+        console.log("No user is logged in");
+      }
     })
-  })
+    return () => unsubscribe();
+  }, [setUser, auth])
 
   return (
-    <div>
+    <div className="App">
       <Post>
         <Router>
           <Routes>

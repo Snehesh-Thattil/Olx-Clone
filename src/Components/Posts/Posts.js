@@ -2,27 +2,33 @@ import Heart from '../../assets/Heart';
 import './Post.css';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FirebaseContext } from '../../Store/ContextFiles'
 import { PostContext } from '../../Store/productContext'
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
 
 function Posts() {
-  const { Firebase } = useContext(FirebaseContext)
   const { setProdDtls } = useContext(PostContext)
   const [Product, setProduct] = useState([])
   const navigate = useNavigate()
+  const db = getFirestore()
 
+  // Fetching products from Firebase
   useEffect(() => {
-    Firebase.firestore().collection('products').get().then((snapshot) => {
+    const productsCollRef = collection(db, 'products')
 
-      const allPosts = snapshot.docs.map((product) => {
-        return {
-          ...product.data(),
-          id: product.id,
-        }
+    getDocs(productsCollRef)
+      .then((snapshot) => {
+        const allPosts = snapshot.docs.map((product) => {
+          return {
+            ...product.data(),
+            id: product.id,
+          }
+        })
+        setProduct(allPosts)
       })
-      setProduct(allPosts)
-    })
-  }, [Firebase])
+      .catch((err) => {
+        console.log(err.message)
+      })
+  }, [db])
 
   return (
     <div className="postParentDiv">
@@ -35,10 +41,10 @@ function Posts() {
 
         <div className="cards">
 
-          {Product.map(Product => {
+          {Product.map((Product, index) => {
 
             return (
-              <div className="card" onClick={() => {
+              <div key={index} className="card" onClick={() => {
                 setProdDtls(Product)
                 navigate('/view')
               }}>
@@ -47,17 +53,17 @@ function Posts() {
                 </div>
 
                 <div className="image">
-                  <img src={Product.Url} alt="" />
+                  <img src={Product.imgUrl} alt="" />
                 </div>
 
                 <div className="content">
-                  <p className="rate">&#x20B9; {Product.Price}</p>
-                  <span className="kilometer">{Product.Category}</span>
-                  <p className="name"> {Product.Name}</p>
+                  <p className="rate">&#x20B9; {Product.price}</p>
+                  <span className="kilometer">{Product.category}</span>
+                  <p className="name"> {Product.name}</p>
                 </div>
 
                 <div className="date">
-                  <span>{Product.CreatedAt}</span>
+                  <span>{Product.createdAt}</span>
                 </div>
               </div>
             )

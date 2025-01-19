@@ -3,6 +3,8 @@ import Logo from '../../olx-logo.png';
 import './Signup.css';
 import { FirebaseContext } from '../../Store/ContextFiles';
 import { useNavigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
 
 export default function Signup() {
   const [Username, setUsername] = useState('')
@@ -10,25 +12,39 @@ export default function Signup() {
   const [Phone, setPhone] = useState('')
   const [Passowrd, setPassword] = useState('')
 
-  const { Firebase } = useContext(FirebaseContext)
-  const db = Firebase.firestore()
+  const { app } = useContext(FirebaseContext)
   const navigate = useNavigate()
 
+  const auth = getAuth(app)
+  const db = getFirestore()
+  const userCollectionRef = collection(db, 'user')
+
+  // Submitting SignUp informations
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    Firebase.auth().createUserWithEmailAndPassword(Email, Passowrd).then((res) => {
-      res.user.updateProfile({ displayName: Username }).then(() => {
-        db.collection('user').add({
-          id: res.user.uid,
-          username: Username,
-          phone: Phone
-        }).then(() => {
-          navigate('/login')
-        })
+    // New
+    createUserWithEmailAndPassword(auth, Email, Passowrd)
+      .then((res) => {
+        res.user.updateProfile({ displayName: Username })
+          .then(() => {
+            addDoc(userCollectionRef, {
+              id: res.user.uid,
+              username: Username,
+              phone: Phone
+            })
+          })
+          .catch((err) => {
+            alert(err.message)
+            console.log(err.message)
+          })
+          .then(() => {
+            navigate('/login')
+          })
       })
-    })
   }
+
+  // Rendering
   return (
     <div>
 
