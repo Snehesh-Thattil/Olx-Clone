@@ -1,27 +1,121 @@
-.footerParentDiv {
+.Footer {
   width: 100vw;
-}
-.footerParentDiv .content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #ebeeef;
-  padding: 16px;
-}
-.footerParentDiv .content .heading {
-  font-size: 24px;
-  font-weight: bolder;
+  position: relative;
 }
 
-.footerParentDiv .footer {
+/* Links */
+.Footer .links {
+  width: 100%;
+  height: 12.5rem;
+  padding: 0 5rem;
+  background-color: rgba(137, 43, 226, 0.151);
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background: #002f34;
-  color: whitesmoke;
+  gap: 10px;
 }
 
-.footerParentDiv .footer p {
-  margin: 0;
+.links h3 {
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-size: 15px;
+}
+
+.links a {
+  color: #002f34;
+  margin: 4px 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.links a:hover {
+  color: black;
+}
+
+.trending-loc,
+.popular-loc,
+.about,
+.olx-links,
+.follow-us {
+  width: calc(100%/5);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+.follow-us {
+  justify-content: space-between;
+}
+
+.follow-us .icons {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+
+.follow-us .store {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.follow-us .store a,
+.store img {
+  width: 7.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+}
+
+.follow-us .icons a {
+  scale: 1.2;
+}
+
+/* Subsidiaries */
+.Footer .subsidiaries {
+  width: 100%;
+  height: 12.5rem;
+  padding: 0 5rem;
+  background-color: #002f34;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logos {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.logos a {
+  margin: 0 10px;
+}
+
+.logos .hr-line {
+  height: 10rem;
+  width: 2.5px;
+  background-color: white;
+  border-radius: 100px;
+}
+
+.help {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+
+  width: 100%;
+  padding: 0 5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.help p,
+.help a {
+  text-decoration: none;
+  color: white;
 }
