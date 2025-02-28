@@ -29,7 +29,7 @@ function ViewItem() {
         console.log(err.message)
       })
   }, [db, app, User])
-
+ 
   // Rendering
   return (
     <div className="viewParentDiv" >
