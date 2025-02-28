@@ -1,5 +1,6 @@
 .loginParentDiv {
   border: 1px solid black;
+  width: -moz-max-content;
   width: max-content;
   padding: 10px;
   position: absolute;
@@ -8,38 +9,32 @@
   transform: translate(-50%, -50%);
   border-radius: 6px;
 }
-
 .loginParentDiv img {
   width: 17.5rem;
   height: 10rem;
 }
-
-.loginParentDiv .input {
+.loginParentDiv form .input {
   width: 100%;
   border-top-color: transparent;
   border-left-color: transparent;
   border-right-color: transparent;
   outline-color: transparent;
 }
-
-.loginParentDiv button {
+.loginParentDiv form button {
   width: 100%;
   height: 48px;
-  /* border-color: transparent; */
   background-color: #002f34;
   color: whitesmoke;
   font-weight: 900;
 }
-
-.loginParentDiv button:hover {
+.loginParentDiv form button:hover {
   background-color: white;
   color: #002f34;
   border: 2px solid #002f34;
 }
-
 .loginParentDiv a {
-  margin-top: .51rem;
+  margin-top: 0.51rem;
   display: flex;
   justify-content: center;
   cursor: pointer;
-}
+}/*# sourceMappingURL=Login.css.map */

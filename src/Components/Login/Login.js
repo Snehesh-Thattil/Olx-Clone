@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import Logo from '../../olx-logo.png';
+import Logo from '../../Assets/Images/olx-logo.png';
 import { useNavigate } from 'react-router-dom'
 import './Login.css';
 import { FirebaseContext } from '../../Store/ContextFiles';
@@ -35,23 +35,21 @@ function Login() {
         <img src={Logo} alt='Err'></img>
 
         <form onSubmit={handleSubmit}>
-          <label htmlFor="fname">Email</label><br />
           <input
-            className="input"
             type="email"
             value={Email}
             onChange={(e) => setEmail(e.target.value)}
-            id="fname"
-            name="email" /><br />
+            placeholder="Email"
+            name="email"
+          />
 
-          <label htmlFor="lname">Password</label><br />
           <input
-            className="input"
             type="password"
             value={Passowrd}
             onChange={(e) => setPassword(e.target.value)}
-            id="lname"
-            name="password" /><br /><br />
+            placeholder="Password"
+            name="password"
+          />
 
           <button>Login</button>
         </form>

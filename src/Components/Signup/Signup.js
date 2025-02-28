@@ -1,110 +1,133 @@
-import React, { useState, useContext } from 'react';
-import Logo from '../../olx-logo.png';
+import React, { useState } from 'react';
+import Logo from '../../Assets/Images/olx-logo.png';
 import './Signup.css';
-import { FirebaseContext } from '../../Store/ContextFiles';
-import { useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import { Link, useNavigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
+import { auth, db } from '../../Firebase/firbase-config';
+import Loader from '../Loader/Loader'
 
 export default function Signup() {
-  const [Username, setUsername] = useState('')
-  const [Email, setEmail] = useState('')
-  const [Phone, setPhone] = useState('')
-  const [Passowrd, setPassword] = useState('')
-
-  const { app } = useContext(FirebaseContext)
+  const [userData, setUserData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: ''
+  })
+  const [load, setLoad] = useState(false)
   const navigate = useNavigate()
 
-  const auth = getAuth(app)
-  const db = getFirestore()
-  const userCollectionRef = collection(db, 'user')
+  // Handle change input values
+  function handleChange(e) {
+    setUserData({ ...userData, [e.target.name]: e.target.value })
+  }
 
-  // Submitting SignUp informations
-  const handleSubmit = (e) => {
+  // Submition of sign-up form
+  function handleSubmit(e) {
     e.preventDefault()
+    setLoad(true)
+    const userCollectionRef = collection(db, 'user')
 
-    // New
-    createUserWithEmailAndPassword(auth, Email, Passowrd)
-      .then((res) => {
-        res.user.updateProfile({ displayName: Username })
-          .then(() => {
-            addDoc(userCollectionRef, {
-              id: res.user.uid,
-              username: Username,
-              phone: Phone
-            })
+    const regexInputs = {
+      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/
+    }
+
+    if (!regexInputs.email.test(userData.email)) {
+      setLoad(false)
+      alert("Oops, invalid email")
+    }
+    else if (userData.confirmPassword !== userData.password) {
+      setLoad(false)
+      alert("Oops, passwords don't match")
+    }
+    else if (!regexInputs.password.test(userData.password)) {
+      setLoad(false)
+      alert("Hey there, password must contain one uppercase letter, one lowercase letter, and one special character")
+    }
+    else {
+      createUserWithEmailAndPassword(auth, userData.email, userData.password)
+        .then((res) => {
+          sendEmailVerification(res.user)
+            .then(() => {
+              alert('Hey there, check the verification mail in your inbox for Login')
+            }).catch((err) => alert(err.message))
+          return res
+        })
+        .then((res) => {
+          updateProfile(res.user, { displayName: userData.name })
+          return res
+        })
+        .then((res) => {
+          addDoc(userCollectionRef, {
+            id: res.user.uid,
+            username: userData.name,
+            phone: userData.phone
           })
-          .catch((err) => {
-            alert(err.message)
-            console.log(err.message)
-          })
-          .then(() => {
-            navigate('/login')
-          })
-      })
+        })
+        .then(() => {
+          setLoad(false)
+          navigate('/')
+        })
+        .catch((err) => {
+          setLoad(false)
+          alert(err.message)
+        })
+    }
   }
 
   // Rendering
+  if (load) return <Loader />
   return (
-    <div>
+    <div className="signupParentDiv">
+      <img width="500px" height="150px" src={Logo} alt='Err'></img>
 
-      <div className="signupParentDiv">
-        <img width="500px" height="150px" src={Logo} alt='Err'></img>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="fname">Username</label>
-          <br />
-          <input
-            className="input"
-            type="text"
-            value={Username}
-            onChange={(e) => setUsername(e.target.value)}
-            id="fname"
-            name="name"
-          // defaultValue="Typehere"
-          />
-          <br />
-          <label htmlFor="fname">Email</label>
-          <br />
-          <input
-            className="input"
-            type="email"
-            value={Email}
-            onChange={(e) => setEmail(e.target.value)}
-            id="fname"
-            name="email"
-          // defaultValue="typehere@gmail.com"
-          />
-          <br />
-          <label htmlFor="lname">Phone</label>
-          <br />
-          <input
-            className="input"
-            type="number"
-            value={Phone}
-            onChange={(e) => setPhone(e.target.value)}
-            id="lname"
-            name="phone"
-          // defaultValue="00000"
-          />
-          <br />
-          <label htmlFor="lname">Password</label>
-          <br />
-          <input
-            className="input"
-            type="password"
-            value={Passowrd}
-            onChange={(e) => setPassword(e.target.value)}
-            id="lname"
-            name="password"
-          // defaultValue="Type@password"
-          />
-          <br />
-          <br />
-          <button>Signup</button>
-        </form>
-        <a href='/login'>Already have an account?</a>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={userData.name}
+          onChange={handleChange}
+          placeholder="Name"
+          name="name"
+        />
 
+        <input
+          type="email"
+          value={userData.email}
+          onChange={handleChange}
+          placeholder="Email"
+          name="email"
+        />
+
+        <input
+          type="number"
+          value={userData.phone}
+          onChange={handleChange}
+          placeholder="Mobile number"
+          name="phone"
+        />
+
+        <input
+          type="password"
+          value={userData.password}
+          onChange={handleChange}
+          password="Password"
+          name="password"
+        />
+
+        <input
+          type="password"
+          value={userData.confirmPassword}
+          onChange={handleChange}
+          placeholder="Confirm password"
+          name="confirmPassword"
+        />
+
+        <button>Signup</button>
+      </form>
+
+      <Link to='/login'>Already have an account?</Link>
     </div>
   )
 }

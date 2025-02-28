@@ -15,7 +15,7 @@ const Create = () => {
 
   const navigate = useNavigate()
 
-  const date = new Date() 
+  const date = new Date()
   const db = getFirestore()
   const storage = getStorage()
 
@@ -56,35 +56,30 @@ const Create = () => {
         <div className="centerDiv">
 
           <form>
-            <label htmlFor="fname">Name</label><br />
             <input
-              className="input"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              id="fname"
-              name="Name" /><br />
+              placeholder="Product nname"
+              name="Name"
+            />
 
-            <label htmlFor="fname">Category</label><br />
             <input
-              className="input"
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              id="fname"
-              name="category" /><br />
+              placeholder="Product category"
+              name="category"
+            />
 
-            <label htmlFor="fname">Price</label><br />
             <input
-              className="input"
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              id="fname"
-              name="Price" /><br />
+              placeholder="Price"
+              name="Price"
+            />
           </form>
-
-          <br />
 
           <img alt="Upload here" src={image ? URL.createObjectURL(image) : ''}></img><br />
           <input onChange={(e) => setImage(e.target.files[0])} type="file" /><br />

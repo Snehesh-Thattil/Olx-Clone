@@ -1,10 +1,10 @@
-import './View.css';
+import './ViewItem.css';
 import React, { useEffect, useState, useContext } from 'react'
 import { PostContext } from '../../Store/productContext';
 import { AuthContext, FirebaseContext } from '../../Store/ContextFiles'
 import { getFirestore, getDocs, collection, where, query } from 'firebase/firestore';
 
-function View() {
+function ViewItem() {
   const { app } = useContext(FirebaseContext)
   const { ProdDtls } = useContext(PostContext)
   const { User } = useContext(AuthContext)
@@ -32,7 +32,7 @@ function View() {
 
   // Rendering
   return (
-    < div className="viewParentDiv" >
+    <div className="viewParentDiv" >
       <div className="imageShowDiv">
         <img src={ProdDtls.imgUrl} alt="" />
       </div>
@@ -53,4 +53,4 @@ function View() {
     </div >
   )
 }
-export default View;
+export default ViewItem;

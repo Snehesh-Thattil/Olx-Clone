@@ -1,4 +1,4 @@
-import Heart from '../../assets/Heart';
+import Heart from '../../Assets/Heart';
 import './Post.css';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

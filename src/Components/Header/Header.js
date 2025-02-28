@@ -1,17 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import './Header.css';
-import OlxLogo from '../../assets/OlxLogo';
-import Search from '../../assets/Search';
-import Arrow from '../../assets/Arrow';
-import SellButton from '../../assets/SellButton';
-import SellButtonPlus from '../../assets/SellButtonPlus';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext, FirebaseContext } from '../../Store/ContextFiles'
+import OlxLogo from '../../Assets/OlxLogo';
+import Search from '../../Assets/Search';
+import Arrow from '../../Assets/Arrow';
+import SellButton from '../../Assets/SellButton';
+import SellButtonPlus from '../../Assets/SellButtonPlus';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Store/ContextFiles'
+import { signOut } from 'firebase/auth';
+import { auth } from '../../Firebase/firbase-config';
 
 function Header() {
   const { User } = useContext(AuthContext)
-  const { app } = useContext(FirebaseContext)
   const navigate = useNavigate()
+
+  const handleSignOut = useCallback(() => {
+    signOut(auth)
+      .then(() => console.log('signed out successfully'))
+      .catch((err) => console.log("Error signing out:", err.message))
+  }, [])
 
   return (
     <div className="headerParentDiv">
@@ -46,16 +53,12 @@ function Header() {
         </div>
 
         <div className="loginPage">
-          <span> {User ? User.displayName : <a href='/login'>Login</a>}</span>
+          {User ? <span>{User.displayName}</span> : <Link className='link' to='/login'>Login</Link>}
           <hr />
         </div>
 
         <div className="logoutPage">
-          <span onClick={() => {
-            app.auth().signOut().then(() => {
-              navigate('/logout')
-            })
-          }}>{User ? 'Logout' : ''}</span>
+          <span onClick={() => handleSignOut()}>{User ? 'Logout' : ''}</span>
         </div>
 
         <div className="sellMenu">

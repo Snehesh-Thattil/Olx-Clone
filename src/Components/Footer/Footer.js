@@ -35,10 +35,10 @@ function Footer() {
         <div className="follow-us">
           <h3>FOLLOW US</h3>
           <div className="icons">
-            <a href="https://www.facebook.com/olxindia/"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://www.instagram.com/olx_india/"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://twitter.com/OLX_India"><i class="fa-brands fa-twitter"></i></a>
-            <a href="https://www.youtube.com/user/OLXInTv"><i class="fa-solid fa-circle-play"></i></a>
+            <a href="https://www.facebook.com/olxindia/"><i className="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/olx_india/"><i className="fa-brands fa-instagram"></i></a>
+            <a href="https://twitter.com/OLX_India"><i className="fa-brands fa-twitter"></i></a>
+            <a href="https://www.youtube.com/user/OLXInTv"><i className="fa-solid fa-circle-play"></i></a>
           </div>
           <div className="store">
             <a href="https://play.google.com/store/apps/details?id=com.olx.southasia"><img src="https://b.zmtcdn.com/data/webuikit/9f0c85a5e33adb783fa0aef667075f9e1556003622.png" alt="" /></a>
