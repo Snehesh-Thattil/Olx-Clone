@@ -10,34 +10,33 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 .headerParentDiv .headerChildDiv .brandName:hover {
   cursor: pointer;
 }
-.headerParentDiv .headerChildDiv .placeSearch {
-  width: 16em;
+.headerParentDiv .headerChildDiv .searchbars {
+  display: flex;
+  gap: 1rem;
+}
+.headerParentDiv .headerChildDiv .searchbars .placeSearch {
+  width: 17.5rem;
   height: 48px;
   display: flex;
   align-items: center;
+  gap: 10px;
   padding: 0 8px;
   border: 2px solid #002f34;
   border-radius: 4px;
   background-color: white;
 }
-.headerParentDiv .headerChildDiv .placeSearch ::-moz-selection {
-  border-color: #23e5db;
-  outline-color: #23e5db;
+.headerParentDiv .headerChildDiv .searchbars .placeSearch input {
+  border: none;
+  outline: none;
+  height: 100%;
 }
-.headerParentDiv .headerChildDiv .placeSearch ::selection {
-  border-color: #23e5db;
-  outline-color: #23e5db;
-}
-.headerParentDiv .headerChildDiv .placeSearch input {
-  border-color: transparent;
-  outline-color: transparent;
-}
-.headerParentDiv .headerChildDiv .productSearch {
-  width: 35em;
+.headerParentDiv .headerChildDiv .searchbars .productSearch {
+  width: 30rem;
   height: 48px;
   border: 2px solid #002f34;
   border-radius: 4px;
@@ -46,18 +45,23 @@
   background-color: white;
   justify-content: space-between;
 }
-.headerParentDiv .headerChildDiv .productSearch .input {
+.headerParentDiv .headerChildDiv .searchbars .productSearch .input {
   width: 100%;
   height: 100%;
   display: flex;
 }
-.headerParentDiv .headerChildDiv .productSearch .input input {
-  border-color: transparent;
-  outline-color: transparent;
+.headerParentDiv .headerChildDiv .searchbars .productSearch .input input {
+  border: none;
+  outline: none;
   width: 100%;
   align-items: center;
+  padding: 0 1rem;
+  font-size: 17px;
 }
-.headerParentDiv .headerChildDiv .productSearch .searchAction {
+.headerParentDiv .headerChildDiv .searchbars .productSearch .input input:focus {
+  border: 1px solid black;
+}
+.headerParentDiv .headerChildDiv .searchbars .productSearch .searchAction {
   min-width: 48px;
   height: 48px;
   position: relative;
@@ -66,42 +70,135 @@
   background-color: #002f34;
   border-radius: 0 4px 4px 0;
 }
-.headerParentDiv .headerChildDiv .productSearch .searchAction svg {
+.headerParentDiv .headerChildDiv .searchbars .productSearch .searchAction svg {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   fill: white;
 }
-.headerParentDiv .headerChildDiv .language {
+.headerParentDiv .headerChildDiv .right-section {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.headerParentDiv .headerChildDiv .right-section .language {
   height: 48px;
   display: flex;
   align-items: center;
+  position: relative;
+  cursor: pointer;
 }
-.headerParentDiv .headerChildDiv .language span {
+.headerParentDiv .headerChildDiv .right-section .language span {
   font-size: 15px;
   white-space: normal;
   text-overflow: ellipsis;
   font-weight: bolder;
   margin-right: 5px;
 }
-.headerParentDiv .headerChildDiv .sellMenu {
+.headerParentDiv .headerChildDiv .right-section .language.active .options {
+  display: unset;
+}
+.headerParentDiv .headerChildDiv .right-section .language.active .fa-angle-down {
+  transform: rotate(-180deg);
+}
+.headerParentDiv .headerChildDiv .right-section .language .fa-angle-down {
+  transition: transform ease-in-out 0.3s;
+}
+.headerParentDiv .headerChildDiv .right-section .language .options {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.65);
+  border-radius: 2px;
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  right: -25px;
+  background-color: white;
+  width: 10rem;
+  display: none;
+}
+.headerParentDiv .headerChildDiv .right-section .language .options li {
+  width: 100%;
+  padding: 1rem;
+  cursor: pointer;
+  background-color: white;
+}
+.headerParentDiv .headerChildDiv .right-section .language .options li:hover {
+  opacity: 1;
+  background-color: rgba(211, 205, 205, 0.795);
+}
+.headerParentDiv .headerChildDiv .right-section .language .options .pointer {
+  position: absolute;
+  rotate: 45deg;
+  top: -10px;
+  right: 25%;
+  background-color: white;
+  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.05);
+  z-index: -1;
+  width: 20px;
+  height: 20px;
+}
+.headerParentDiv .headerChildDiv .right-section i {
+  cursor: pointer;
+}
+.headerParentDiv .headerChildDiv .right-section .notifications {
+  height: 48px;
+  display: flex;
+  align-items: center;
   position: relative;
   cursor: pointer;
 }
-.headerParentDiv .headerChildDiv .sellMenu .all {
+.headerParentDiv .headerChildDiv .right-section .notifications.active .messgs {
+  display: unset;
+}
+.headerParentDiv .headerChildDiv .right-section .notifications .messgs {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.65);
+  border-radius: 2px;
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  right: -50px;
+  background-color: white;
+  width: 15rem;
+  display: none;
+}
+.headerParentDiv .headerChildDiv .right-section .notifications .messgs li {
+  width: 100%;
+  padding: 1rem;
+  cursor: pointer;
+  background-color: white;
+}
+.headerParentDiv .headerChildDiv .right-section .notifications .messgs li:hover {
+  opacity: 1;
+  background-color: rgba(211, 205, 205, 0.795);
+}
+.headerParentDiv .headerChildDiv .right-section .notifications .messgs .pointer {
+  position: absolute;
+  rotate: 45deg;
+  top: -10px;
+  right: 15%;
+  background-color: white;
+  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.05);
+  z-index: -1;
+  width: 20px;
+  height: 20px;
+}
+.headerParentDiv .headerChildDiv .right-section .sellMenu {
+  position: relative;
+  cursor: pointer;
+}
+.headerParentDiv .headerChildDiv .right-section .sellMenu .all {
   fill: white;
 }
-.headerParentDiv .headerChildDiv .sellMenu .top {
+.headerParentDiv .headerChildDiv .right-section .sellMenu .top {
   fill: #23e5db;
 }
-.headerParentDiv .headerChildDiv .sellMenu .left {
+.headerParentDiv .headerChildDiv .right-section .sellMenu .left {
   fill: #ffce32;
 }
-.headerParentDiv .headerChildDiv .sellMenu .right {
+.headerParentDiv .headerChildDiv .right-section .sellMenu .right {
   fill: #3a77ff;
 }
-.headerParentDiv .headerChildDiv .sellMenu .sellMenuContent {
+.headerParentDiv .headerChildDiv .right-section .sellMenu .sellMenuContent {
   display: flex;
   position: absolute;
   top: 50%;
@@ -112,35 +209,140 @@
   letter-spacing: 0.5px;
   color: #002f34;
 }
-.headerParentDiv .headerChildDiv .sellMenu .sellMenuContent span {
+.headerParentDiv .headerChildDiv .right-section .sellMenu .sellMenuContent span {
   margin-left: 5px;
 }
-.headerParentDiv .headerChildDiv .loginPage span {
-  text-decoration: none;
-  color: #002f34;
+.headerParentDiv .headerChildDiv .right-section .loginPage {
+  display: flex;
+  align-items: center;
+  gap: 7.5px;
+  outline: 0.2px solid rgb(199, 197, 197);
+  border-radius: 5px;
+  padding: 2px 10px;
+  position: relative;
 }
-.headerParentDiv .headerChildDiv .loginPage .link {
+.headerParentDiv .headerChildDiv .right-section .loginPage.active .options {
+  display: unset;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage.active .fa-angle-down {
+  transform: rotate(180deg);
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .fa-angle-down {
+  transition: transform ease-in-out 0.3s;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .options {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.65);
+  border-radius: 2px;
+  list-style: none;
+  position: absolute;
+  top: 120%;
+  right: -30px;
+  background-color: white;
+  width: 18rem;
+  display: none;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .options .view-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #014b53;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .options .view-profile .info {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .options .view-profile .info h1 {
   text-decoration: none;
   color: white;
-  background-color: #002f34;
+  background-color: #002b30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .options .view-profile button {
+  width: 90%;
+  color: white;
   padding: 10px;
-  border-radius: 10px;
+  font-weight: 700;
+  border: 5px solid #002b30;
+  background-color: #002b30;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
-.headerParentDiv .headerChildDiv .loginPage .link:hover {
-  background-color: #005f69;
+.headerParentDiv .headerChildDiv .right-section .loginPage .options .view-profile button:hover {
+  background-color: white;
+  color: black;
 }
-.headerParentDiv .headerChildDiv .loginPage hr {
-  margin: 0;
-  background-color: black;
-  height: 2px;
+.headerParentDiv .headerChildDiv .right-section .loginPage .options li {
+  width: 100%;
+  padding: 1rem;
+  cursor: pointer;
+  background-color: white;
+  display: flex;
 }
-.headerParentDiv .headerChildDiv .logoutPage a {
+.headerParentDiv .headerChildDiv .right-section .loginPage .options li i {
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .options li:hover {
+  opacity: 1;
+  background-color: rgba(211, 205, 205, 0.795);
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .options .pointer {
+  position: absolute;
+  rotate: 45deg;
+  top: -10px;
+  right: 15%;
+  background-color: white;
+  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.05);
+  z-index: -1;
+  width: 20px;
+  height: 20px;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .profile-box {
+  display: flex;
+  align-items: center;
+  gap: 7.5px;
+  cursor: pointer;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .profile-box h3 {
+  text-decoration: none;
+  color: white;
+  background-color: #002b30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .profile-box h3:hover {
+  background-color: #014b53;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage .profile-box .fa-angle-down {
+  transition: transform ease-in-out 0.3s;
+}
+.headerParentDiv .headerChildDiv .right-section .loginPage span {
+  cursor: pointer;
+}
+.headerParentDiv .headerChildDiv .right-section .logoutPage a {
   font-weight: bold;
   text-decoration: none;
   color: rgb(122, 98, 98);
   cursor: pointer;
 }
-.headerParentDiv .headerChildDiv .logoutPage:hover {
+.headerParentDiv .headerChildDiv .right-section .logoutPage:hover {
   cursor: pointer;
 }
 

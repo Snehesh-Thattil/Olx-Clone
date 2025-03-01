@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Logo from '../../Assets/Images/olx-logo.png';
-import './Signup.css';
-import { Link, useNavigate } from 'react-router-dom'
+import './SignUp.css';
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';
 import { auth, db } from '../../Firebase/firbase-config';
 import Loader from '../Loader/Loader'
 
-export default function Signup() {
+function SignUp({ setLoginBox }) {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
-    phone: '',
     password: '',
     confirmPassword: ''
   })
   const [load, setLoad] = useState(false)
-  const navigate = useNavigate()
+  const signUpRef = useRef()
+
+  // Close login popUp when clicking outside
+  useEffect(() => {
+    const handleMouseDown = (e) => {
+      if (!signUpRef?.current.contains(e.target)) {
+        setLoginBox(null)
+      }
+    }
+    document.addEventListener('mousedown', handleMouseDown)
+    return () => document.removeEventListener('mousedown', handleMouseDown)
+  }, [setLoginBox])
 
   // Handle change input values
   function handleChange(e) {
@@ -63,15 +72,16 @@ export default function Signup() {
           addDoc(userCollectionRef, {
             id: res.user.uid,
             username: userData.name,
-            phone: userData.phone
+            email: userData.email
           })
         })
         .then(() => {
           setLoad(false)
-          navigate('/')
+          setLoginBox('Login')
         })
         .catch((err) => {
           setLoad(false)
+          setLoginBox('Login')
           alert(err.message)
         })
     }
@@ -80,54 +90,61 @@ export default function Signup() {
   // Rendering
   if (load) return <Loader />
   return (
-    <div className="signupParentDiv">
-      <img width="500px" height="150px" src={Logo} alt='Err'></img>
+    <div className="SignUp">
+      <div className="signUp-box" ref={signUpRef}>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={userData.name}
-          onChange={handleChange}
-          placeholder="Name"
-          name="name"
-        />
+        <img src={Logo} alt='Err'></img>
 
-        <input
-          type="email"
-          value={userData.email}
-          onChange={handleChange}
-          placeholder="Email"
-          name="email"
-        />
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={userData.name}
+            onChange={handleChange}
+            placeholder="Name"
+            name="name"
+            required
+          />
 
-        <input
-          type="number"
-          value={userData.phone}
-          onChange={handleChange}
-          placeholder="Mobile number"
-          name="phone"
-        />
+          <input
+            type="email"
+            value={userData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            name="email"
+            required
+          />
 
-        <input
-          type="password"
-          value={userData.password}
-          onChange={handleChange}
-          password="Password"
-          name="password"
-        />
+          <input
+            type="password"
+            value={userData.password}
+            onChange={handleChange}
+            name="password"
+            placeholder="Password"
+            required
+          />
 
-        <input
-          type="password"
-          value={userData.confirmPassword}
-          onChange={handleChange}
-          placeholder="Confirm password"
-          name="confirmPassword"
-        />
+          <input
+            type="password"
+            value={userData.confirmPassword}
+            onChange={handleChange}
+            placeholder="Confirm password"
+            name="confirmPassword"
+            required
+          />
 
-        <button>Signup</button>
-      </form>
+          <button>Signup</button>
+        </form>
 
-      <Link to='/login'>Already have an account?</Link>
+        <p>Already have an account?<span onClick={() => setLoginBox('Login')}>Login</span></p>
+
+        <div className="bottom-side">
+          <h5>All your personal details are safe with us.</h5>
+          <p>If you continue, you are accepting our <a href="https://help.olx.in/hc/en-us">Terms and Conditions and Privacy Policy</a></p>
+        </div>
+
+      </div>
     </div>
   )
 }
+
+export default SignUp

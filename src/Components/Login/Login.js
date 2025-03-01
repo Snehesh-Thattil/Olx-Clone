@@ -1,43 +1,63 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Logo from '../../Assets/Images/olx-logo.png';
-import { useNavigate } from 'react-router-dom'
 import './Login.css';
-import { FirebaseContext } from '../../Store/ContextFiles';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../Firebase/firbase-config';
+import Loader from '../Loader/Loader';
 
-function Login() {
-  const { app } = useContext(FirebaseContext)
-  const [Email, setEmail] = useState('')
-  const [Passowrd, setPassword] = useState('')
-  const navigate = useNavigate()
+function Login({ setLoginBox }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [load, setLoad] = useState(false)
+  const loginboxRef = useRef()
 
-  const auth = getAuth(app)
-
+  // Submition of Login details
   const handleSubmit = (e) => {
     e.preventDefault()
+    setLoad(true)
 
-    signInWithEmailAndPassword(auth, Email, Passowrd)
-      .then(() => {
-        alert('Logged-In')
+    signInWithEmailAndPassword(auth, email, password)
+      .then(async (res) => {
+        const user = res.user
+        await user.reload()
+        await user.getIdToken(true)
+
+        if (!user.emailVerified) {
+          sendEmailVerification(res.user)
+          setLoad(false)
+          alert("Please verify your email before logging in.")
+        }
+        setLoad(false)
+        setLoginBox(null)
       })
-      .then(() => {
-        navigate('/')
-      })
-      .catch((error) => {
-        alert(error.message)
-        console.log(error.message)
+      .catch((err) => {
+        setLoad(false)
+        alert(err.message)
       })
   }
 
+  // Close login popUp when clicking outside
+  useEffect(() => {
+    const handleMouseDown = (e) => {
+      if (!loginboxRef?.current.contains(e.target)) {
+        setLoginBox(null)
+      }
+    }
+    document.addEventListener('mousedown', handleMouseDown)
+    return () => document.removeEventListener('mousedown', handleMouseDown)
+  }, [setLoginBox])
+
+  // JSX
+  if (load) return <Loader />
   return (
-    <div>
-      <div className="loginParentDiv">
+    <div className='Login'>
+      <div className="login-box" ref={loginboxRef}>
         <img src={Logo} alt='Err'></img>
 
         <form onSubmit={handleSubmit}>
           <input
             type="email"
-            value={Email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             name="email"
@@ -45,7 +65,7 @@ function Login() {
 
           <input
             type="password"
-            value={Passowrd}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             name="password"
@@ -54,7 +74,13 @@ function Login() {
           <button>Login</button>
         </form>
 
-        <a href='/signup'>New to OLX ?</a>
+        <p className='link'>New to OLX? <span onClick={() => setLoginBox('Sign-up')}>SignUp</span></p>
+
+        <div className="bottom-side">
+          <h5>All your personal details are safe with us.</h5>
+          <p>If you continue, you are accepting our <a href="https://help.olx.in/hc/en-us">Terms and Conditions and Privacy Policy</a></p>
+        </div>
+
       </div>
     </div>
   )

@@ -6,16 +6,16 @@ import { getFirestore, getDocs, collection, where, query } from 'firebase/firest
 
 function ViewItem() {
   const { app } = useContext(FirebaseContext)
-  const { ProdDtls } = useContext(PostContext)
-  const { User } = useContext(AuthContext)
-  const [UserDtls, setUserDtls] = useState([])
+  const { prodDtls } = useContext(PostContext)
+  const { user } = useContext(AuthContext)
+  const [userDtls, setUserDtls] = useState([])
   const db = getFirestore()
 
   // Fetching product details from Firestore
   useEffect(() => {
     const q = query(
       collection(db, 'users'),
-      where('id', '==', User.uid)
+      where('id', '==', user.uid)
     )
 
     getDocs(q)
@@ -28,26 +28,26 @@ function ViewItem() {
         alert(err.message)
         console.log(err.message)
       })
-  }, [db, app, User])
- 
+  }, [db, app, user])
+
   // Rendering
   return (
     <div className="viewParentDiv" >
       <div className="imageShowDiv">
-        <img src={ProdDtls.imgUrl} alt="" />
+        <img src={prodDtls.imgUrl} alt="" />
       </div>
       <div className="rightSection">
         <div className="productDetails">
-          <p>&#x20B9; {ProdDtls.price} </p>
-          <span>{ProdDtls.name} </span>
-          <p>{ProdDtls.category}</p>
-          <span>{ProdDtls.createdAt}</span>
+          <p>&#x20B9; {prodDtls.price} </p>
+          <span>{prodDtls.name} </span>
+          <p>{prodDtls.category}</p>
+          <span>{prodDtls.createdAt}</span>
         </div>
-        {UserDtls && <div className="contactDetails">
-          <p>{UserDtls.name}</p>
-          <p>UID : {UserDtls.id}</p>
-          <p>{UserDtls.phone}</p>
-          <p>{UserDtls.email}</p>
+        {userDtls && <div className="contactDetails">
+          <p>{userDtls.name}</p>
+          <p>UID : {userDtls.id}</p>
+          <p>{userDtls.phone}</p>
+          <p>{userDtls.email}</p>
         </div>}
       </div>
     </div >

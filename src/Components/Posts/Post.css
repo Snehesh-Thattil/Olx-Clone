@@ -1,3 +1,7 @@
+.postParentDiv {
+  width: 100%;
+  margin-bottom: 10rem;
+}
 .postParentDiv .moreView {
   margin: 16px 16px 24px;
   padding: 16px 16px 32px;

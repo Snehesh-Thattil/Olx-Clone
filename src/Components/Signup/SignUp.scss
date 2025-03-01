@@ -1,4 +1,4 @@
-.Login {
+.SignUp {
   border-radius: 6px;
   position: fixed;
   top: 0;
@@ -13,7 +13,7 @@
   justify-content: center;
   background-color: rgba(155, 151, 151, 0.363);
 
-  .login-box {
+  .signUp-box {
     width: 25rem;
     height: 85%;
     outline: .1px solid rgb(206, 201, 201);
@@ -25,9 +25,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    // gap: 15px;
 
     img {
-      height: 10rem;
+      height: 7.5rem;
       object-fit: contain;
       margin: 0 auto;
     }
@@ -36,8 +37,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
-      width: 80%;
+      gap: 10px;
+      width: 100%;
 
       input {
         width: 100%;
@@ -64,9 +65,9 @@
 
     p {
       span {
-        margin: 0 5px;
-        color: blue;
+        text-decoration: none;
         cursor: pointer;
+        margin: 0rem .25rem;
 
         &:hover {
           text-decoration: underline;

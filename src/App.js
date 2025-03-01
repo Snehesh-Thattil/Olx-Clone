@@ -1,43 +1,47 @@
 import React, { useContext, useEffect } from 'react'
 import './App.css'
 import Home from './Pages/Home'
-import Signup from './Pages/Signup'
-import Login from './Pages/Login'
 import Create from './Pages/Create'
 import View from './Pages/ViewPost'
 import Post from './Store/productContext'
 import { Route, Routes } from 'react-router-dom'
-import { AuthContext, FirebaseContext } from './Store/ContextFiles'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { AuthContext } from './Store/ContextFiles'
+import { onIdTokenChanged } from 'firebase/auth'
+import { auth } from './Firebase/firbase-config'
 
 function App() {
-  const { setUser } = useContext(AuthContext)
-  const { app } = useContext(FirebaseContext)
-  const auth = getAuth(app)
+  const { user, setUser } = useContext(AuthContext)
 
+  // Checking user sign-in status
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user)
-        console.log("User logged in:", user.displayName || user.uid)
+    const unsubscribe = onIdTokenChanged(auth, (userAuth) => {
+      if (userAuth?.emailVerified) {
+        console.log('User logged in :', userAuth.displayName, '|', userAuth.email)
+        setUser(userAuth)
       } else {
         setUser(null)
-        console.log("No user is logged in")
+        console.log("Unverified email")
       }
     })
+
     return () => unsubscribe()
-  }, [setUser, auth])
+  }, [setUser])
 
   return (
     <div className="App">
       <Post>
-        <Routes>
-          <Route element={<Home />} path='/' />
-          <Route element={<Signup />} path='/signup' />
-          <Route element={<Login />} path='/login' />
-          <Route element={<Create />} path='/create' />
-          <Route element={<View />} path='/view' />
-        </Routes>
+        {!user ?
+          <Routes>
+            <Route element={<Home />} path='/' />
+            <Route element={<View />} path='/view' />
+          </Routes>
+          :
+          <Routes>
+            <Route element={<Home />} path='/' />
+            <Route element={<View />} path='/view' />
+            <Route element={<Create />} path='/create' />
+          </Routes>
+        }
       </Post>
     </div>
   )

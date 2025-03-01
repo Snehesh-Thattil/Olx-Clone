@@ -10,6 +10,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 1rem;
 
         .brandName {
             &:hover {
@@ -17,168 +18,399 @@
             }
         }
 
-        .placeSearch {
-            width: 16em;
-            height: 48px;
+        .searchbars {
             display: flex;
-            align-items: center;
-            padding: 0 8px;
-            border: 2px solid #002f34;
-            border-radius: 4px;
-            background-color: white;
+            gap: 1rem;
 
-            ::selection {
-                border-color: #23e5db;
-                outline-color: #23e5db;
-            }
-
-            input {
-                border-color: transparent;
-                outline-color: transparent;
-            }
-        }
-
-        .productSearch {
-            width: 35em;
-            height: 48px;
-            border: 2px solid #002f34;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            background-color: white;
-            justify-content: space-between;
-
-            .input {
-                width: 100%;
-                height: 100%;
+            .placeSearch {
+                width: 17.5rem;
+                height: 48px;
                 display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 0 8px;
+                border: 2px solid #002f34;
+                border-radius: 4px;
+                background-color: white;
 
                 input {
-                    border-color: transparent;
-                    outline-color: transparent;
-                    width: 100%;
-                    align-items: center;
+                    border: none;
+                    outline: none;
+                    height: 100%;
                 }
             }
 
-            .searchAction {
-                min-width: 48px;
+            .productSearch {
+                width: 30rem;
                 height: 48px;
-                position: relative;
+                border: 2px solid #002f34;
+                border-radius: 4px;
                 display: flex;
-                cursor: pointer;
-                background-color: #002f34;
-                border-radius: 0 4px 4px 0;
+                align-items: center;
+                background-color: white;
+                justify-content: space-between;
 
-                svg {
+                .input {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+
+                    input {
+                        border: none;
+                        outline: none;
+                        width: 100%;
+                        align-items: center;
+                        padding: 0 1rem;
+                        font-size: 17px;
+
+                        &:focus {
+                            border: 1px solid black;
+                        }
+                    }
+                }
+
+                .searchAction {
+                    min-width: 48px;
+                    height: 48px;
+                    position: relative;
+                    display: flex;
+                    cursor: pointer;
+                    background-color: #002f34;
+                    border-radius: 0 4px 4px 0;
+
+                    svg {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        fill: white;
+                    }
+                }
+            }
+        }
+
+        .right-section {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+
+            .language {
+                height: 48px;
+                display: flex;
+                align-items: center;
+                position: relative;
+                cursor: pointer;
+
+                span {
+                    font-size: 15px;
+                    white-space: normal;
+                    text-overflow: ellipsis;
+                    font-weight: bolder;
+                    margin-right: 5px;
+                }
+
+                &.active {
+                    .options {
+                        display: unset;
+                    }
+
+                    .fa-angle-down {
+                        transform: rotate(-180deg);
+                    }
+                }
+
+                .fa-angle-down {
+                    transition: transform ease-in-out .3s;
+                }
+
+                .options {
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.65);
+                    border-radius: 2px;
+                    list-style: none;
+                    position: absolute;
+                    top: 100%;
+                    right: -25px;
+                    background-color: white;
+                    width: 10rem;
+                    display: none;
+
+                    li {
+                        width: 100%;
+                        padding: 1rem;
+                        cursor: pointer;
+                        background-color: white;
+
+                        &:hover {
+                            opacity: 1;
+                            background-color: rgba(211, 205, 205, 0.795);
+                        }
+                    }
+
+                    .pointer {
+                        position: absolute;
+                        rotate: 45deg;
+                        top: -10px;
+                        right: 25%;
+                        background-color: white;
+                        box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.05);
+                        z-index: -1;
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+            }
+
+            i {
+                cursor: pointer;
+            }
+
+            .notifications {
+                height: 48px;
+                display: flex;
+                align-items: center;
+                position: relative;
+                cursor: pointer;
+
+                &.active {
+                    .messgs {
+                        display: unset;
+                    }
+                }
+
+                .messgs {
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.65);
+                    border-radius: 2px;
+                    list-style: none;
+                    position: absolute;
+                    top: 100%;
+                    right: -50px;
+                    background-color: white;
+                    width: 15rem;
+                    display: none;
+
+                    li {
+                        width: 100%;
+                        padding: 1rem;
+                        cursor: pointer;
+                        background-color: white;
+
+                        &:hover {
+                            opacity: 1;
+                            background-color: rgba(211, 205, 205, 0.795);
+                        }
+                    }
+
+                    .pointer {
+                        position: absolute;
+                        rotate: 45deg;
+                        top: -10px;
+                        right: 15%;
+                        background-color: white;
+                        box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.05);
+                        z-index: -1;
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+            }
+
+            .sellMenu {
+                position: relative;
+                cursor: pointer;
+
+                .all {
+                    fill: white;
+                }
+
+                .top {
+                    fill: #23e5db;
+                }
+
+                .left {
+                    fill: #ffce32;
+                }
+
+                .right {
+                    fill: #3a77ff;
+                }
+
+                .sellMenuContent {
+                    display: flex;
                     position: absolute;
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-                    fill: white;
+                    font-size: 14px;
+                    font-weight: 700;
+                    letter-spacing: 0.5px;
+                    color: #002f34;
+
+                    span {
+                        margin-left: 5px;
+                    }
                 }
             }
-        }
 
-        .language {
-            height: 48px;
-            display: flex;
-            align-items: center;
-
-            span {
-                font-size: 15px;
-                white-space: normal;
-                text-overflow: ellipsis;
-                font-weight: bolder;
-                margin-right: 5px;
-            }
-        }
-
-        .sellMenu {
-            position: relative;
-            cursor: pointer;
-
-            .all {
-                fill: white;
-            }
-
-            .top {
-                fill: #23e5db;
-            }
-
-            .left {
-                fill: #ffce32;
-            }
-
-            .right {
-                fill: #3a77ff;
-            }
-
-            .sellMenuContent {
+            .loginPage {
                 display: flex;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-size: 14px;
-                font-weight: 700;
-                letter-spacing: 0.5px;
-                color: #002f34;
+                align-items: center;
+                gap: 7.5px;
+                outline: .2px solid rgb(199, 197, 197);
+                border-radius: 5px;
+                padding: 2px 10px;
+                position: relative;
+
+                &.active {
+                    .options {
+                        display: unset;
+                    }
+
+                    .fa-angle-down {
+                        transform: rotate(180deg);
+                    }
+                }
+
+                .fa-angle-down {
+                    transition: transform ease-in-out .3s;
+                }
+
+                .options {
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.65);
+                    border-radius: 2px;
+                    list-style: none;
+                    position: absolute;
+                    top: 120%;
+                    right: -30px;
+                    background-color: white;
+                    width: 18rem;
+                    display: none;
+
+                    .view-profile {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 1rem 0;
+                        border-bottom: 1px solid #014b53;
+
+                        .info {
+                            display: flex;
+                            gap: 20px;
+                            align-items: center;
+                            justify-content: center;
+                            padding: .5rem 0;
+
+                            h1 {
+                                text-decoration: none;
+                                color: white;
+                                background-color: #002b30;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                border-radius: 50%;
+                                width: 3rem;
+                                height: 3rem;
+                            }
+                        }
+
+                        button {
+                            width: 90%;
+                            color: white;
+                            padding: 10px;
+                            font-weight: 700;
+                            border: 5px solid #002b30;
+                            background-color: #002b30;
+                            cursor: pointer;
+                            transition: background-color .3s ease-in-out;
+
+                            &:hover {
+                                background-color: white;
+                                color: black;
+                            }
+                        }
+                    }
+
+                    li {
+                        width: 100%;
+                        padding: 1rem;
+                        cursor: pointer;
+                        background-color: white;
+                        display: flex;
+
+                        i {
+                            width: 2.5rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-start;
+                        }
+
+                        &:hover {
+                            opacity: 1;
+                            background-color: rgba(211, 205, 205, 0.795);
+                        }
+                    }
+
+                    .pointer {
+                        position: absolute;
+                        rotate: 45deg;
+                        top: -10px;
+                        right: 15%;
+                        background-color: white;
+                        box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.05);
+                        z-index: -1;
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+
+                .profile-box {
+                    display: flex;
+                    align-items: center;
+                    gap: 7.5px;
+                    cursor: pointer;
+
+                    h3 {
+                        text-decoration: none;
+                        color: white;
+                        background-color: #002b30;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 50%;
+                        width: 2rem;
+                        height: 2rem;
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: #014b53;
+                        }
+                    }
+
+                    .fa-angle-down {
+                        transition: transform ease-in-out .3s;
+                    }
+                }
 
                 span {
-                    margin-left: 5px;
+                    cursor: pointer;
                 }
             }
-        }
 
-        .loginPage {
-            span {
-                text-decoration: none;
-                color: #002f34;
-            }
-
-            .link {
-                text-decoration: none;
-                color: white;
-                background-color: #002f34;
-                padding: 10px;
-                border-radius: 10px;
+            .logoutPage {
+                a {
+                    font-weight: bold;
+                    text-decoration: none;
+                    color: rgb(122, 98, 98);
+                    cursor: pointer;
+                }
 
                 &:hover {
-                    background-color: #005f69;
+                    cursor: pointer;
                 }
-            }
-
-            hr {
-                margin: 0;
-                background-color: black;
-                height: 2px;
-            }
-        }
-
-        .logoutPage {
-            a {
-                font-weight: bold;
-                text-decoration: none;
-                color: rgb(122, 98, 98);
-                cursor: pointer;
-            }
-
-            &:hover {
-                cursor: pointer;
             }
         }
     }
 }
-
-// .span {
-//     text-decoration: none;
-//     font-size: 16px;
-//     white-space: normal;
-//     text-overflow: ellipsis;
-//     font-weight: bolder;
-//     margin-right: 5px;
-// }
 
 @media only screen and (max-width: 700px) {
 

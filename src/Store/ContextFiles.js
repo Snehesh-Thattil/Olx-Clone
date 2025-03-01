@@ -7,9 +7,9 @@ export const FirebaseContext = createContext(null)
 export const AuthContext = createContext(null)
 
 export function AuthContextWrapper({ children }) {
-    const [User, setUser] = useState(null)
+    const [user, setUser] = useState(null)
     return (
-        <AuthContext.Provider value={{ User, setUser }}>
+        <AuthContext.Provider value={{ user, setUser }}>
             {children}
         </AuthContext.Provider>
     )

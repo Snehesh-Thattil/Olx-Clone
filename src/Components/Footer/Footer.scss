@@ -4,11 +4,10 @@
 
     .links {
         width: 100%;
-        height: 12.5rem;
         padding: 0 5rem;
         background-color: rgba(137, 43, 226, 0.151);
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
         gap: 10px;
 
         .trending-loc,
@@ -16,11 +15,10 @@
         .about,
         .olx-links,
         .follow-us {
-            width: calc(100%/5);
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            padding: 1rem;
+            padding: 1rem 0;
         }
 
         .follow-us {
@@ -89,6 +87,11 @@
 
             a {
                 margin: 0 10px;
+
+                img {
+                    width: 7.5rem;
+                    object-fit: contain;
+                }
             }
 
             .hr-line {
@@ -100,7 +103,7 @@
         }
 
         .help {
-            position: absolute;
+            // position: absolute;
             bottom: 1rem;
             left: 0;
             width: 100%;
@@ -113,6 +116,15 @@
                 text-decoration: none;
                 color: white;
             }
+        }
+    }
+}
+
+@media screen and (max-width:767px) {
+    .Footer {
+        .links {
+            grid-template-columns: unset;
+            grid-template-rows: repeat(1fr);
         }
     }
 }

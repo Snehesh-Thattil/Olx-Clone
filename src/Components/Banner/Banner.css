@@ -1,11 +1,21 @@
 .bannerParentDiv {
-  padding-top: 4em;
   width: 100%;
+  padding-top: 4em;
   overflow: hidden;
 }
 .bannerParentDiv .bannerChildDiv .menuBar {
+  height: 3rem;
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
   padding: 10px 16px;
+}
+.bannerParentDiv .bannerChildDiv .menuBar .categoryMenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 .bannerParentDiv .bannerChildDiv .menuBar .categoryMenu span {
   margin-right: 16px;

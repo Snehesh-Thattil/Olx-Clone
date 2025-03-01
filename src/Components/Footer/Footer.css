@@ -4,11 +4,10 @@
 }
 .Footer .links {
   width: 100%;
-  height: 12.5rem;
   padding: 0 5rem;
   background-color: rgba(137, 43, 226, 0.151);
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
 }
 .Footer .links .trending-loc,
@@ -16,11 +15,10 @@
 .Footer .links .about,
 .Footer .links .olx-links,
 .Footer .links .follow-us {
-  width: 20%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1rem;
+  padding: 1rem 0;
 }
 .Footer .links .follow-us {
   justify-content: space-between;
@@ -80,6 +78,11 @@
 .Footer .subsidiaries .logos a {
   margin: 0 10px;
 }
+.Footer .subsidiaries .logos a img {
+  width: 7.5rem;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
 .Footer .subsidiaries .logos .hr-line {
   height: 10rem;
   width: 2.5px;
@@ -87,7 +90,6 @@
   border-radius: 100px;
 }
 .Footer .subsidiaries .help {
-  position: absolute;
   bottom: 1rem;
   left: 0;
   width: 100%;
@@ -99,4 +101,11 @@
 .Footer .subsidiaries .help a {
   text-decoration: none;
   color: white;
+}
+
+@media screen and (max-width: 767px) {
+  .Footer .links {
+    grid-template-columns: unset;
+    grid-template-rows: repeat(1fr);
+  }
 }/*# sourceMappingURL=Footer.css.map */
