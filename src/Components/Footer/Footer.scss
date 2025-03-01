@@ -18,7 +18,7 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            padding: 1rem 0;
+            padding: 2rem 0;
         }
 
         .follow-us {
@@ -29,6 +29,16 @@
                 width: 100%;
                 justify-content: space-evenly;
                 align-items: flex-end;
+                margin: 10px 0;
+
+                a {
+                    transform: scale(1.2);
+                    transition: transform .3s ease-in-out;
+
+                    &:hover {
+                        transform: scale(1.5);
+                    }
+                }
             }
 
             .store {
@@ -44,11 +54,12 @@
                     width: 7.5rem;
                     height: 2.5rem;
                     cursor: pointer;
-                }
-            }
+                    transition: transform .3s ease-in-out;
 
-            .icons a {
-                scale: 1.2;
+                    &:hover {
+                        transform: scale(.95);
+                    }
+                }
             }
         }
 
@@ -72,7 +83,6 @@
 
     .subsidiaries {
         width: 100%;
-        height: 12.5rem;
         padding: 0 5rem;
         background-color: #002f34;
         display: flex;
@@ -81,33 +91,37 @@
 
         .logos {
             width: 100%;
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
             align-items: center;
-            justify-content: space-evenly;
+            justify-content: center;
+            padding: 2rem 0 5rem 0;
 
             a {
                 margin: 0 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
                 img {
-                    width: 7.5rem;
+                    width: 50%;
                     object-fit: contain;
-                }
-            }
+                    transition: transform .3s ease-in-out;
 
-            .hr-line {
-                height: 10rem;
-                width: 2.5px;
-                background-color: white;
-                border-radius: 100px;
+                    &:hover {
+                        transform: scale(1.2);
+                    }
+                }
             }
         }
 
         .help {
-            // position: absolute;
-            bottom: 1rem;
-            left: 0;
-            width: 100%;
             padding: 0 5rem;
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            width: calc(100% - 1rem);
+            overflow-y: hidden;
             display: flex;
             justify-content: space-between;
 
@@ -120,11 +134,91 @@
     }
 }
 
-@media screen and (max-width:767px) {
+
+// MEDIA-QUERIRES RESPONSIVENESS
+@media screen and (max-width: 767px) {
     .Footer {
         .links {
-            grid-template-columns: unset;
-            grid-template-rows: repeat(1fr);
+            grid-template-columns: 1fr;
+            padding: 0 2.5rem;
+
+            .follow-us {
+                .store {
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                }
+            }
+        }
+
+        .subsidiaries {
+            height: auto;
+            padding: 1rem;
+
+            .logos {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+
+                a {
+                    img {
+                        width: 65%;
+                    }
+                }
+            }
+
+            .help {
+                padding: 0;
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .Footer {
+        .links {
+            grid-template-columns: 1fr 1fr;
+
+            .trending-loc {
+                order: 1;
+            }
+
+            .popular-loc {
+                order: 2;
+            }
+
+            .about {
+                order: 4;
+            }
+
+            .olx-links {
+                order: 3;
+            }
+
+            .follow-us {
+                grid-column: 1 / -1;
+                align-items: center;
+                order: 5;
+
+                .icons {
+                    justify-content: center;
+                    gap: 2.5rem;
+                }
+
+                .store {
+                    flex-direction: row;
+                }
+            }
+        }
+
+        .subsidiaries {
+            height: auto;
+            padding: 1rem;
+
+            .logos {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 1rem;
+            }
         }
     }
 }

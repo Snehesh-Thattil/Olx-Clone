@@ -42,15 +42,25 @@
   }
 }
 
+
+// MEDIA-QUERIRES RESPONSIVENESS
 @media only screen and (max-width: 700px) {
   .otherQuickOptions {
     display: none;
   }
 
   .bannerParentDiv {
+    padding-top: 2em;
+    
     .bannerChildDiv {
       .banner {
         position: relative;
+        
+        img {
+          height: auto;
+          max-width: 100%;
+          width: 100%; // Change from 100vw to 100%
+        }
       }
     }
   }

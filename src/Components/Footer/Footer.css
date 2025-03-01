@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1rem 0;
+  padding: 2rem 0;
 }
 .Footer .links .follow-us {
   justify-content: space-between;
@@ -28,6 +28,14 @@
   width: 100%;
   justify-content: space-evenly;
   align-items: flex-end;
+  margin: 10px 0;
+}
+.Footer .links .follow-us .icons a {
+  transform: scale(1.2);
+  transition: transform 0.3s ease-in-out;
+}
+.Footer .links .follow-us .icons a:hover {
+  transform: scale(1.5);
 }
 .Footer .links .follow-us .store {
   width: 100%;
@@ -42,9 +50,11 @@
   width: 7.5rem;
   height: 2.5rem;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
 }
-.Footer .links .follow-us .icons a {
-  scale: 1.2;
+.Footer .links .follow-us .store a:hover,
+.Footer .links .follow-us .store img:hover {
+  transform: scale(0.95);
 }
 .Footer .links h3 {
   margin-bottom: 10px;
@@ -62,7 +72,6 @@
 }
 .Footer .subsidiaries {
   width: 100%;
-  height: 12.5rem;
   padding: 0 5rem;
   background-color: #002f34;
   display: flex;
@@ -71,29 +80,34 @@
 }
 .Footer .subsidiaries .logos {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
+  padding: 2rem 0 5rem 0;
 }
 .Footer .subsidiaries .logos a {
   margin: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .Footer .subsidiaries .logos a img {
-  width: 7.5rem;
+  width: 50%;
   -o-object-fit: contain;
      object-fit: contain;
+  transition: transform 0.3s ease-in-out;
 }
-.Footer .subsidiaries .logos .hr-line {
-  height: 10rem;
-  width: 2.5px;
-  background-color: white;
-  border-radius: 100px;
+.Footer .subsidiaries .logos a img:hover {
+  transform: scale(1.2);
 }
 .Footer .subsidiaries .help {
-  bottom: 1rem;
-  left: 0;
-  width: 100%;
   padding: 0 5rem;
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  width: calc(100% - 1rem);
+  overflow-y: hidden;
   display: flex;
   justify-content: space-between;
 }
@@ -105,7 +119,64 @@
 
 @media screen and (max-width: 767px) {
   .Footer .links {
-    grid-template-columns: unset;
-    grid-template-rows: repeat(1fr);
+    grid-template-columns: 1fr;
+    padding: 0 2.5rem;
+  }
+  .Footer .links .follow-us .store {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .Footer .subsidiaries {
+    height: auto;
+    padding: 1rem;
+  }
+  .Footer .subsidiaries .logos {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .Footer .subsidiaries .logos a img {
+    width: 65%;
+  }
+  .Footer .subsidiaries .help {
+    padding: 0;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .Footer .links {
+    grid-template-columns: 1fr 1fr;
+  }
+  .Footer .links .trending-loc {
+    order: 1;
+  }
+  .Footer .links .popular-loc {
+    order: 2;
+  }
+  .Footer .links .about {
+    order: 4;
+  }
+  .Footer .links .olx-links {
+    order: 3;
+  }
+  .Footer .links .follow-us {
+    grid-column: 1/-1;
+    align-items: center;
+    order: 5;
+  }
+  .Footer .links .follow-us .icons {
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .Footer .links .follow-us .store {
+    flex-direction: row;
+  }
+  .Footer .subsidiaries {
+    height: auto;
+    padding: 1rem;
+  }
+  .Footer .subsidiaries .logos {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
   }
 }/*# sourceMappingURL=Footer.css.map */

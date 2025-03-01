@@ -1,10 +1,10 @@
-import React, { Fragment, useContext, useState } from 'react';
-import './Create.css';
-import Header from '../Header/Header';
+import React, { Fragment, useContext, useState } from 'react'
+import './Create.css'
+import Header from '../Header/Header'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../Store/ContextFiles'
-import { addDoc, collection, getFirestore } from 'firebase/firestore';
-import { getStorage, getDownloadURL, uploadBytes, ref } from 'firebase/storage';
+import { addDoc, collection, getFirestore } from 'firebase/firestore'
+import { getStorage, getDownloadURL, uploadBytes, ref } from 'firebase/storage'
 
 const Create = () => {
   const [name, setName] = useState('')

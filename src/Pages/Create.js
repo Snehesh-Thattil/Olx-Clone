@@ -8,7 +8,7 @@ const CreatePage = () => {
       <Header />
       <Create/>
     </Fragment>
-  );
-};
+  )
+}
 
 export default CreatePage;

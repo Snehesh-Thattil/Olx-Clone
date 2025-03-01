@@ -36,7 +36,15 @@
   .otherQuickOptions {
     display: none;
   }
+  .bannerParentDiv {
+    padding-top: 2em;
+  }
   .bannerParentDiv .bannerChildDiv .banner {
     position: relative;
+  }
+  .bannerParentDiv .bannerChildDiv .banner img {
+    height: auto;
+    max-width: 100%;
+    width: 100%;
   }
 }/*# sourceMappingURL=Banner.css.map */

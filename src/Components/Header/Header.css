@@ -3,7 +3,7 @@
   padding: 10px;
   background-color: whitesmoke;
   position: fixed;
-  z-index: 999;
+  z-index: 99;
 }
 .headerParentDiv .headerChildDiv {
   width: 100%;
@@ -347,9 +347,15 @@
 }
 
 @media only screen and (max-width: 700px) {
-  .placeSearch,
-  .productSearch,
-  .sellMenu {
-    display: none;
+  .headerParentDiv {
+    padding: 5px;
+  }
+  .headerParentDiv .headerChildDiv {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .headerParentDiv .headerChildDiv .right-section {
+    width: 100%;
+    justify-content: space-between;
   }
 }/*# sourceMappingURL=Header.css.map */
