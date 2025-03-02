@@ -1,6 +1,5 @@
 .postParentDiv {
   width: 100%;
-  margin-bottom: 10rem; // Temporarily
 
   .moreView {
     margin: 16px 16px 24px;
@@ -107,6 +106,13 @@
         height: 19rem;
         display: inline-block;
         cursor: pointer;
+
+        .image {
+          img {
+            width: 10rem; //Temp
+            height: 10rem; //Temp
+          }
+        }
       }
     }
   }
@@ -120,12 +126,12 @@
     .moreView {
       margin: 8px;
       padding: 8px;
-      
+
       .heading {
         flex-direction: column;
         align-items: flex-start;
       }
-      
+
       .cards {
         .card {
           width: 80%; // Make cards more responsive
@@ -133,13 +139,13 @@
         }
       }
     }
-    
+
     .recommendations {
       margin: 8px;
-      
+
       .cards {
         flex-wrap: wrap;
-        
+
         .card {
           width: 80%;
         }

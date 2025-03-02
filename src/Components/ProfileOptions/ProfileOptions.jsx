@@ -33,8 +33,8 @@ function ProfileOptions({ mobile, setLoginBox }) {
         <div className={mobile ? "ProfileOptions mobile" : "ProfileOptions"}>
             <div className="view-profile">
                 <div className="info">
-                    <h1>{user?.displayName.slice(0, 1)}</h1>
-                    <h2>{user?.displayName}</h2>
+                    <h2>{user?.displayName.slice(0, 1)}</h2>
+                    <h3>{user?.displayName}</h3>
                 </div>
                 <button>View and edit profile</button>
             </div>

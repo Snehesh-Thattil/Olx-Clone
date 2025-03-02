@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import './Header.css';
 import OlxLogo from '../../Assets/OlxLogo';
 import Search from '../../Assets/Search';
-import SellButton from '../../Assets/SellButton';
-import SellButtonPlus from '../../Assets/SellButtonPlus';
+import SellBotton from '../../Assets/Images/Sell-Button.png'
 import { useNavigate } from 'react-router-dom';
 import Login from '../Login/Login';
 import SignUp from '../Signup/SignUp';
@@ -17,7 +16,7 @@ function Header() {
   const languageRef = useRef()
   const notificationsRef = useRef()
   const profileRef = useRef()
-  const mobileProfileRef = useRef()
+  const mobileNavRef = useRef()
   const navigate = useNavigate()
 
   // Verify user before proceeding certain clicks
@@ -50,13 +49,15 @@ function Header() {
     }
   }, [])
 
-  // Collapse the mobile ProfileOptions on scroll-down
+  // Collapse mobile header on scroll-down
   useEffect(() => {
     let lastScroll = window.scrollY
     const handleScrolldown = () => {
       const currentScroll = window.scrollY
-      if (currentScroll > lastScroll) {
-        mobileProfileRef.current?.classList.remove('active')
+      if (lastScroll > currentScroll) {
+        mobileNavRef.current?.classList.add('fixed')
+      } else {
+        mobileNavRef.current?.classList.remove('fixed')
       }
       lastScroll = currentScroll
     }
@@ -68,11 +69,11 @@ function Header() {
   if (loginBox === "Login") return <Login setLoginBox={setLoginBox} />
   if (loginBox === "Sign-up") return <SignUp setLoginBox={setLoginBox} />
   return (
-    <div className="Header" ref={mobileProfileRef}>
+    <div className="Header" ref={mobileNavRef}>
       <ProfileOptions mobile setLoginBox={setLoginBox} />
 
       <div className="logo">
-        <i className="fa-solid fa-bars" onClick={() => user && mobileProfileRef.current.classList.toggle('active')}></i>
+        <i className="fa-solid fa-bars" onClick={() => user && mobileNavRef.current.classList.toggle('active')}></i>
         <div onClick={() => navigate('/')} className="brandName">
           <OlxLogo></OlxLogo>
         </div>
@@ -109,8 +110,8 @@ function Header() {
           </div>
         </div>
 
-        <i className="fa-regular fa-heart" onClick={() => handleVerifyUser('/wishlist')}></i>
-        <i className="fa-regular fa-comment-dots" onClick={() => handleVerifyUser('/chats')}></i>
+        <i className="fa-regular fa-heart" tabIndex="0" onClick={() => handleVerifyUser('/wishlist')}></i>
+        <i className="fa-regular fa-comment-dots" tabIndex="0" onClick={() => handleVerifyUser('/chats')}></i>
 
         <div className="notifications" ref={notificationsRef} onClick={() => notificationsRef.current.classList.toggle('active')}>
           <i className="fa-regular fa-bell"></i>
@@ -135,12 +136,8 @@ function Header() {
           {user && <ProfileOptions />}
         </div>
 
-        <div className="sellMenu" onClick={() => handleVerifyUser('/create')}>
-          <SellButton></SellButton>
-          <div className="sellMenuContent">
-            <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
-          </div>
+        <div className="sellButton" onClick={() => handleVerifyUser('/create')}>
+          <img src={SellBotton} alt="" />
         </div>
 
       </div>

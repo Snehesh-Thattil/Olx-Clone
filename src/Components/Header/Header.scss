@@ -13,6 +13,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        z-index: 3;
 
         .fa-bars {
             display: none;
@@ -118,8 +119,7 @@
 
             &.active {
                 .options {
-                    opacity: 1;
-                    transform: skewY(0deg);
+                    display: unset;
                 }
 
                 .fa-angle-down {
@@ -140,8 +140,7 @@
                 right: -5px;
                 background-color: white;
                 width: 10rem;
-                opacity: 0;
-                transform: skewY(10deg);
+                display: none;
                 transition: transform ease-in-out .3s;
 
                 li {
@@ -153,7 +152,6 @@
                     font-weight: 500;
 
                     &:hover {
-                        opacity: 1;
                         background-color: rgba(211, 205, 205, 0.795);
                     }
                 }
@@ -174,6 +172,12 @@
 
         i {
             cursor: pointer;
+            padding: 10px;
+
+            &:active {
+                background-color: #6f9ca146;
+                border-radius: 50%;
+            }
         }
 
         .notifications {
@@ -184,10 +188,18 @@
             cursor: pointer;
 
             &.active {
-                .messgs {
-                    opacity: 1;
-                    transform: skewY(0deg);
+                i {
+                    background-color: #6f9ca146;
                 }
+
+                .messgs {
+                    display: unset;
+                }
+            }
+
+            i {
+                padding: 10px;
+                border-radius: 50%;
             }
 
             .messgs {
@@ -199,8 +211,7 @@
                 right: -40px;
                 background-color: white;
                 width: 15rem;
-                opacity: 0;
-                transform: skewY(10deg);
+                display: none;
                 transition: transform .3s ease-in-out;
 
                 li {
@@ -210,7 +221,6 @@
                     background-color: white;
 
                     &:hover {
-                        opacity: 1;
                         background-color: rgba(211, 205, 205, 0.795);
                     }
                 }
@@ -229,40 +239,15 @@
             }
         }
 
-        .sellMenu {
-            position: relative;
+        .sellButton {
             cursor: pointer;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-            .all {
-                fill: white;
-            }
-
-            .top {
-                fill: #23e5db;
-            }
-
-            .left {
-                fill: #ffce32;
-            }
-
-            .right {
-                fill: #3a77ff;
-            }
-
-            .sellMenuContent {
-                display: flex;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-size: 14px;
-                font-weight: 700;
-                letter-spacing: 0.5px;
-                color: #002f34;
-
-                span {
-                    margin-left: 5px;
-                }
+            img {
+                border-radius: 30px;
             }
         }
 
@@ -272,13 +257,14 @@
             gap: 7.5px;
             outline: .2px solid rgb(199, 197, 197);
             border-radius: 5px;
-            padding: 2px 10px;
+            padding: 2.5px 7.5px;
             position: relative;
 
             &.active {
+                background-color: #6f9ca146;
+
                 .ProfileOptions {
-                    opacity: 1;
-                    transform: skewY(0deg);
+                    display: unset;
                 }
 
                 .fa-angle-down {
@@ -293,7 +279,7 @@
             .profile-box {
                 display: flex;
                 align-items: center;
-                gap: 7.5px;
+                gap: 5px;
                 cursor: pointer;
 
                 h3 {
@@ -342,25 +328,28 @@
 // MEDIA-QUERIRES RESPONSIVENESS
 @media only screen and (max-width: 767px) {
     .Header {
+        position: absolute;
         padding: 15px;
         grid-template-columns: repeat(5, 1fr);
         grid-template-rows: 1fr 1fr;
         gap: 0.5rem;
         border-bottom: .5px solid #002b30;
 
+        &.fixed {
+            position: fixed;
+        }
+
         &.active {
             .logo {
                 .fa-bars {
-                    transform: rotate(90deg) scale(1.2) translateX(10px);
-                    background-color: #002b30;
+                    transform: rotate(90deg) scale(1.2);
+                    background-color: #002b309d;
                     color: white;
-                    z-index: 2;
                 }
             }
 
             .ProfileOptions.mobile {
-                transform: translateY(0);
-                opacity: 1;
+                transform: translateX(0);
             }
         }
 
@@ -402,10 +391,18 @@
             i.fa-comment-dots,
             .language,
             .notifications,
-            .loginPage,
-            .sellMenu {
+            .loginPage {
                 transform: scale(1.5);
                 display: none;
+            }
+
+            .sellButton {
+                position: fixed;
+                bottom: 2.5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                outline: .5px solid rgb(158, 151, 151);
+                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
             }
         }
     }
@@ -414,9 +411,9 @@
 @media (min-width:768px) and (max-width: 1024px) {
     .Header {
         padding: 10px 15px;
-        grid-template-columns: .5fr 3fr 5fr;
+        grid-template-columns: .5fr 3fr 6fr;
         grid-template-rows: 1fr 1fr;
-        gap: .75rem;
+        gap: .5rem;
         border-bottom: .5px solid #002b30;
 
         .logo {
@@ -434,6 +431,11 @@
         .right-section {
             grid-area: 2/3/3/4;
             flex-direction: row-reverse;
+            gap: 0;
+
+            .sellMenu {
+                margin-right: 10px;
+            }
         }
     }
 }

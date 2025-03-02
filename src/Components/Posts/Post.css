@@ -1,6 +1,5 @@
 .postParentDiv {
   width: 100%;
-  margin-bottom: 10rem;
 }
 .postParentDiv .moreView {
   margin: 16px 16px 24px;
@@ -89,6 +88,10 @@
   height: 19rem;
   display: inline-block;
   cursor: pointer;
+}
+.postParentDiv .recommendations .cards .card .image img {
+  width: 10rem;
+  height: 10rem;
 }
 
 @media only screen and (max-width: 700px) {

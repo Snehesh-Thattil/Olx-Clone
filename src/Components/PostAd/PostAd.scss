@@ -1,12 +1,39 @@
 .PostAd {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding-bottom: 4rem;
     min-height: 100vh;
+
+    .navigate {
+        width: 100%;
+        height: 5rem;
+        display: flex;
+        align-items: center;
+        padding: 2rem;
+        background-color: #55555531;
+
+        i {
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #c7c3c3;
+            }
+        }
+
+        p {
+            margin: 0 1rem;
+            font-size: 20px;
+        }
+    }
 
     .category-box {
         width: 45%;
-        height: 70vh;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         background: white;
         background-color: #f3f4f6;
@@ -18,7 +45,7 @@
         flex-direction: column;
 
         .category-header {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #aca9a9;
             padding-bottom: 8px;
             font-weight: 600;
             color: #333;
@@ -44,31 +71,34 @@
                 margin: 0;
                 width: 50%;
                 height: 100%;
+                border-right: 2px solid #ddd;
+                // outline: 2px solid #ddd;
 
                 li {
                     list-style: none;
+                    width: 100%;
+                    text-align: left;
+                    padding: .75rem;
+                    background: none;
+                    border: none;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    color: #333;
+                    transition: background 0.3s;
 
-                    .category-item {
-                        width: 100%;
-                        text-align: left;
-                        padding: .75rem;
-                        background: none;
-                        border: none;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        font-size: 1rem;
-                        cursor: pointer;
-                        color: #333;
-                        transition: background 0.3s;
+                    span {
+                        margin-left: 2rem;
+                    }
 
-                        span {
-                            margin-left: 2rem;
-                        }
+                    &:hover {
+                        background-color: #bbb4b493;
+                    }
 
-                        &:hover {
-                            background-color: #bbb4b4;
-                        }
+                    &.active {
+                        background-color: #bbb4b4;
                     }
                 }
             }
@@ -80,7 +110,7 @@
                 margin: 0;
                 border-left: 2px solid #ddd;
 
-                .subcategory-item {
+                li {
                     font-size: 0.9rem;
                     padding: .75rem;
                     color: #555;
@@ -88,7 +118,7 @@
                     transition: background-color 0.3s;
 
                     &:hover {
-                        background-color: #cecaca;
+                        background-color: #bbb4b493;
                     }
                 }
             }
@@ -98,20 +128,38 @@
 
 
 // MEDIA-QUERIES RESPONSIVENESS
-@media (max-width: 600px) {
-    .category-box {
-        max-width: 90%;
-    }
-}
+@media screen and (max-width: 767px) {
+    .PostAd {
 
-@media (max-width: 400px) {
-    .category-item {
-        font-size: 0.9rem;
-        padding: 10px;
-    }
+        .category-box {
+            width: 95%;
 
-    .subcategory-item {
-        font-size: 0.85rem;
-        padding: 6px 10px;
+            .category-header {
+                h2 {
+                    font-size: 1.25rem;
+                }
+
+                h4 {
+                    font-size: .75rem;
+                }
+            }
+
+            .lists {
+
+                .category-item {
+                    font-size: 0.9rem;
+                    padding: 10px;
+
+                    li {
+                        font-size: .75rem;
+                    }
+                }
+
+                .subcategory-item {
+                    font-size: 0.85rem;
+                    padding: 6px 10px;
+                }
+            }
+        }
     }
 }
