@@ -1,0 +1,117 @@
+.PostAd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    .category-box {
+        width: 45%;
+        height: 70vh;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background: white;
+        background-color: #f3f4f6;
+        outline: .5px solid rgb(194, 184, 184);
+        max-width: 100%;
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+
+        .category-header {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+
+            h2 {
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: 10px;
+                font-size: 1.5rem;
+            }
+
+            h4 {
+                font-weight: 500;
+            }
+        }
+
+        .lists {
+            display: flex;
+            flex-grow: 1;
+
+            .category-list {
+                list-style: none;
+                margin: 0;
+                width: 50%;
+                height: 100%;
+
+                li {
+                    list-style: none;
+
+                    .category-item {
+                        width: 100%;
+                        text-align: left;
+                        padding: .75rem;
+                        background: none;
+                        border: none;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 1rem;
+                        cursor: pointer;
+                        color: #333;
+                        transition: background 0.3s;
+
+                        span {
+                            margin-left: 2rem;
+                        }
+
+                        &:hover {
+                            background-color: #bbb4b4;
+                        }
+                    }
+                }
+            }
+
+            .subcategory-list {
+                width: 50%;
+                height: 100%;
+                list-style: none;
+                margin: 0;
+                border-left: 2px solid #ddd;
+
+                .subcategory-item {
+                    font-size: 0.9rem;
+                    padding: .75rem;
+                    color: #555;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+
+                    &:hover {
+                        background-color: #cecaca;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// MEDIA-QUERIES RESPONSIVENESS
+@media (max-width: 600px) {
+    .category-box {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 400px) {
+    .category-item {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .subcategory-item {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+}
