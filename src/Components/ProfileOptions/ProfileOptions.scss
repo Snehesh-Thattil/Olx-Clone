@@ -62,10 +62,11 @@
 
     li {
         width: 100%;
-        padding: 1rem;
+        padding: .5rem;
         cursor: pointer;
         background-color: white;
         display: flex;
+        align-items: center;
 
         i {
             width: 2.5rem;
@@ -113,6 +114,10 @@
 
             &::-webkit-scrollbar {
                 display: none;
+            }
+
+            li {
+                padding: 1rem;
             }
         }
     }

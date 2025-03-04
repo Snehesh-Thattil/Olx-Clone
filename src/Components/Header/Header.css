@@ -115,7 +115,7 @@
   border-radius: 2px;
   list-style: none;
   position: absolute;
-  top: 225%;
+  top: 140%;
   right: -5px;
   background-color: white;
   width: 10rem;
@@ -174,7 +174,7 @@
   border-radius: 2px;
   list-style: none;
   position: absolute;
-  top: 100%;
+  top: 120%;
   right: -40px;
   background-color: white;
   width: 15rem;
@@ -219,6 +219,7 @@
   border-radius: 5px;
   padding: 2.5px 7.5px;
   position: relative;
+  cursor: pointer;
 }
 .Header .right-section .loginPage.active {
   background-color: rgba(111, 156, 161, 0.2745098039);
@@ -258,6 +259,8 @@
 }
 .Header .right-section .loginPage span {
   cursor: pointer;
+  width: -moz-max-content;
+  width: max-content;
 }
 .Header .right-section .logoutPage a {
   font-weight: bold;
@@ -279,6 +282,9 @@
     border-bottom: 0.5px solid #002b30;
   }
   .Header.fixed {
+    position: fixed;
+  }
+  .Header.active .logo {
     position: fixed;
   }
   .Header.active .logo .fa-bars {

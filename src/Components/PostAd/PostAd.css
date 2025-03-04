@@ -109,6 +109,9 @@
 }
 
 @media screen and (max-width: 767px) {
+  .PostAd {
+    gap: 3rem;
+  }
   .PostAd .category-box {
     width: 95%;
   }

@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom'
 import { AuthContext } from './Store/ContextFiles'
 import { onIdTokenChanged } from 'firebase/auth'
 import { auth } from './Firebase/firbase-config'
+import Listing from './Pages/Listing'
 
 function App() {
   const { user, setUser } = useContext(AuthContext)
@@ -40,6 +41,7 @@ function App() {
             <Route element={<Home />} path='/' />
             <Route element={<View />} path='/view' />
             <Route element={<Create />} path='/create' />
+            <Route element={<Listing />} path='/listing-form' />
           </Routes>
         }
       </Post>

@@ -4,8 +4,8 @@ import OlxLogo from '../../Assets/OlxLogo';
 import Search from '../../Assets/Search';
 import SellBotton from '../../Assets/Images/Sell-Button.png'
 import { useNavigate } from 'react-router-dom';
-import Login from '../Login/Login';
 import SignUp from '../Signup/SignUp';
+import SignIn from '../Signup/SignIn';
 import { AuthContext } from '../../Store/ContextFiles';
 import ProfileOptions from '../ProfileOptions/ProfileOptions';
 
@@ -66,14 +66,14 @@ function Header() {
   }, [])
 
   // JSX
-  if (loginBox === "Login") return <Login setLoginBox={setLoginBox} />
+  if (loginBox === "Sign-in") return <SignIn setLoginBox={setLoginBox} />
   if (loginBox === "Sign-up") return <SignUp setLoginBox={setLoginBox} />
   return (
     <div className="Header" ref={mobileNavRef}>
       <ProfileOptions mobile setLoginBox={setLoginBox} />
 
       <div className="logo">
-        <i className="fa-solid fa-bars" onClick={() => user && mobileNavRef.current.classList.toggle('active')}></i>
+        <i className="fa-solid fa-bars" onClick={() => mobileNavRef.current.classList.toggle('active')}></i>
         <div onClick={() => navigate('/')} className="brandName">
           <OlxLogo></OlxLogo>
         </div>

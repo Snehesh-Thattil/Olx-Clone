@@ -72,7 +72,6 @@
                 width: 50%;
                 height: 100%;
                 border-right: 2px solid #ddd;
-                // outline: 2px solid #ddd;
 
                 li {
                     list-style: none;
@@ -130,6 +129,7 @@
 // MEDIA-QUERIES RESPONSIVENESS
 @media screen and (max-width: 767px) {
     .PostAd {
+        gap: 3rem;
 
         .category-box {
             width: 95%;

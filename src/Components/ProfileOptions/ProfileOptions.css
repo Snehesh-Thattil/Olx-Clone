@@ -56,10 +56,11 @@
 }
 .ProfileOptions li {
   width: 100%;
-  padding: 1rem;
+  padding: 0.5rem;
   cursor: pointer;
   background-color: white;
   display: flex;
+  align-items: center;
 }
 .ProfileOptions li i {
   width: 2.5rem;
@@ -101,5 +102,8 @@
   }
   .ProfileOptions.mobile::-webkit-scrollbar {
     display: none;
+  }
+  .ProfileOptions.mobile li {
+    padding: 1rem;
   }
 }/*# sourceMappingURL=ProfileOptions.css.map */

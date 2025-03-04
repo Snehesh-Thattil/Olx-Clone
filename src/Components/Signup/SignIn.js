@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Logo from '../../Assets/Images/olx-logo.png';
-import './Login.css';
+import '../Signup/SignUp.css';
 import { sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../Firebase/firbase-config';
 import Loader from '../Loader/Loader';
 
-function Login({ setLoginBox }) {
+function SignIn({ setLoginBox }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [load, setLoad] = useState(false)
@@ -50,8 +50,8 @@ function Login({ setLoginBox }) {
   // JSX
   if (load) return <Loader />
   return (
-    <div className='Login'>
-      <div className="login-box" ref={loginboxRef}>
+    <div className='SignUp'>
+      <div className="signUp-box" ref={loginboxRef}>
         <img src={Logo} alt='Err'></img>
 
         <form onSubmit={handleSubmit}>
@@ -86,4 +86,4 @@ function Login({ setLoginBox }) {
   )
 }
 
-export default Login;
+export default SignIn;

@@ -96,7 +96,6 @@
         }
     }
 
-
     .right-section {
         display: flex;
         gap: 1.5rem;
@@ -136,7 +135,7 @@
                 border-radius: 2px;
                 list-style: none;
                 position: absolute;
-                top: 225%;
+                top: 140%;
                 right: -5px;
                 background-color: white;
                 width: 10rem;
@@ -207,7 +206,7 @@
                 border-radius: 2px;
                 list-style: none;
                 position: absolute;
-                top: 100%;
+                top: 120%;
                 right: -40px;
                 background-color: white;
                 width: 15rem;
@@ -259,6 +258,7 @@
             border-radius: 5px;
             padding: 2.5px 7.5px;
             position: relative;
+            cursor: pointer;
 
             &.active {
                 background-color: #6f9ca146;
@@ -306,6 +306,7 @@
 
             span {
                 cursor: pointer;
+                width: max-content;
             }
         }
 
@@ -322,6 +323,7 @@
             }
         }
     }
+
 }
 
 
@@ -341,6 +343,8 @@
 
         &.active {
             .logo {
+                position: fixed;
+
                 .fa-bars {
                     transform: rotate(90deg) scale(1.2);
                     background-color: #002b309d;

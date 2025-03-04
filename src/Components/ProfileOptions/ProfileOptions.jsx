@@ -14,10 +14,11 @@ function ProfileOptions({ mobile, setLoginBox }) {
         signOut(auth)
             .then(() => {
                 alert('signed out successfully')
+                navigate('/')
                 window.location.reload()
             })
             .catch((err) => console.log("Error signing out:", err.message))
-    }, [])
+    }, [navigate])
 
     // Verify user before proceeding certain clicks
     const handleVerifyUser = (path) => {
@@ -33,10 +34,10 @@ function ProfileOptions({ mobile, setLoginBox }) {
         <div className={mobile ? "ProfileOptions mobile" : "ProfileOptions"}>
             <div className="view-profile">
                 <div className="info">
-                    <h2>{user?.displayName.slice(0, 1)}</h2>
-                    <h3>{user?.displayName}</h3>
+                    {user && <h2>{user.displayName.slice(0, 1)}</h2>}
+                    {user && <h3>{user.displayName}</h3>}
                 </div>
-                <button>View and edit profile</button>
+                {user ? <button>View and edit profile</button> : <button onClick={() => setLoginBox('Sign-up')}>Sign up now</button>}
             </div>
             <li><i className="fa-solid fa-address-card"></i>My ADS</li>
             <li><i className="fa-solid fa-file-contract"></i>Buy Business Package</li>

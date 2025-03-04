@@ -36,7 +36,7 @@ function SignUp({ setLoginBox }) {
   function handleSubmit(e) {
     e.preventDefault()
     setLoad(true)
-    const userCollectionRef = collection(db, 'user')
+    const userCollectionRef = collection(db, 'users')
 
     const regexInputs = {
       email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -77,11 +77,11 @@ function SignUp({ setLoginBox }) {
         })
         .then(() => {
           setLoad(false)
-          setLoginBox('Login')
+          setLoginBox('Sign-in')
         })
         .catch((err) => {
           setLoad(false)
-          setLoginBox('Login')
+          setLoginBox('Sign-in')
           alert(err.message)
         })
     }
@@ -135,7 +135,7 @@ function SignUp({ setLoginBox }) {
           <button>Signup</button>
         </form>
 
-        <p>Already have an account?<span onClick={() => setLoginBox('Login')}>Login</span></p>
+        <p>Already have an account?<span onClick={() => setLoginBox('Sign-in')}>Login</span></p>
 
         <div className="bottom-side">
           <h5>All your personal details are safe with us.</h5>

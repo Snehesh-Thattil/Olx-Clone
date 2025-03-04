@@ -1,4 +1,5 @@
-.SignUp {
+.SignUp,
+.SignIn {
   border-radius: 6px;
   position: fixed;
   top: 0;
@@ -13,66 +14,138 @@
   justify-content: center;
   background-color: rgba(155, 151, 151, 0.363);
 }
-.SignUp .signUp-box {
+.SignUp .signUp-box,
+.SignUp .signIn-box,
+.SignIn .signUp-box,
+.SignIn .signIn-box {
   width: 25rem;
-  height: 85%;
   outline: 0.1px solid rgb(206, 201, 201);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.65);
-  padding: 20px;
+  padding: 1rem;
   border-radius: 5px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  gap: 2rem;
 }
-.SignUp .signUp-box img {
+.SignUp .signUp-box img,
+.SignUp .signIn-box img,
+.SignIn .signUp-box img,
+.SignIn .signIn-box img {
   height: 7.5rem;
   -o-object-fit: contain;
      object-fit: contain;
   margin: 0 auto;
 }
-.SignUp .signUp-box form {
+.SignUp .signUp-box form,
+.SignUp .signIn-box form,
+.SignIn .signUp-box form,
+.SignIn .signIn-box form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 0.5rem;
   width: 100%;
+  padding: 1rem;
 }
-.SignUp .signUp-box form input {
+.SignUp .signUp-box form input,
+.SignUp .signIn-box form input,
+.SignIn .signUp-box form input,
+.SignIn .signIn-box form input {
   width: 100%;
-  padding: 10px;
+  padding: 0.75rem;
+  border: 2px solid rgba(0, 47, 52, 0.3843137255);
+  border-radius: 3px;
 }
-.SignUp .signUp-box form button {
+.SignUp .signUp-box form button,
+.SignUp .signIn-box form button,
+.SignIn .signUp-box form button,
+.SignIn .signIn-box form button {
   width: 100%;
-  height: 48px;
+  padding: 0.75rem;
   background-color: #002f34;
   color: whitesmoke;
   font-weight: 900;
+  margin-top: 0.5rem;
   cursor: pointer;
   border-radius: 5px;
   transition: all 0.25s ease-in-out;
 }
-.SignUp .signUp-box form button:hover {
+.SignUp .signUp-box form button:hover,
+.SignUp .signIn-box form button:hover,
+.SignIn .signUp-box form button:hover,
+.SignIn .signIn-box form button:hover {
   background-color: white;
   color: #002f34;
   border: 2px solid #002f34;
 }
-.SignUp .signUp-box p span {
+.SignUp .signUp-box p span,
+.SignUp .signIn-box p span,
+.SignIn .signUp-box p span,
+.SignIn .signIn-box p span {
   text-decoration: none;
   cursor: pointer;
   margin: 0rem 0.25rem;
 }
-.SignUp .signUp-box p span:hover {
+.SignUp .signUp-box p span:hover,
+.SignUp .signIn-box p span:hover,
+.SignIn .signUp-box p span:hover,
+.SignIn .signIn-box p span:hover {
   text-decoration: underline;
 }
-.SignUp .signUp-box .bottom-side {
+.SignUp .signUp-box .bottom-side,
+.SignUp .signIn-box .bottom-side,
+.SignIn .signUp-box .bottom-side,
+.SignIn .signIn-box .bottom-side {
   text-align: center;
 }
-.SignUp .signUp-box .bottom-side p {
+.SignUp .signUp-box .bottom-side p,
+.SignUp .signIn-box .bottom-side p,
+.SignIn .signUp-box .bottom-side p,
+.SignIn .signIn-box .bottom-side p {
   margin: 5px 0;
   font-size: 15px;
 }
-.SignUp .signUp-box .bottom-side p a {
+.SignUp .signUp-box .bottom-side p a,
+.SignUp .signIn-box .bottom-side p a,
+.SignIn .signUp-box .bottom-side p a,
+.SignIn .signIn-box .bottom-side p a {
   font-size: 13px;
+}
+
+@media screen and (max-width: 767px) {
+  .SignUp {
+    padding: 1rem;
+  }
+  .SignUp .signUp-box {
+    width: 95%;
+    gap: 1rem;
+  }
+  .SignUp .signUp-box img {
+    height: 8rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .SignUp .signUp-box form {
+    gap: 0.75rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .SignUp {
+    padding: 2rem;
+  }
+  .SignUp .signUp-box {
+    width: 60%;
+    gap: 3rem;
+  }
+  .SignUp .signUp-box img {
+    height: 10rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .SignUp .signUp-box form {
+    gap: 1rem;
+  }
 }/*# sourceMappingURL=SignUp.css.map */
