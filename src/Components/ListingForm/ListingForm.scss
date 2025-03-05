@@ -56,8 +56,35 @@
                 flex-direction: column;
                 gap: 1.5rem;
 
+                h4 {
+                    color: #333;
+                }
+
                 .input-field {
                     width: 50%;
+
+                    &.price-input {
+                        .price-input-wrapper {
+                            position: relative;
+                            display: flex;
+                            align-items: center;
+
+                            .currency-symbol {
+                                position: absolute;
+                                left: 1rem;
+                                font-size: 1rem;
+                                font-weight: 600;
+                                color: #555353;
+                            }
+
+                            input {
+                                padding-left: 2.5rem;
+                                width: 100%;
+                                border: 1px solid #ccc;
+                                border-radius: 5px;
+                            }
+                        }
+                    }
 
                     label {
                         font-size: 14px;
@@ -71,7 +98,7 @@
                     textarea {
                         width: 100%;
                         padding: 10px;
-                        font-size: 14px;
+                        font-size: .85rem;
                         border: 1px solid #ccc;
                         border-radius: 4px;
                         outline: none;
@@ -82,17 +109,100 @@
                         }
                     }
 
-                    input {
-                        height: 40px;
-                    }
-
                     textarea {
-                        height: 120px;
+                        height: 7.5rem;
                         resize: vertical;
                     }
 
                     p {
                         font-size: .75rem;
+                    }
+
+                    .radios {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                        width: 100%;
+                        text-align: center;
+                        flex-wrap: wrap;
+                        border: 1px solid #ccc;
+                        padding: 10px;
+
+                        label {
+                            font-size: 10px;
+                            font-weight: 600;
+                            color: #333;
+                            display: block;
+                            margin-bottom: 4px;
+                            cursor: pointer;
+
+                            input {
+                                font-size: 5px;
+                                padding: 0;
+                                height: 15px;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    .images-grid {
+                        display: grid;
+                        grid-template-columns: repeat(4, 1fr);
+                        gap: 10px;
+                        margin-top: 10px;
+
+                        .image-item {
+                            border: 2px solid #ccc;
+                            padding: 4px;
+                            cursor: pointer;
+                            text-align: center;
+                            height: 6rem;
+                            position: relative;
+                            display: flex;
+                            flex-direction: column;
+
+                            img {
+                                width: 100%;
+                                height: 70%;
+                                object-fit: contain;
+                                flex-grow: 1;
+                            }
+
+                            p {
+                                padding: 4px 2px;
+                                transition: all ease-in-out .4s;
+
+                                &:hover {
+                                    background-color: #007bff62;
+                                }
+                            }
+
+                            &.cover {
+                                p {
+                                    background-color: #007bffc7;
+                                }
+                            }
+
+                            &.add-photo {
+                                background: #f5f5f5;
+                                border: 2px dashed #ccc;
+                            }
+
+                            i {
+                                position: absolute;
+                                right: 5px;
+                                padding: 4px;
+                                background-color: rgba(105, 92, 92, 0.486);
+                                top: 5px;
+                                border-radius: 2px;
+                                transition: transform ease-in-out .3s;
+
+                                &:hover {
+                                    transform: rotate(90deg);
+                                    background-color: rgba(163, 7, 7, 0.658);
+                                }
+                            }
+                        }
                     }
                 }
             }
