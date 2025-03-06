@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import "./PostAd.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 
 const categories = [
     { name: "Cars", subcategories: ["Cars"] },
@@ -14,7 +14,7 @@ const categories = [
 ]
 
 function PostAd() {
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null)
     const navigate = useNavigate()
 
     // JSX
@@ -45,9 +45,9 @@ function PostAd() {
 
                     {selectedCategory &&
                         <ul className="subcategory-list">
-                            {selectedCategory.subcategories.map((subctgry, index) => (
-                                <li key={index} onClick={() => navigate('/listing-form', { state: { subctgry } })}>
-                                    {subctgry}
+                            {selectedCategory.subcategories.map((subcategory, index) => (
+                                <li key={index} onClick={() => navigate('/listing-form', { state: { subcategory } })}>
+                                    {subcategory}
                                 </li>
                             ))}
                         </ul>}
@@ -55,7 +55,7 @@ function PostAd() {
 
             </div>
         </div>
-    );
+    )
 }
 
 export default PostAd

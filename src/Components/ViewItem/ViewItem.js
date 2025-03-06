@@ -1,15 +1,14 @@
 import './ViewItem.css';
 import React, { useEffect, useState, useContext } from 'react'
 import { PostContext } from '../../Store/productContext';
-import { AuthContext, FirebaseContext } from '../../Store/ContextFiles'
-import { getFirestore, getDocs, collection, where, query } from 'firebase/firestore';
+import { AuthContext } from '../../Store/AuthContext'
+import { getDocs, collection, where, query } from 'firebase/firestore';
+import { db } from '../../Firebase/firbase-config';
 
 function ViewItem() {
-  const { app } = useContext(FirebaseContext)
   const { prodDtls } = useContext(PostContext)
   const { user } = useContext(AuthContext)
   const [userDtls, setUserDtls] = useState([])
-  const db = getFirestore()
 
   // Fetching product details from Firestore
   useEffect(() => {
@@ -28,7 +27,7 @@ function ViewItem() {
         alert(err.message)
         console.log(err.message)
       })
-  }, [db, app, user])
+  }, [user])
 
   // Rendering
   return (

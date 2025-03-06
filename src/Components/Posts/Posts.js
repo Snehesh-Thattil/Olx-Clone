@@ -63,7 +63,7 @@ function Posts() {
                 </div>
 
                 <div className="date">
-                  <span>{Product.createdAt}</span>
+                  {/* <span>{Product.createdAt}</span> */}
                 </div>
               </div>
             )
@@ -108,4 +108,4 @@ function Posts() {
   )
 }
 
-export default Posts;
+export default Posts

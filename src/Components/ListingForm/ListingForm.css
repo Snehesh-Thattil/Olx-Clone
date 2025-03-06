@@ -32,6 +32,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 3rem;
 }
 .Listing .details h3 {
   padding: 2rem 2rem;
@@ -50,6 +51,33 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+.Listing .details form .input-section .contact-infos {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.Listing .details form .input-section .contact-infos .name-photo {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.Listing .details form .input-section .contact-infos .name-photo img {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  outline: 0.25rem outset skyblue;
+}
+.Listing .details form .input-section .contact-infos .name-photo .name-input {
+  flex-grow: 1;
+}
+.Listing .details form .input-section .contact-infos .phone {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
 }
 .Listing .details form .input-section h4 {
   color: #333;
@@ -176,4 +204,17 @@
 .Listing .details form .input-section .input-field .images-grid .image-item i:hover {
   transform: rotate(90deg);
   background-color: rgba(163, 7, 7, 0.658);
+}
+.Listing .details form .input-section .submit-btn {
+  padding: 0.75rem 1rem;
+  width: 10rem;
+  font-weight: bold;
+  background-color: rgba(67, 169, 209, 0.836);
+  border-radius: 5px;
+  border: 0.5px solid gray;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.Listing .details form .input-section .submit-btn:hover {
+  background-color: rgb(13, 155, 211);
 }/*# sourceMappingURL=ListingForm.css.map */

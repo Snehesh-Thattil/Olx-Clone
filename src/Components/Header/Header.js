@@ -6,7 +6,7 @@ import SellBotton from '../../Assets/Images/Sell-Button.png'
 import { useNavigate } from 'react-router-dom';
 import SignUp from '../Signup/SignUp';
 import SignIn from '../Signup/SignIn';
-import { AuthContext } from '../../Store/ContextFiles';
+import { AuthContext } from '../../Store/AuthContext';
 import ProfileOptions from '../ProfileOptions/ProfileOptions';
 
 function Header() {

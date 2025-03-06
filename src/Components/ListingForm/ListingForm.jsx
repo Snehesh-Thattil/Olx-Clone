@@ -1,62 +1,77 @@
-import { doc, getDoc } from 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { db } from '../../Firebase/firbase-config'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import ImageIcon from '../../Assets/Images/image-upload-icon.png'
+import Loader from '../Loader/Loader'
 import './ListingForm.css'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../Store/AuthContext'
+import { db, storage } from '../../Firebase/firbase-config'
+import { addDoc, collection, doc, getDoc, serverTimestamp } from 'firebase/firestore'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import DynamicFields from './SubComponents/DynamicFields'
 import axios from 'axios'
 
+// Map subcategories to form names
+const FORM_NAME_MAP = {
+    'Cars': 'car_form',
+    'Accessories': 'accessories_form',
+    'Mobile Phones': 'mobilePhone_form',
+    'Tablets': 'tablet_form',
+    'Scooters': 'scooter_form',
+    'Motorcycles': 'motorcycle_form',
+    'Bicycles': 'bicycle_form',
+    'Commercial & Other Vehicles': 'vehicles_form',
+    'Vehicle Spares': 'spares_form'
+}
+
 function ListingForm() {
+    const location = useLocation()
+    const navigate = useNavigate()
+    const subcat = location.state?.subcategory || "unknown"
+    const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+    const fbFormName = FORM_NAME_MAP[subcat] || null
+
+    const { user } = useContext(AuthContext)
+    const [load, setLoad] = useState(false)
     const [fields, setFields] = useState([])
     const [images, setImages] = useState([])
     const [coverImage, setCoverImage] = useState()
-    const [userLocation, setUserLocation] = useState({
+    const [productInfo, setProductInfo] = useState({
+        item: subcat || null,
+    })
+    const [sellerInfo, setSellerInfo] = useState({
+        name: user?.displayName || null,
+        email: user?.email || null,
+        photo: user?.photoURL || null,
+        userId: user?.uid,
         state: '',
         district: '',
         neighbourhood: ''
     })
-    const location = useLocation()
-    const navigate = useNavigate()
-    const form = location.state?.subctgry || "unknown"
 
-    const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+    const profileInputRef = useRef()
+    const imageInputRef = useRef()
 
-    let fbFormName = null;
-    switch (form) {
-        case 'Cars': fbFormName = 'car_form'; break;
-        case 'Accessories': fbFormName = 'accessories_form'; break;
-        case 'Mobile Phones': fbFormName = 'mobilePhone_form'; break;
-        case 'Tablets': fbFormName = 'tablet_form'; break;
-        case 'Scooters': fbFormName = 'scooter_form'; break;
-        case 'Motorcycles': fbFormName = 'motorcycle_form'; break;
-        case 'Bicycles': fbFormName = 'bicycle_form'; break;
-        case 'Commercial & Other Vehicles': fbFormName = 'vehicles_form'; break;
-        case 'Vehicle Spares': fbFormName = 'spares_form'; break;
-        default: fbFormName = null;
-    }
-
-    // Fetch template of inputs of selected subcategory
+    // Fetch form template for the selected subcategory
     useEffect(() => {
         const fetchForm = async () => {
             try {
                 const docRef = doc(db, "formTemplates", fbFormName)
                 const res = await getDoc(docRef)
-                const data = res.data().fields
 
                 if (res.exists()) {
-                    setFields(data)
+                    setFields(res.data().fields)
                 } else {
-                    console.log("No such document!")
+                    console.error("No such document!")
                 }
             } catch (err) {
-                console.log("Error fetching formDoc", err.message)
+                console.error("Error fetching formDoc", err.message)
             }
         }
         fetchForm()
     }, [fbFormName])
 
-    // Handle image input field change
-    function handleUploadChange(e) {
+    // Handle image upload change
+    const handleUploadChange = useCallback((e) => {
         const files = Array.from(e.target.files)
 
         if (images.length + files.length > 12) {
@@ -64,52 +79,118 @@ function ListingForm() {
             return
         }
 
-        setImages((prevImages) => [...prevImages, ...files])
+        setImages((prev) => [...prev, ...files])
 
-        if (!coverImage) {
+        if (!coverImage && files.length) {
             setCoverImage(files[0])
         }
-    }
+    }, [images, coverImage])
 
-    // Fetch location of the user
+    // Fetch user's location using geolocation and reverse geocoding
     useEffect(() => {
         const fetchUserLocation = () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (position) => {
-                    const { latitude, longitude } = position.coords
+                    try {
+                        const { latitude, longitude } = position.coords
 
-                    const { data } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`)
-                    const addressComponents = data.results[0].address_components
+                        const { data } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`)
+                        const addressComponents = data.results[0].address_components
 
-                    const state = await addressComponents?.find((comp) => comp.types.includes("administrative_area_level_1"))?.long_name
-                    const district = await addressComponents?.find((comp) => comp.types.includes("administrative_area_level_3"))?.long_name
-                    const neighbourhood = await addressComponents?.find((comp) => comp.types.includes("sublocality") || comp.types.includes("neighborhood") || comp.types.includes("locality"))?.long_name
+                        const state = await addressComponents?.find((comp) => comp.types.includes("administrative_area_level_1"))?.long_name
+                        const district = await addressComponents?.find((comp) => comp.types.includes("administrative_area_level_3"))?.long_name
+                        const neighbourhood = await addressComponents?.find((comp) => comp.types.includes("sublocality") || comp.types.includes("neighborhood") || comp.types.includes("locality"))?.long_name
 
-                    setUserLocation({ state: state, district: district, neighbourhood: neighbourhood })
+                        setSellerInfo({ state: state, district: district, neighbourhood: neighbourhood })
+                    }
+                    catch (err) {
+                        console.error('Error fetching location:', err.message);
+                    }
                 })
             }
         }
         fetchUserLocation()
     }, [GOOGLE_API_KEY])
 
-    // Handle change address manually
-    function handleLocationChange(e) {
-        setUserLocation({ ...userLocation, [e.target.name]: e.target.value })
+    // Handlers for input changes
+    const handleLocationChange = (e) => {
+        setSellerInfo({ ...sellerInfo, [e.target.name]: e.target.value })
     }
 
-    // Handle delete image icon click
-    function handleDeleteImage(img) {
-        setImages((prevImages) => {
-            const newImgArray = prevImages.filter((prevImg) => prevImg !== img)
+    const handleProductInfoChange = (e) => {
+        setProductInfo({ ...productInfo, [e.target.name]: e.target.value })
+    }
 
-            if (!newImgArray.includes(coverImage)) {
-                setCoverImage(newImgArray.length > 0 ? newImgArray[0] : null)
+    const handleDeleteImage = (img) => {
+        setImages((prev) => {
+            const updated = prev.filter((prevImg) => prevImg !== img)
+
+            if (!updated.includes(coverImage)) {
+                setCoverImage(updated.length > 0 ? updated[0] : null)
             }
-            return newImgArray
+            return updated
         })
     }
 
+    // Helper functions to generate unique file names and upload files
+    const generateUniqueFileName = (file) => {
+        const timestamp = new Date()
+        const randomStr = Math.random().toString(36).substring(2, 10)
+        return `${timestamp}_${randomStr}_${file.name}`
+    }
+
+    const uploadFileAndGetURL = async (file, path) => {
+        const storageRef = ref(storage, path)
+        const snapshot = await uploadBytes(storageRef, file)
+        return getDownloadURL(snapshot.ref)
+    }
+
+    // Handle form submition on submit button click
+    const handleFormSubmit = async (e) => {
+        e.preventDefault()
+        setLoad(true)
+
+        try {
+            const productCollRef = collection(db, "products")
+
+            const uploadPromises = images.map((img) => {
+                const filename = generateUniqueFileName(img)
+                return uploadFileAndGetURL(img, `/Images/products/${filename}`)
+            })
+            const imgURLs = await Promise.all(uploadPromises)
+
+            const sellerPhotoName = generateUniqueFileName(sellerInfo.photo)
+            const sellerPhotoURL = await uploadFileAndGetURL(sellerInfo.photo, `/Images/products/${sellerPhotoName}`)
+
+            const coverImgName = generateUniqueFileName(coverImage)
+            const coverImgURL = await uploadFileAndGetURL(coverImage, `/Images/products/${coverImgName}`)
+
+            await addDoc(productCollRef, {
+                ...productInfo,
+                imgURLs,
+                coverImgURL,
+                sellerInfo: { ...sellerInfo, photo: sellerPhotoURL },
+                state: sellerInfo.state,
+                district: sellerInfo.district,
+                neighbourhood: sellerInfo.neighbourhood,
+                createdAt: serverTimestamp()
+            })
+
+            console.log('Successfully uploaded files and details')
+            navigate('/')
+        }
+        catch (err) {
+            alert(err.message)
+            console.error("Error uploading details on firebase", err.message)
+        }
+        finally {
+            setLoad(false)
+        }
+    }
+
+
     // JSX
+    if (load) return <Loader />
     return (
         <div className='Listing'>
             <div className="navigate">
@@ -118,38 +199,20 @@ function ListingForm() {
             </div>
             <div className="details">
                 <h3>INCLUDE SOME DETAILS</h3>
-                <form action="">
+
+                <form onSubmit={handleFormSubmit}>
+                    <DynamicFields fields={fields} onChange={handleProductInfoChange} />
 
                     <div className="input-section">
-                        {fields.map((field, index) => {
-                            return (
-                                <div className="input-field" key={index}>
-                                    <label htmlFor="">{field.label}</label>
-
-                                    {field.type === 'radio' ? (
-                                        <div className="radios">
-                                            {field.options.map((opt, index) => (
-                                                <label key={index}>
-                                                    <input type="radio" name={field.label} value={opt} required /> {opt}
-                                                </label>
-                                            ))}
-                                        </div>
-
-                                    ) : (<input min={field.min} max={field.max} minLength={field.minLength} maxLength={field.maxLength} type={field.type} required />)
-                                    }
-                                </div>
-                            )
-                        })}
-
                         <div className="input-field">
                             <label htmlFor="">Ad title</label>
-                            <input type="text" minLength={5} maxLength={70} required />
+                            <input type="text" minLength={5} maxLength={70} name='ad-title' onChange={handleProductInfoChange} required />
                             <p>Mention the key features of your item (e.g. brand, model, age, type)</p>
                         </div>
 
                         <div className="input-field">
                             <label htmlFor="">Description</label>
-                            <textarea type="text" minLength={10} maxLength={4096} required />
+                            <textarea type="text" minLength={10} maxLength={4096} name='description' onChange={handleProductInfoChange} required />
                             <p>Include condition, features and reason for selling</p>
                         </div>
                     </div>
@@ -161,7 +224,12 @@ function ListingForm() {
 
                             <div className="price-input-wrapper">
                                 <span className="currency-symbol">₹</span>
-                                <input type="number" id="price" min={10} max={999999999} required />
+                                <input type="number"
+                                    id="price"
+                                    required
+                                    name='price'
+                                    min={10} max={999999999}
+                                    onChange={handleProductInfoChange} />
                             </div>
                         </div>
                     </div>
@@ -171,10 +239,16 @@ function ListingForm() {
                         <div className="input-field">
 
                             <div className="images-grid">
-                                <input style={{ display: 'none' }} id='input-image' type="file" multiple onChange={handleUploadChange} accept='image/*' disabled={images.length >= 12} />
+                                <input type="file"
+                                    multiple
+                                    accept='image/*'
+                                    ref={imageInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={handleUploadChange}
+                                    disabled={images.length >= 12} />
 
                                 {images.length < 12 &&
-                                    <img src={ImageIcon} className="image-item add-photo" onClick={() => document.getElementById('input-image').click()} alt="" />}
+                                    <img src={ImageIcon} className="image-item add-photo" onClick={() => imageInputRef.current?.click()} alt="" />}
 
                                 {images.map((img, index) => {
                                     return (
@@ -196,24 +270,54 @@ function ListingForm() {
                         <div className="input-field">
                             <label htmlFor="">State</label>
                             <input type="text" minLength={5} maxLength={70}
-                                value={userLocation?.state}
+                                value={sellerInfo?.state}
                                 onChange={handleLocationChange}
                                 name='state' required />
                         </div>
                         <div className="input-field">
                             <label htmlFor="">District</label>
                             <input type="text" minLength={5} maxLength={70}
-                                value={userLocation?.district}
+                                value={sellerInfo?.district}
                                 onChange={handleLocationChange}
                                 name='district' required />
                         </div>
                         <div className="input-field">
                             <label htmlFor="">Neighbourhood</label>
                             <input type="text" minLength={5} maxLength={70}
-                                value={userLocation?.neighbourhood}
+                                value={sellerInfo?.neighbourhood}
                                 onChange={handleLocationChange}
                                 name='neighbourhood' required />
                         </div>
+                    </div>
+
+                    <div className="input-section">
+                        <h4>REVIEW CONTACT INFO</h4>
+                        <div className="contact-infos">
+
+                            <div className="name-photo">
+                                <input type="file"
+                                    accept='image/*'
+                                    ref={profileInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={(e) => setSellerInfo({ ...sellerInfo, photo: e.target.files[0] })} />
+
+                                <img src={sellerInfo.photo instanceof File ? URL.createObjectURL(sellerInfo?.photo) : sellerInfo.photo || "https://img.icons8.com/?size=100&id=65342&format=png&color=000000"} onClick={() => profileInputRef.current?.click()} alt="" />
+
+                                <div className="name-input input-field">
+                                    <label htmlFor="">Name</label>
+                                    <input type="text" defaultValue={user.displayName} minLength={3} maxLength={70} required />
+                                </div>
+                            </div>
+
+                            <div className="phone">
+                                <p>Phone number</p>
+                                <h4>{user?.phoneNumber}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="input-section">
+                        <button type='submit' className='submit-btn'>SUBMIT</button>
                     </div>
 
                 </form>
