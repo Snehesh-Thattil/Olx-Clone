@@ -1,12 +1,13 @@
 import { createContext, useState } from "react";
 
+// Products Context
 export const PostContext = createContext(null)
 
-export default function Post({ children }) {
-    const [prodDtls, setProdDtls] = useState(null)
+export function PostContextWrapper({ children }) {
+    const [products, setProducts] = useState(null)
 
     return (
-        <PostContext.Provider value={{ prodDtls, setProdDtls }}>
+        <PostContext.Provider value={{ products, setProducts }}>
             {children}
         </PostContext.Provider>
     )

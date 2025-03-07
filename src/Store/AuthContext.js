@@ -5,6 +5,7 @@ export const AuthContext = createContext(null)
 
 export function AuthContextWrapper({ children }) {
     const [user, setUser] = useState(null)
+    
     return (
         <AuthContext.Provider value={{ user, setUser }}>
             {children}

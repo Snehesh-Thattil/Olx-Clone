@@ -52,56 +52,11 @@
   flex-direction: column;
   gap: 1.5rem;
 }
-.Listing .details form .input-section .contact-infos {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-.Listing .details form .input-section .contact-infos .name-photo {
-  width: 100%;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-.Listing .details form .input-section .contact-infos .name-photo img {
-  width: 5.5rem;
-  height: 5.5rem;
-  border-radius: 50%;
-  outline: 0.25rem outset skyblue;
-}
-.Listing .details form .input-section .contact-infos .name-photo .name-input {
-  flex-grow: 1;
-}
-.Listing .details form .input-section .contact-infos .phone {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1rem;
-}
 .Listing .details form .input-section h4 {
   color: #333;
 }
 .Listing .details form .input-section .input-field {
   width: 50%;
-}
-.Listing .details form .input-section .input-field.price-input .price-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.Listing .details form .input-section .input-field.price-input .price-input-wrapper .currency-symbol {
-  position: absolute;
-  left: 1rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #555353;
-}
-.Listing .details form .input-section .input-field.price-input .price-input-wrapper input {
-  padding-left: 2.5rem;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 .Listing .details form .input-section .input-field label {
   font-size: 14px;
@@ -155,6 +110,24 @@
   height: 15px;
   cursor: pointer;
 }
+.Listing .details form .input-section .input-field.price-input .price-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.Listing .details form .input-section .input-field.price-input .price-input-wrapper .currency-symbol {
+  position: absolute;
+  left: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555353;
+}
+.Listing .details form .input-section .input-field.price-input .price-input-wrapper input {
+  padding-left: 2.5rem;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 .Listing .details form .input-section .input-field .images-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -170,15 +143,17 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 6rem;
 }
 .Listing .details form .input-section .input-field .images-grid .image-item img {
   width: 100%;
-  height: 70%;
-  -o-object-fit: contain;
-     object-fit: contain;
-  flex-grow: 1;
+  height: 75%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .Listing .details form .input-section .input-field .images-grid .image-item p {
+  flex-grow: 1;
   padding: 4px 2px;
   transition: all ease-in-out 0.4s;
 }
@@ -190,7 +165,7 @@
 }
 .Listing .details form .input-section .input-field .images-grid .image-item.add-photo {
   background: #f5f5f5;
-  border: 2px dashed #ccc;
+  border: 2px dashed rgba(67, 169, 209, 0.836);
 }
 .Listing .details form .input-section .input-field .images-grid .image-item i {
   position: absolute;
@@ -205,6 +180,33 @@
   transform: rotate(90deg);
   background-color: rgba(163, 7, 7, 0.658);
 }
+.Listing .details form .input-section .contact-infos {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.Listing .details form .input-section .contact-infos .name-photo {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.Listing .details form .input-section .contact-infos .name-photo img {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  outline: 0.25rem outset skyblue;
+}
+.Listing .details form .input-section .contact-infos .name-photo .name-input {
+  flex-grow: 1;
+}
+.Listing .details form .input-section .contact-infos .phone {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
 .Listing .details form .input-section .submit-btn {
   padding: 0.75rem 1rem;
   width: 10rem;
@@ -217,4 +219,35 @@
 }
 .Listing .details form .input-section .submit-btn:hover {
   background-color: rgb(13, 155, 211);
+}
+
+@media screen and (max-width: 767px) {
+  .Listing .details {
+    width: 95%;
+  }
+  .Listing .details form .input-section .contact-infos,
+  .Listing .details form .input-section .input-field {
+    width: 100%;
+  }
+  .Listing .details form .input-section .contact-infos .images-grid,
+  .Listing .details form .input-section .input-field .images-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .Listing .details {
+    width: 70%;
+  }
+  .Listing .details form .input-section .contact-infos,
+  .Listing .details form .input-section .input-field {
+    width: 70%;
+  }
+  .Listing .details form .input-section .contact-infos .images-grid,
+  .Listing .details form .input-section .input-field .images-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .Listing .details form .input-section .contact-infos .images-grid .image-item,
+  .Listing .details form .input-section .input-field .images-grid .image-item {
+    height: 7rem;
+  }
 }/*# sourceMappingURL=ListingForm.css.map */

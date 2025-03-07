@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import "./PostAd.css";
+import "./PostAdList.css";
 import { useNavigate } from "react-router-dom"
 
 const categories = [
@@ -13,7 +13,7 @@ const categories = [
     { name: "Sports", subcategories: ["Gym & Fitness", "Books", "Sports equipments", "Musical Instruments"] },
 ]
 
-function PostAd() {
+function PostAdList() {
     const [selectedCategory, setSelectedCategory] = useState(null)
     const navigate = useNavigate()
 
@@ -46,7 +46,7 @@ function PostAd() {
                     {selectedCategory &&
                         <ul className="subcategory-list">
                             {selectedCategory.subcategories.map((subcategory, index) => (
-                                <li key={index} onClick={() => navigate('/listing-form', { state: { subcategory } })}>
+                                <li key={index} onClick={() => navigate('/listing-form', { state: { subcategory, category: selectedCategory?.name } })}>
                                     {subcategory}
                                 </li>
                             ))}
@@ -54,8 +54,8 @@ function PostAd() {
                 </div>
 
             </div>
-        </div>
+        </div >
     )
 }
 
-export default PostAd
+export default PostAdList

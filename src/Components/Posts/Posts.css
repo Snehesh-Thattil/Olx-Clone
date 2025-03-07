@@ -1,0 +1,39 @@
+.postParentDiv {
+  width: 100%;
+}
+.postParentDiv .recommendations {
+  margin: 16px 16px 24px;
+}
+.postParentDiv .recommendations .heading span {
+  font-size: 24px;
+  color: #002f34;
+}
+.postParentDiv .recommendations .cards {
+  display: flex;
+}
+.postParentDiv .recommendations .cards .card {
+  margin-right: 15px;
+  margin-top: 0.5rem;
+  padding: 13px;
+  max-width: 222px;
+  width: 14rem;
+  height: 19rem;
+  display: inline-block;
+  cursor: pointer;
+}
+.postParentDiv .recommendations .cards .card .image img {
+  width: 10rem;
+  height: 10rem;
+}
+
+@media only screen and (max-width: 700px) {
+  .postParentDiv .recommendations {
+    margin: 8px;
+  }
+  .postParentDiv .recommendations .cards {
+    flex-wrap: wrap;
+  }
+  .postParentDiv .recommendations .cards .card {
+    width: 80%;
+  }
+}/*# sourceMappingURL=Posts.css.map */

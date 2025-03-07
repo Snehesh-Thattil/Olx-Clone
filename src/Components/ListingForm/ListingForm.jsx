@@ -26,7 +26,8 @@ const FORM_NAME_MAP = {
 function ListingForm() {
     const location = useLocation()
     const navigate = useNavigate()
-    const subcat = location.state?.subcategory || "unknown"
+    const subcat = location.state?.subcategory || null
+    const catgry = location.state?.category || null
     const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
     const fbFormName = FORM_NAME_MAP[subcat] || null
 
@@ -36,7 +37,8 @@ function ListingForm() {
     const [images, setImages] = useState([])
     const [coverImage, setCoverImage] = useState()
     const [productInfo, setProductInfo] = useState({
-        item: subcat || null,
+        subcategory: subcat || null,
+        category: catgry || null
     })
     const [sellerInfo, setSellerInfo] = useState({
         name: user?.displayName || null,
@@ -150,6 +152,12 @@ function ListingForm() {
         e.preventDefault()
         setLoad(true)
 
+        if (images.length === 0) {
+            alert("Please upload at least one photo of the product")
+            setLoad(false)
+            return
+        }
+
         try {
             const productCollRef = collection(db, "products")
 
@@ -253,7 +261,7 @@ function ListingForm() {
                                 {images.map((img, index) => {
                                     return (
                                         <div key={index} className={coverImage === img ? "image-item cover" : "image-item"} >
-                                            <img src={URL.createObjectURL(img)} alt="item-image" onClick={() => setCoverImage(img)} />
+                                            <img src={URL.createObjectURL(img)} alt="item-image" />
                                             <p onClick={() => setCoverImage(img)}> {coverImage === img ? 'Cover Image' : 'Set as Cover'}</p>
                                             <i className="fa-solid fa-xmark" onClick={() => handleDeleteImage(img)}></i>
                                         </div>
