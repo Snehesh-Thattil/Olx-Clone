@@ -3,7 +3,7 @@ import './App.css'
 import Home from './Pages/Home'
 import Listing from './Pages/Listing'
 import PostAd from './Pages/PostAd'
-import View from './Pages/ViewPost'
+import ViewPost from './Pages/ViewPost'
 import { Route, Routes } from 'react-router-dom'
 import { AuthContext } from './Store/AuthContext'
 import { onIdTokenChanged } from 'firebase/auth'
@@ -32,12 +32,12 @@ function App() {
       {!user ?
         <Routes>
           <Route element={<Home />} path='/' />
-          <Route element={<View />} path='/view' />
+          <Route element={<ViewPost />} path='/view' />
         </Routes>
         :
         <Routes>
           <Route element={<Home />} path='/' />
-          <Route element={<View />} path='/view' />
+          <Route element={<ViewPost />} path='/view' />
           <Route element={<PostAd />} path='/create' />
           <Route element={<Listing />} path='/listing-form' />
         </Routes>

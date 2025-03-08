@@ -1,39 +1,100 @@
-.postParentDiv {
-  width: 100%;
+.Posts {
+  margin-top: 1.25rem;
+  background: rgb(235, 238, 239);
+  padding: 1.5rem;
 }
-.postParentDiv .recommendations {
-  margin: 16px 16px 24px;
+.Posts .heading {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
-.postParentDiv .recommendations .heading span {
-  font-size: 24px;
-  color: #002f34;
+.Posts .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
 }
-.postParentDiv .recommendations .cards {
+.Posts .cards .card {
+  border: 1px solid #b9b8b8;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+.Posts .cards .card:hover {
+  transform: translateY(-5px);
+}
+.Posts .cards .card .wishlist {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
-}
-.postParentDiv .recommendations .cards .card {
-  margin-right: 15px;
-  margin-top: 0.5rem;
-  padding: 13px;
-  max-width: 222px;
-  width: 14rem;
-  height: 19rem;
-  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease-in-out;
   cursor: pointer;
 }
-.postParentDiv .recommendations .cards .card .image img {
-  width: 10rem;
+.Posts .cards .card .wishlist i {
+  color: #3f3e3e;
+  font-size: 1.25rem;
+}
+.Posts .cards .card .wishlist:hover {
+  transform: scale(1.2);
+}
+.Posts .cards .card .image {
+  padding: 7.5px;
+  border-bottom: 0.5px solid rgba(185, 184, 184, 0.4745098039);
+}
+.Posts .cards .card .image img {
+  width: 100%;
   height: 10rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px 5px 0 0;
+}
+.Posts .cards .card .content {
+  padding: 10px;
+}
+.Posts .cards .card .content .rate {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 5px;
+}
+.Posts .cards .card .content .kilometer {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+.Posts .cards .card .content .name {
+  font-size: 16px;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.Posts .cards .card .place-date {
+  padding: 10px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #777;
+}
+.Posts .cards .card .place-date .place {
+  flex: 1;
+}
+.Posts .cards .card .place-date .date {
+  flex: 0;
 }
 
-@media only screen and (max-width: 700px) {
-  .postParentDiv .recommendations {
-    margin: 8px;
-  }
-  .postParentDiv .recommendations .cards {
-    flex-wrap: wrap;
-  }
-  .postParentDiv .recommendations .cards .card {
-    width: 80%;
+@media screen and (max-width: 1024px) {
+  .Posts .cards .card .image img {
+    height: 12.5rem;
   }
 }/*# sourceMappingURL=Posts.css.map */

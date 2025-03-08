@@ -1,33 +1,122 @@
-.postParentDiv {
-  width: 100%;
+.Posts {
+  margin-top: 1.25rem;
+  background: rgba(235, 238, 239, 1);
+  padding: 1.5rem;
 
-  .recommendations {
-    margin: 16px 16px 24px;
+  .heading {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
 
-    .heading {
-      span {
-        font-size: 24px;
-        color: #002f34;
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+
+    .card {
+      border: 1px solid #b9b8b8;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+      cursor: pointer;
+      position: relative;
+
+      &:hover {
+        transform: translateY(-5px);
       }
-    }
 
-    .cards {
-      display: flex;
-
-      .card {
-        margin-right: 15px;
-        margin-top: 0.5rem;
-        padding: 13px;
-        max-width: 222px;
-        width: 14rem;
-        height: 19rem;
-        display: inline-block;
+      .wishlist {
+        position: absolute;
+        top: .85rem;
+        right: .85rem;
+        background-color: #fff;
+        border-radius: 50%;
+        padding: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform .25s ease-in-out;
         cursor: pointer;
 
+        i {
+          color: #3f3e3e;
+          font-size: 1.25rem;
+        }
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+
+      .image {
+        padding: 7.5px;
+        border-bottom: .5px solid #b9b8b879;
+
+        img {
+          width: 100%;
+          height: 10rem;
+          object-fit: cover;
+          border-radius: 5px 5px 0 0;
+        }
+      }
+
+      .content {
+        padding: 10px;
+
+        .rate {
+          font-size: 18px;
+          font-weight: bold;
+          color: #000;
+          margin-bottom: 5px;
+        }
+
+        .kilometer {
+          font-size: 14px;
+          color: #555;
+          margin-bottom: 5px;
+        }
+
+        .name {
+          font-size: 16px;
+          color: #333;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .place-date {
+        padding: 10px;
+        border-top: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #777;
+
+        .place {
+          flex: 1;
+        }
+
+        .date {
+          flex: 0;
+        }
+      }
+    }
+  }
+}
+
+
+// MEDIA-QUERIES RESPONSIVENESS
+@media screen and (max-width:1024px) {
+  .Posts {
+    .cards {
+      .card {
         .image {
           img {
-            width: 10rem; //Temp
-            height: 10rem; //Temp
+            height: 12.5rem;
           }
         }
       }
@@ -35,20 +124,32 @@
   }
 }
 
+// .card:nth-child(7) {
+//   background-color: #0057ff;
+//   color: #fff;
+//   text-align: center;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   border: none;
+//   border-radius: 5px;
 
-// MEDIA-QUERIRES RESPONSIVENESS
-@media only screen and (max-width: 700px) {
-  .postParentDiv {
-    .recommendations {
-      margin: 8px;
+//   p {
+//     font-size: 14px;
+//   }
 
-      .cards {
-        flex-wrap: wrap;
+//   button {
+//     background-color: #fff;
+//     color: #0057ff;
+//     border: none;
+//     padding: 10px 15px;
+//     border-radius: 3px;
+//     font-weight: bold;
+//     cursor: pointer;
+//     margin-top: 10px;
 
-        .card {
-          width: 80%;
-        }
-      }
-    }
-  }
-}
+//     &:hover {
+//       background-color: #f1f1f1;
+//     }
+//   }
+// }

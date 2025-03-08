@@ -38,6 +38,7 @@
 }
 .Categories .icons li:hover {
   background-color: lightblue;
+  outline: 1px solid rgb(59, 145, 179);
 }
 .Categories .icons li img {
   max-width: 2rem;

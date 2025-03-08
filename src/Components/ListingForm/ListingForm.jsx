@@ -41,10 +41,7 @@ function ListingForm() {
         category: catgry || null
     })
     const [sellerInfo, setSellerInfo] = useState({
-        name: user?.displayName || null,
-        email: user?.email || null,
-        photo: user?.photoURL || null,
-        userId: user?.uid,
+        photo: user?.photoURL,
         state: '',
         district: '',
         neighbourhood: ''
@@ -157,6 +154,11 @@ function ListingForm() {
             setLoad(false)
             return
         }
+        if (!sellerInfo.photo && !user?.photoURL) {
+            alert("Please upload the owners photo")
+            setLoad(false)
+            return
+        }
 
         try {
             const productCollRef = collection(db, "products")
@@ -177,7 +179,13 @@ function ListingForm() {
                 ...productInfo,
                 imgURLs,
                 coverImgURL,
-                sellerInfo: { ...sellerInfo, photo: sellerPhotoURL },
+                sellerInfo: {
+                    ...sellerInfo,
+                    photo: sellerPhotoURL,
+                    name: user?.displayName,
+                    userId: user?.uid,
+                    email: user?.email
+                },
                 state: sellerInfo.state,
                 district: sellerInfo.district,
                 neighbourhood: sellerInfo.neighbourhood,
@@ -209,7 +217,8 @@ function ListingForm() {
                 <h3>INCLUDE SOME DETAILS</h3>
 
                 <form onSubmit={handleFormSubmit}>
-                    <DynamicFields fields={fields} onChange={handleProductInfoChange} />
+                    {fields.length > 0 &&
+                        <DynamicFields fields={fields} onChange={handleProductInfoChange} />}
 
                     <div className="input-section">
                         <div className="input-field">
@@ -309,7 +318,7 @@ function ListingForm() {
                                     style={{ display: 'none' }}
                                     onChange={(e) => setSellerInfo({ ...sellerInfo, photo: e.target.files[0] })} />
 
-                                <img src={sellerInfo.photo instanceof File ? URL.createObjectURL(sellerInfo?.photo) : sellerInfo.photo || "https://img.icons8.com/?size=100&id=65342&format=png&color=000000"} onClick={() => profileInputRef.current?.click()} alt="" />
+                                <img src={sellerInfo.photo instanceof File ? URL.createObjectURL(sellerInfo?.photo) : sellerInfo?.photo || user?.photoURL || "https://img.icons8.com/?size=100&id=65342&format=png&color=000000"} onClick={() => profileInputRef.current?.click()} alt="" />
 
                                 <div className="name-input input-field">
                                     <label htmlFor="">Name</label>
