@@ -1,57 +1,221 @@
-.viewParentDiv {
-  padding-top: 4em;
+.ViewItem {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding: 5rem 2rem 2rem;
+  min-height: 100vh;
+  background: rgba(235, 238, 239, 1);
+  color: rgb(36, 34, 34);
 
-  .imageShowDiv {
+  .imageSection {
+    width: 100%;
+    height: 70vh;
+    padding: 0 3rem;
+    background-color: black;
     display: flex;
-    align-items: center;
     justify-content: center;
-    padding: 16px;
-    width: 70vw;
 
     img {
-      margin-top: 3rem;
-      width: 27.5rem;
-      height: 27.5rem;
+      object-fit: contain;
     }
   }
 
-  .rightSection {
-    padding: 16px;
-    margin-top: 1rem;
-    margin-right: 2rem;
-    width: 30vw;
+  .productInfos {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+    border-radius: 5px;
 
-    .productDetails {
-      border: 1px solid black;
-      padding: 6px;
-      border-radius: 6px;
-      margin-bottom: 2em;
-      width: 100%;
+    .details,
+    .price {
+      background-color: white;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: .5rem;
+      border-radius: 5px;
+    }
 
-      :first-child {
-        font-weight: 700;
-        margin-bottom: 8px;
-        color: #002f34;
-        font-size: 34px;
-        line-height: 32px;
-        margin-bottom: 20px;
+    .details {
+      position: relative;
+
+      img {
+        height: 2rem;
+        width: fit-content;
+        object-fit: contain;
+        border-radius: 5px;
+        outline: 2px solid rgba(0, 0, 0, 0.274);
+      }
+
+      h3 {
+        font-weight: normal;
+      }
+
+      .features {
+        display: flex;
+        align-items: center;
+        color: #6e7b7c;
+
+        h4 {
+          margin-right: 1rem;
+          font-size: 1.25rem;
+        }
+
+        i {
+          margin-right: .5rem;
+        }
+      }
+
+      #date-place {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
       }
     }
 
-    .contactDetails {
-      border: 1px solid black;
-      padding: 6px;
-      border-radius: 6px;
+    .price {
+      flex-grow: 1;
+      color: #033136;
 
-      :first-child {
-        font-size: 20px;
-        line-height: 24px;
-        font-weight: 400;
-        color: #002f34;
-        padding: 0;
+      p {
+        color: black;
+        font-weight: 500;
+      }
+
+      button {
+        padding: .75rem 1rem;
+        background-color: #002f34;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        border: .3rem solid #002f34;
+
+        &:hover {
+          background-color: white;
+          color: black;
+        }
+      }
+    }
+  }
+
+  .otherDetails {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+
+    .overview,
+    .description,
+    .sellerDetails {
+      background-color: white;
+      border-radius: 5px;
+    }
+
+    .overview {
+      h3 {
+        width: 100%;
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.37);
+      }
+
+      .items {
+        display: flex;
+        justify-content: space-around;
+        padding: 2rem;
+        gap: .5rem;
+
+        .item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          i {
+            font-size: 1.75rem;
+          }
+
+          p {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            span {
+              font-weight: bolder;
+              font-size: 1.5rem;
+            }
+          }
+        }
+      }
+    }
+
+    .sellerDetails {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.5rem;
+
+      .name-photo {
+        width: 100%;
+        display: flex;
+        gap: 2rem;
+        flex-direction: row;
+        align-items: center;
+        margin-left: 2rem;
+
+        img {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 50%;
+          border: 1px solid skyblue;
+          object-fit: cover;
+        }
+      }
+
+      .phone {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+
+        h4 {
+          cursor: pointer;
+          text-decoration: underline;
+
+          &:hover {
+            color: rgba(56, 54, 54, 0.733);
+          }
+        }
+      }
+
+      button {
+        width: 100%;
+        padding: .75rem 1rem;
+        background-color: white;
+        color: black;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        border: .3rem double #002f34;
+
+        &:hover {
+          border: .3rem solid #002f34;
+        }
+      }
+    }
+
+    .description {
+      grid-column: 1/3;
+
+      h3 {
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.37);
+      }
+
+      p {
+        padding: 2rem;
       }
     }
   }

@@ -1,51 +1,190 @@
-.viewParentDiv {
-  padding-top: 4em;
+.ViewItem {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.viewParentDiv .imageShowDiv {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  width: 70vw;
-}
-.viewParentDiv .imageShowDiv img {
-  margin-top: 3rem;
-  width: 27.5rem;
-  height: 27.5rem;
-}
-.viewParentDiv .rightSection {
-  padding: 16px;
-  margin-top: 1rem;
-  margin-right: 2rem;
-  width: 30vw;
-}
-.viewParentDiv .rightSection .productDetails {
-  border: 1px solid black;
-  padding: 6px;
-  border-radius: 6px;
-  margin-bottom: 2em;
+  flex-direction: column;
+  gap: 1rem;
   width: 100%;
+  padding: 5rem 2rem 2rem;
+  min-height: 100vh;
+  background: rgb(235, 238, 239);
+  color: rgb(36, 34, 34);
 }
-.viewParentDiv .rightSection .productDetails :first-child {
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: #002f34;
-  font-size: 34px;
-  line-height: 32px;
-  margin-bottom: 20px;
+.ViewItem .imageSection {
+  width: 100%;
+  height: 70vh;
+  padding: 0 3rem;
+  background-color: black;
+  display: flex;
+  justify-content: center;
 }
-.viewParentDiv .rightSection .contactDetails {
-  border: 1px solid black;
-  padding: 6px;
-  border-radius: 6px;
+.ViewItem .imageSection img {
+  -o-object-fit: contain;
+     object-fit: contain;
 }
-.viewParentDiv .rightSection .contactDetails :first-child {
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 400;
-  color: #002f34;
-  padding: 0;
+.ViewItem .productInfos {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  border-radius: 5px;
+}
+.ViewItem .productInfos .details,
+.ViewItem .productInfos .price {
+  background-color: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-radius: 5px;
+}
+.ViewItem .productInfos .details {
+  position: relative;
+}
+.ViewItem .productInfos .details img {
+  height: 2rem;
+  width: -moz-fit-content;
+  width: fit-content;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 5px;
+  outline: 2px solid rgba(0, 0, 0, 0.274);
+}
+.ViewItem .productInfos .details h3 {
+  font-weight: normal;
+}
+.ViewItem .productInfos .details .features {
+  display: flex;
+  align-items: center;
+  color: #6e7b7c;
+}
+.ViewItem .productInfos .details .features h4 {
+  margin-right: 1rem;
+  font-size: 1.25rem;
+}
+.ViewItem .productInfos .details .features i {
+  margin-right: 0.5rem;
+}
+.ViewItem .productInfos .details #date-place {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+}
+.ViewItem .productInfos .price {
+  flex-grow: 1;
+  color: #033136;
+}
+.ViewItem .productInfos .price p {
+  color: black;
+  font-weight: 500;
+}
+.ViewItem .productInfos .price button {
+  padding: 0.75rem 1rem;
+  background-color: #002f34;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 0.3rem solid #002f34;
+}
+.ViewItem .productInfos .price button:hover {
+  background-color: white;
+  color: black;
+}
+.ViewItem .otherDetails {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+}
+.ViewItem .otherDetails .overview,
+.ViewItem .otherDetails .description,
+.ViewItem .otherDetails .sellerDetails {
+  background-color: white;
+  border-radius: 5px;
+}
+.ViewItem .otherDetails .overview h3 {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.37);
+}
+.ViewItem .otherDetails .overview .items {
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+  gap: 0.5rem;
+}
+.ViewItem .otherDetails .overview .items .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ViewItem .otherDetails .overview .items .item i {
+  font-size: 1.75rem;
+}
+.ViewItem .otherDetails .overview .items .item p {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ViewItem .otherDetails .overview .items .item p span {
+  font-weight: bolder;
+  font-size: 1.5rem;
+}
+.ViewItem .otherDetails .sellerDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+.ViewItem .otherDetails .sellerDetails .name-photo {
+  width: 100%;
+  display: flex;
+  gap: 2rem;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 2rem;
+}
+.ViewItem .otherDetails .sellerDetails .name-photo img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 1px solid skyblue;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.ViewItem .otherDetails .sellerDetails .phone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.ViewItem .otherDetails .sellerDetails .phone h4 {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.ViewItem .otherDetails .sellerDetails .phone h4:hover {
+  color: rgba(56, 54, 54, 0.733);
+}
+.ViewItem .otherDetails .sellerDetails button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 0.3rem double #002f34;
+}
+.ViewItem .otherDetails .sellerDetails button:hover {
+  border: 0.3rem solid #002f34;
+}
+.ViewItem .otherDetails .description {
+  grid-column: 1/3;
+}
+.ViewItem .otherDetails .description h3 {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.37);
+}
+.ViewItem .otherDetails .description p {
+  padding: 2rem;
 }/*# sourceMappingURL=ViewItem.css.map */

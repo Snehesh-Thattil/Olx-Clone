@@ -41,10 +41,14 @@ function ListingForm() {
         category: catgry || null
     })
     const [sellerInfo, setSellerInfo] = useState({
+        name: user?.displayName,
+        userId: user?.uid,
+        email: user?.email,
         photo: user?.photoURL,
         state: '',
         district: '',
-        neighbourhood: ''
+        neighbourhood: '',
+        coords: {}
     })
 
     const profileInputRef = useRef()
@@ -100,7 +104,13 @@ function ListingForm() {
                         const district = await addressComponents?.find((comp) => comp.types.includes("administrative_area_level_3"))?.long_name
                         const neighbourhood = await addressComponents?.find((comp) => comp.types.includes("sublocality") || comp.types.includes("neighborhood") || comp.types.includes("locality"))?.long_name
 
-                        setSellerInfo({ state: state, district: district, neighbourhood: neighbourhood })
+                        setSellerInfo((prev) => ({
+                            ...prev,
+                            state: state,
+                            district: district,
+                            neighbourhood: neighbourhood,
+                            coords: { latitude, longitude }
+                        }))
                     }
                     catch (err) {
                         console.error('Error fetching location:', err.message);
@@ -181,10 +191,7 @@ function ListingForm() {
                 coverImgURL,
                 sellerInfo: {
                     ...sellerInfo,
-                    photo: sellerPhotoURL,
-                    name: user?.displayName,
-                    userId: user?.uid,
-                    email: user?.email
+                    photo: sellerPhotoURL
                 },
                 state: sellerInfo.state,
                 district: sellerInfo.district,
