@@ -3,6 +3,25 @@
   background: rgba(235, 238, 239, 1);
   padding: 1.5rem;
 
+  &.related-items {
+    margin-top: 0;
+    padding: 1rem;
+
+    .cards {
+      padding: .5rem;
+      display: flex;
+      overflow: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .card {
+        min-width: 17.5rem;
+      }
+    }
+  }
+
   .heading {
     font-size: 22px;
     font-weight: bold;

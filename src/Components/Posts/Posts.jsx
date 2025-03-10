@@ -1,11 +1,11 @@
 import './Posts.css'
 import React, { useCallback, useContext, useEffect } from 'react'
-import { PostContext } from '../../Store/productContext'
+import { productsContext } from '../../Store/productContext'
 import { collection, getDocs, getFirestore } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 
 function Posts() {
-  const { products, setProducts } = useContext(PostContext)
+  const { products, setProducts } = useContext(productsContext)
   const navigate = useNavigate()
   const db = getFirestore()
 
@@ -31,6 +31,7 @@ function Posts() {
     fetchProducts()
   }, [db, setProducts])
 
+  // Format the date of product listing
   const formatDate = useCallback((createdAt) => {
     const createdDate = new Date(createdAt.seconds * 1000).toLocaleDateString()
     const today = new Date().toLocaleDateString()

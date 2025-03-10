@@ -3,6 +3,21 @@
   background: rgb(235, 238, 239);
   padding: 1.5rem;
 }
+.Posts.related-items {
+  margin-top: 0;
+  padding: 1rem;
+}
+.Posts.related-items .cards {
+  padding: 0.5rem;
+  display: flex;
+  overflow: scroll;
+}
+.Posts.related-items .cards::-webkit-scrollbar {
+  display: none;
+}
+.Posts.related-items .cards .card {
+  min-width: 17.5rem;
+}
 .Posts .heading {
   font-size: 22px;
   font-weight: bold;

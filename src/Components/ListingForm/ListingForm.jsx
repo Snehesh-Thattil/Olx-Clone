@@ -99,6 +99,7 @@ function ListingForm() {
 
                         const { data } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`)
                         const addressComponents = data.results[0].address_components
+                        const formattedAddress = data.results[0].formatted_address
 
                         const state = await addressComponents?.find((comp) => comp.types.includes("administrative_area_level_1"))?.long_name
                         const district = await addressComponents?.find((comp) => comp.types.includes("administrative_area_level_3"))?.long_name
@@ -106,10 +107,11 @@ function ListingForm() {
 
                         setSellerInfo((prev) => ({
                             ...prev,
+                            formattedAddress,
                             state: state,
                             district: district,
                             neighbourhood: neighbourhood,
-                            coords: { latitude, longitude }
+                            coords: { latitude, longitude },
                         }))
                     }
                     catch (err) {

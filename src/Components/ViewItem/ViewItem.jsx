@@ -1,24 +1,29 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './ViewItem.css';
 import { useLocation } from 'react-router-dom';
 import VerifiedUserTag from '../../Assets/Images/verified-user-icon.png'
 import featuredIconTag from '../../Assets/Images/FeaturedIconTag.png'
-import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+import { productsContext } from '../../Store/productContext';
+import RelatedItems from './SubComponents/RelatedItems';
 
 function ViewItem() {
-  const location = useLocation()
-  const { product, formatDate } = location?.state || null
   const [showInfo, setShowInfo] = useState(false)
+  const [relatedItems, setRelatedItems] = useState([])
+  const location = useLocation()
+  const { products } = useContext(productsContext)
+  const { product, formatDate } = location?.state || null
+  const { latitude, longitude } = product.sellerInfo?.coords
   const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
-  const sellerLocation = product.sellerInfo.coords
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: GOOGLE_API_KEY,
-    libraries: ['marker']
-  })
-
   console.log(product)
+
+  // Finding similar products to display
+  useEffect(() => {
+    const result = products?.filter((item) => item.category === product.category && item.subcategory === product.subcategory)
+      .filter((item) => item.id !== product.id)
+      .slice(0, 10)
+    setRelatedItems(result)
+  }, [product, products])
 
   // JSX
   return (
@@ -37,21 +42,27 @@ function ViewItem() {
             <h3>{product.Variant}</h3>
 
             <div className="features">
-              <i className="fa-solid fa-gas-pump"></i>
-              <h4>{product.Fuel} </h4>
+              <div className="feature">
+                <i className="fa-solid fa-gas-pump"></i>
+                <h4>{product.Fuel} </h4>
+              </div>
 
-              <i className="fa-solid fa-gauge-simple-high"></i>
-              <h4>{product['KM driven']} KM</h4>
+              <div className="feature">
+                <i className="fa-solid fa-gauge-simple-high"></i>
+                <h4>{product['KM driven']} KM</h4>
+              </div>
 
-              <i className="fa-solid fa-gears"></i>
-              <h4>{product.Transmition}</h4>
+              <div className="feature">
+                <i className="fa-solid fa-gears"></i>
+                <h4>{product.Transmition}</h4>
+              </div>
+
             </div>
           </div>
           :
           <div className='details'>
             {product.sellerInfo?.userVerified ? <img src={VerifiedUserTag} alt="loadimage" /> : <img src={featuredIconTag} alt='loadimage' />}
             <h1>{product['ad-title']}</h1>
-            <h4 id='date-place'> {product.neighbourhood}, {product.district} {product.state} <span>{formatDate}</span></h4>
           </div>}
 
         <div className="price">
@@ -72,7 +83,7 @@ function ViewItem() {
             </div>
             <div className='item'>
               <i className="fa-solid fa-location-dot"></i>
-              <p>Location<span>{product.district}, {product.state}</span></p>
+              <p>Location<span>{product.neighbourhood}, {product.district}, {product.state}</span></p>
             </div>
             <div className='item'>
               <i className="fa-solid fa-calendar"></i>
@@ -96,7 +107,7 @@ function ViewItem() {
                 <p>{product.sellerInfo.phone ? (showInfo ? product.sellerInfo.phone : '**********') : ""}</p>
                 <p>{product.sellerInfo.email ? (showInfo ? product.sellerInfo.email : '**********') : ""}</p>
               </div>
-              <h4 onClick={() => setShowInfo(true)}>show number</h4>
+              <h4 onClick={() => setShowInfo(true)}>{!showInfo && "show number"}</h4>
             </div>
           </div>
         }
@@ -105,21 +116,17 @@ function ViewItem() {
           <h3>Description</h3>
           <p>{product.description}</p>
         </div>
-        <div></div>
-        <div className="map">
-          {isLoaded && <GoogleMap
-            center={sellerLocation}
-            zoom={15}
-            mapContainerStyle={{ width: '100%', height: '300px', borderRadius: '10px' }}
-            onLoad={(map) => {
-              const { AdvancedMarkerElement } = window.google.maps.marker
-              new AdvancedMarkerElement({
-                map,
-                position: sellerLocation,
-                title: 'Sellers Location'
-              })
-            }}
-          />}
+
+        {relatedItems?.length > 0 && <RelatedItems products={relatedItems} />}
+
+        <div className='map'>
+          <iframe
+            title="Seller Location Map"
+            width="100%"
+            height="300"
+            src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_API_KEY}&q=${latitude},${longitude}`}
+            allowFullScreen>
+          </iframe>
         </div>
 
       </div>
