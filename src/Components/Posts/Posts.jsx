@@ -1,13 +1,15 @@
 import './Posts.css'
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { productsContext } from '../../Store/productContext'
 import { collection, getDocs, getFirestore } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
+import useDateFormat from '../../Hooks/useDateFormat'
 
 function Posts() {
   const { products, setProducts } = useContext(productsContext)
   const navigate = useNavigate()
   const db = getFirestore()
+  const { formatDate } = useDateFormat()
 
   // Fetching products from Firebase
   useEffect(() => {
@@ -31,25 +33,6 @@ function Posts() {
     fetchProducts()
   }, [db, setProducts])
 
-  // Format the date of product listing
-  const formatDate = useCallback((createdAt) => {
-    const createdDate = new Date(createdAt.seconds * 1000).toLocaleDateString()
-    const today = new Date().toLocaleDateString()
-    const findYesterday = new Date()
-    findYesterday.setDate(findYesterday.getDate() - 1)
-    const yesterday = findYesterday.toLocaleDateString()
-
-    if (createdDate === today) {
-      return "Today"
-    }
-    else if (createdDate === yesterday) {
-      return "Yesterday"
-    }
-    else {
-      return createdDate
-    }
-  }, [])
-
   // JSX
   return (
     <div className="Posts">
@@ -64,12 +47,10 @@ function Posts() {
           .map((product, index) => {
             return (
               <div className="card" key={index} onClick={() => {
-                navigate('/view', { state: { product, formatDate: formatDate(product.createdAt) } })
+                navigate('/view', { state: { product } })
               }}>
 
-                <div className="wishlist" onClick={(e) => e.stopPropagation()}>
-                  <i className="fa-regular fa-heart"></i>
-                </div>
+                <i className="fa-solid fa-heart" onClick={(e) => e.stopPropagation()}></i>
 
                 <div className="image">
                   <img src={product.coverImgURL} alt="product-image" />
@@ -77,9 +58,9 @@ function Posts() {
 
                 <div className="content">
                   <h2 className="rate">&#x20B9; {product.price}</h2>
-                  {['Car', 'Scooters', 'Motorcycles', 'Commercial & Other Vehicles']
+                  {['Cars', 'Scooters', 'Motorcycles', 'Commercial & Other Vehicles']
                     .includes(product.category) ?
-                    <span className="kilometer">{product.Year} - {product["KM driven"]}km</span> : ""}
+                    <p className="kilometer">{product.Year} - {product["KM driven"]}km</p> : ""}
                   <p className="name"> {product['ad-title']}</p>
                 </div>
 

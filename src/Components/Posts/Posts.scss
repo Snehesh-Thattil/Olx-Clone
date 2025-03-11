@@ -41,32 +41,26 @@
       transition: transform 0.3s;
       cursor: pointer;
       position: relative;
+      display: flex;
+      flex-direction: column;
 
       &:hover {
         transform: translateY(-5px);
       }
 
-      .wishlist {
+      i {
         position: absolute;
         top: .85rem;
         right: .85rem;
-        background-color: #fff;
-        border-radius: 50%;
-        padding: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
         transition: transform .25s ease-in-out;
         cursor: pointer;
-
-        i {
-          color: #3f3e3e;
-          font-size: 1.25rem;
-        }
+        color: rgb(189, 175, 175);
+        text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+        font-size: 1.25rem;
 
         &:hover {
           transform: scale(1.2);
+          color: rgb(158, 141, 141);
         }
       }
 
@@ -83,6 +77,7 @@
       }
 
       .content {
+        flex-grow: 1;
         padding: 10px;
 
         .rate {
@@ -142,33 +137,3 @@
     }
   }
 }
-
-// .card:nth-child(7) {
-//   background-color: #0057ff;
-//   color: #fff;
-//   text-align: center;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   border: none;
-//   border-radius: 5px;
-
-//   p {
-//     font-size: 14px;
-//   }
-
-//   button {
-//     background-color: #fff;
-//     color: #0057ff;
-//     border: none;
-//     padding: 10px 15px;
-//     border-radius: 3px;
-//     font-weight: bold;
-//     cursor: pointer;
-//     margin-top: 10px;
-
-//     &:hover {
-//       background-color: #f1f1f1;
-//     }
-//   }
-// }

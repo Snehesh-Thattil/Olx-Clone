@@ -98,15 +98,17 @@
 
     .right-section {
         display: flex;
-        gap: 1.5rem;
+        gap: 1.25rem;
         align-items: center;
         justify-content: space-between;
 
         .language {
             display: flex;
             align-items: center;
+            justify-content: center;
             position: relative;
             cursor: pointer;
+            width: 7rem;
 
             span {
                 font-size: 15px;
@@ -343,8 +345,6 @@
 
         &.active {
             .logo {
-                position: fixed;
-
                 .fa-bars {
                     transform: rotate(90deg) scale(1.2);
                     background-color: #002b309d;

@@ -5,15 +5,21 @@ import VerifiedUserTag from '../../Assets/Images/verified-user-icon.png'
 import featuredIconTag from '../../Assets/Images/FeaturedIconTag.png'
 import { productsContext } from '../../Store/productContext';
 import RelatedItems from './SubComponents/RelatedItems';
+import useDateFormat from '../../Hooks/useDateFormat';
 
 function ViewItem() {
   const [showInfo, setShowInfo] = useState(false)
+  const [currentImgIndex, SetCurrentImgIndex] = useState(0)
   const [relatedItems, setRelatedItems] = useState([])
-  const location = useLocation()
   const { products } = useContext(productsContext)
-  const { product, formatDate } = location?.state || null
+
+  const { formatDate } = useDateFormat()
+
+  const location = useLocation()
+  const { product } = location?.state || null
   const { latitude, longitude } = product.sellerInfo?.coords
   const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+  const images = [product.coverImgURL, ...product.imgURLs]
 
   console.log(product)
 
@@ -25,11 +31,43 @@ function ViewItem() {
     setRelatedItems(result)
   }, [product, products])
 
+  // Image slide buttons action
+  const handleNext = () => {
+    SetCurrentImgIndex((prev) => prev === images.length - 1 ? 0 : prev + 1)
+  }
+  const handlePrev = () => {
+    SetCurrentImgIndex((prev) => prev === 0 ? images.length - 1 : prev - 1)
+  }
+
+  // Share button to share page
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          url: window.location.href,
+          text: 'Check out this page!'
+        })
+      }
+      catch (err) {
+        console.error('Error sharing', err);
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href)
+      alert('Link copied to clipboard')
+    }
+  }
+
   // JSX
   return (
     <div className="ViewItem" >
+
       <div className="imageSection">
-        <img src={product?.coverImgURL} alt="coverimage" />
+        <button className='prev' onClick={handlePrev} ><i className="fa-solid fa-chevron-left"></i></button>
+        <button className='next' onClick={handleNext}><i className="fa-solid fa-chevron-right"></i></button>
+        <img src={images[currentImgIndex]} alt="product-photo" />
+        <button className='share' onClick={handleShare}><i className="fa-solid fa-share-nodes"></i></button>
+        <button className="wishlist"><i className="fa-solid fa-heart"></i></button>
       </div>
 
       <div className="productInfos">
@@ -38,13 +76,14 @@ function ViewItem() {
           .includes(product.category) ?
           <div className="details">
             {product.sellerInfo?.userVerified ? <img src={VerifiedUserTag} alt="loadimage" /> : <img src={featuredIconTag} alt='loadimage' />}
-            <h1>{product.Brand} {product.Model} ({product.Year})</h1>
-            <h3>{product.Variant}</h3>
+            <h1>{product?.Brand} {product?.Model} ({product?.Year})</h1>
+            <h3>{product?.Variant || product?.Type}</h3>
+            <h2>{product['ad-title']}</h2>
 
             <div className="features">
               <div className="feature">
                 <i className="fa-solid fa-gas-pump"></i>
-                <h4>{product.Fuel} </h4>
+                <h4>{product?.Fuel} </h4>
               </div>
 
               <div className="feature">
@@ -54,7 +93,7 @@ function ViewItem() {
 
               <div className="feature">
                 <i className="fa-solid fa-gears"></i>
-                <h4>{product.Transmition}</h4>
+                <h4>{product?.Transmition}</h4>
               </div>
 
             </div>
@@ -62,7 +101,8 @@ function ViewItem() {
           :
           <div className='details'>
             {product.sellerInfo?.userVerified ? <img src={VerifiedUserTag} alt="loadimage" /> : <img src={featuredIconTag} alt='loadimage' />}
-            <h1>{product['ad-title']}</h1>
+            <h1>{product?.Brand}</h1>
+            <h2>{product['ad-title']}</h2>
           </div>}
 
         <div className="price">
@@ -87,7 +127,7 @@ function ViewItem() {
             </div>
             <div className='item'>
               <i className="fa-solid fa-calendar"></i>
-              <p>Posting date<span>{formatDate}</span></p>
+              <p>Posting date<span>{formatDate(product.createdAt)}</span></p>
             </div>
           </div>
         </div>
@@ -119,7 +159,7 @@ function ViewItem() {
 
         {relatedItems?.length > 0 && <RelatedItems products={relatedItems} />}
 
-        <div className='map'>
+        <div className='mapView'>
           <iframe
             title="Seller Location Map"
             width="100%"

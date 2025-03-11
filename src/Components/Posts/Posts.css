@@ -36,30 +36,25 @@
   transition: transform 0.3s;
   cursor: pointer;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .Posts .cards .card:hover {
   transform: translateY(-5px);
 }
-.Posts .cards .card .wishlist {
+.Posts .cards .card i {
   position: absolute;
   top: 0.85rem;
   right: 0.85rem;
-  background-color: #fff;
-  border-radius: 50%;
-  padding: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: transform 0.25s ease-in-out;
   cursor: pointer;
-}
-.Posts .cards .card .wishlist i {
-  color: #3f3e3e;
+  color: rgb(189, 175, 175);
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
   font-size: 1.25rem;
 }
-.Posts .cards .card .wishlist:hover {
+.Posts .cards .card i:hover {
   transform: scale(1.2);
+  color: rgb(158, 141, 141);
 }
 .Posts .cards .card .image {
   padding: 7.5px;
@@ -73,6 +68,7 @@
   border-radius: 5px 5px 0 0;
 }
 .Posts .cards .card .content {
+  flex-grow: 1;
   padding: 10px;
 }
 .Posts .cards .card .content .rate {

@@ -1,28 +1,11 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../../Posts/Posts.css'
+import useDateFormat from '../../../Hooks/useDateFormat'
 
 function RelatedItems({ products }) {
     const navigate = useNavigate()
-
-    // Format the date of product listing
-    const formatDate = useCallback((createdAt) => {
-        const createdDate = new Date(createdAt.seconds * 1000).toLocaleDateString()
-        const today = new Date().toLocaleDateString()
-        const findYesterday = new Date()
-        findYesterday.setDate(findYesterday.getDate() - 1)
-        const yesterday = findYesterday.toLocaleDateString()
-
-        if (createdDate === today) {
-            return "Today"
-        }
-        else if (createdDate === yesterday) {
-            return "Yesterday"
-        }
-        else {
-            return createdDate
-        }
-    }, [])
+    const { formatDate } = useDateFormat()
 
     // JSX
     return (
@@ -34,7 +17,7 @@ function RelatedItems({ products }) {
                 {products?.map((product, index) => {
                     return (
                         <div className="card" key={index} onClick={() => {
-                            navigate('/view', { state: { product, formatDate: formatDate(product.createdAt) } })
+                            navigate('/view', { state: { product } })
                             window.scrollTo({
                                 top: 0,
                                 behavior: 'smooth'
