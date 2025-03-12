@@ -1,56 +1,35 @@
 import './Posts.css'
-import React, { useContext, useEffect } from 'react'
-import { productsContext } from '../../Store/productContext'
-import { collection, getDocs, getFirestore } from 'firebase/firestore'
+import React, { useContext } from 'react'
+import { ProductsContext } from '../../Store/productContext'
 import { useNavigate } from 'react-router-dom'
 import useDateFormat from '../../Hooks/useDateFormat'
 
-function Posts() {
-  const { products, setProducts } = useContext(productsContext)
+function Posts({ MyAdsList }) {
+  const { products } = useContext(ProductsContext)
   const navigate = useNavigate()
-  const db = getFirestore()
   const { formatDate } = useDateFormat()
 
-  // Fetching products from Firebase
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const productsCollRef = collection(db, 'products')
-
-      try {
-        const snapshot = await getDocs(productsCollRef)
-        const allProducts = snapshot.docs.map((product) => {
-          return {
-            ...product.data(),
-            id: product.id
-          }
-        })
-        setProducts(allProducts)
-      }
-      catch (err) {
-        console.error("Error fetching products", err.message)
-      }
-    }
-    fetchProducts()
-  }, [db, setProducts])
+  // Determine what products to show
+  const showProducts = MyAdsList && MyAdsList.length > 0 ? MyAdsList : MyAdsList ? [] : products
 
   // JSX
   return (
     <div className="Posts">
 
       <div className="heading">
-        <span>Fresh recommendations</span>
+        <span>{MyAdsList ? 'My Ad Listings' : 'Fresh recommendations'}</span>
       </div>
 
       <div className="cards">
 
-        {products?.sort((a, b) => new Date(b.createdAt.seconds) - new Date(a.createdAt.seconds))
+        {showProducts?.sort((a, b) => new Date(b.createdAt.seconds) - new Date(a.createdAt.seconds))
           .map((product, index) => {
             return (
               <div className="card" key={index} onClick={() => {
                 navigate('/view', { state: { product } })
               }}>
 
-                <i className="fa-solid fa-heart" onClick={(e) => e.stopPropagation()}></i>
+                {!MyAdsList && <i className="fa-solid fa-heart" onClick={(e) => e.stopPropagation()}></i>}
 
                 <div className="image">
                   <img src={product.coverImgURL} alt="product-image" />

@@ -136,7 +136,7 @@ function Header() {
           {user && <ProfileOptions />}
         </div>
 
-        <div className="sellButton" onClick={() => handleVerifyUser('/create')}>
+        <div className="sellButton" onClick={() => handleVerifyUser('/post-ads-list')}>
           <img src={SellBotton} alt="" />
         </div>
 

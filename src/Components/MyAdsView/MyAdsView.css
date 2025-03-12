@@ -1,0 +1,27 @@
+.MyAdsView {
+  padding: 5rem 2rem 1rem;
+  width: 100%;
+  background-color: rgb(208, 214, 216);
+}
+.MyAdsView .cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.MyAdsView .cards .card {
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+.MyAdsView .cards .card img {
+  width: 30%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .MyAdsView {
+    padding: 9rem 2rem 1rem;
+  }
+}/*# sourceMappingURL=MyAdsView.css.map */

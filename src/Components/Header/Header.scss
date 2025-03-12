@@ -149,11 +149,13 @@
                     padding: 1rem;
                     cursor: pointer;
                     background-color: white;
+                    color: #002b30;
                     font-size: 15px;
-                    font-weight: 500;
+                    font-weight: 600;
 
                     &:hover {
                         background-color: rgba(211, 205, 205, 0.795);
+                        color: #014b53;
                     }
                 }
 
@@ -174,9 +176,14 @@
         i {
             cursor: pointer;
             padding: 10px;
+            border-radius: 50%;
+
+            &:hover {
+                background-color: rgba(189, 222, 235, 0.89);
+            }
 
             &:active {
-                background-color: #6f9ca146;
+                background-color: #12a1b1;
                 border-radius: 50%;
             }
         }
@@ -223,6 +230,7 @@
 
                     &:hover {
                         background-color: rgba(211, 205, 205, 0.795);
+                        color: #014b53;
                     }
                 }
 

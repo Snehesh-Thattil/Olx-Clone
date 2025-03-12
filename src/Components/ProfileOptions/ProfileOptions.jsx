@@ -39,14 +39,14 @@ function ProfileOptions({ mobile, setLoginBox }) {
                 </div>
                 {user ? <button>View and edit profile</button> : <button onClick={() => setLoginBox('Sign-up')}>Sign up now</button>}
             </div>
-            <li><i className="fa-solid fa-address-card"></i>My ADS</li>
+            <li onClick={() => navigate('/my-ads')}><i className="fa-solid fa-address-card"></i>My ADS</li>
             <li><i className="fa-solid fa-file-contract"></i>Buy Business Package</li>
             <li><i className="fa-regular fa-credit-card"></i>Bought Packages & Billing</li>
             {mobile && <li onClick={() => handleVerifyUser('/wishlist')}><i className="fa-regular fa-heart"></i>Wishlist</li>}
             {mobile && <li onClick={() => handleVerifyUser('/chats')}><i className="fa-regular fa-comment-dots"></i>Chats</li>}
             {mobile && <li><i className="fa-regular fa-bell"></i>Notifications</li>}
             <li><i className="fa-solid fa-gear"></i>Settings</li>
-            <li><i className="fa-solid fa-question"></i>Help</li>
+            <li onClick={() => (window.location.href = 'https://help.olx.in/hc/en-us')}><i className="fa-solid fa-question"></i>Help</li>
             <li><i className="fa-solid fa-download"></i>Install OLX Lite app</li>
             <li onClick={() => handleSignOut()}><i className="fa-solid fa-arrow-right-from-bracket"></i>Logout</li>
             {!mobile && <div className="pointer" ></div>}

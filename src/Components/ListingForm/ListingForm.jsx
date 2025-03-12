@@ -8,7 +8,6 @@ import { db, storage } from '../../Firebase/firbase-config'
 import { addDoc, collection, doc, getDoc, serverTimestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import DynamicFields from './SubComponents/DynamicFields'
-import axios from 'axios'
 
 // Map subcategories to form names
 const FORM_NAME_MAP = {
@@ -28,7 +27,6 @@ function ListingForm() {
     const navigate = useNavigate()
     const subcat = location.state?.subcategory || null
     const catgry = location.state?.category || null
-    const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
     const fbFormName = FORM_NAME_MAP[subcat] || null
 
     const { user } = useContext(AuthContext)
@@ -45,10 +43,10 @@ function ListingForm() {
         userId: user?.uid,
         email: user?.email,
         photo: user?.photoURL,
-        state: '',
-        district: '',
-        neighbourhood: '',
-        coords: {}
+        state: user?.state,
+        district: user?.district,
+        neighbourhood: user?.neighbourhood,
+        coords: user?.coords
     })
 
     const profileInputRef = useRef()
@@ -73,8 +71,16 @@ function ListingForm() {
         fetchForm()
     }, [fbFormName])
 
-    // Handle image upload change
-    const handleUploadChange = useCallback((e) => {
+    // Handlers for Image upload delete and input changes
+    const handleLocationChange = (e) => {
+        setSellerInfo({ ...sellerInfo, [e.target.name]: e.target.value })
+    }
+
+    const handleProductInfoChange = (e) => {
+        setProductInfo({ ...productInfo, [e.target.name]: e.target.value })
+    }
+
+    const handleUploadImage = useCallback((e) => {
         const files = Array.from(e.target.files)
 
         if (images.length + files.length > 12) {
@@ -88,49 +94,6 @@ function ListingForm() {
             setCoverImage(files[0])
         }
     }, [images, coverImage])
-
-    // Fetch user's location using geolocation and reverse geocoding
-    useEffect(() => {
-        const fetchUserLocation = () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                    try {
-                        const { latitude, longitude } = position.coords
-
-                        const { data } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`)
-                        const addressComponents = data.results[0].address_components
-                        const formattedAddress = data.results[0].formatted_address
-
-                        const state = await addressComponents?.find((comp) => comp.types.includes("administrative_area_level_1"))?.long_name
-                        const district = await addressComponents?.find((comp) => comp.types.includes("administrative_area_level_3"))?.long_name
-                        const neighbourhood = await addressComponents?.find((comp) => comp.types.includes("sublocality") || comp.types.includes("neighborhood") || comp.types.includes("locality"))?.long_name
-
-                        setSellerInfo((prev) => ({
-                            ...prev,
-                            formattedAddress,
-                            state: state,
-                            district: district,
-                            neighbourhood: neighbourhood,
-                            coords: { latitude, longitude },
-                        }))
-                    }
-                    catch (err) {
-                        console.error('Error fetching location:', err.message);
-                    }
-                })
-            }
-        }
-        fetchUserLocation()
-    }, [GOOGLE_API_KEY])
-
-    // Handlers for input changes
-    const handleLocationChange = (e) => {
-        setSellerInfo({ ...sellerInfo, [e.target.name]: e.target.value })
-    }
-
-    const handleProductInfoChange = (e) => {
-        setProductInfo({ ...productInfo, [e.target.name]: e.target.value })
-    }
 
     const handleDeleteImage = (img) => {
         setImages((prev) => {
@@ -270,7 +233,7 @@ function ListingForm() {
                                     accept='image/*'
                                     ref={imageInputRef}
                                     style={{ display: 'none' }}
-                                    onChange={handleUploadChange}
+                                    onChange={handleUploadImage}
                                     disabled={images.length >= 12} />
 
                                 {images.length < 12 &&

@@ -19,7 +19,7 @@ function PostAdList() {
 
     // JSX
     return (
-        <div className="PostAd">
+        <div className="PostAdList">
             <div className="navigate">
                 <i className="fa-solid fa-arrow-left" onClick={() => navigate('/')}></i>
                 <p>Post Your Ad</p>

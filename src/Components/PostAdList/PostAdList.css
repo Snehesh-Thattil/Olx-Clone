@@ -1,4 +1,4 @@
-.PostAd {
+.PostAdList {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   padding-bottom: 4rem;
   min-height: 100vh;
 }
-.PostAd .navigate {
+.PostAdList .navigate {
   width: 100%;
   height: 5rem;
   display: flex;
@@ -16,19 +16,19 @@
   padding: 2rem;
   background-color: rgba(85, 85, 85, 0.1921568627);
 }
-.PostAd .navigate i {
+.PostAdList .navigate i {
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
 }
-.PostAd .navigate i:hover {
+.PostAdList .navigate i:hover {
   background-color: #c7c3c3;
 }
-.PostAd .navigate p {
+.PostAdList .navigate p {
   margin: 0 1rem;
   font-size: 20px;
 }
-.PostAd .category-box {
+.PostAdList .category-box {
   width: 45%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background: white;
@@ -40,33 +40,33 @@
   display: flex;
   flex-direction: column;
 }
-.PostAd .category-box .category-header {
+.PostAdList .category-box .category-header {
   border-bottom: 1px solid #aca9a9;
   padding-bottom: 8px;
   font-weight: 600;
   color: #333;
 }
-.PostAd .category-box .category-header h2 {
+.PostAdList .category-box .category-header h2 {
   font-weight: bold;
   text-align: center;
   margin-bottom: 10px;
   font-size: 1.5rem;
 }
-.PostAd .category-box .category-header h4 {
+.PostAdList .category-box .category-header h4 {
   font-weight: 500;
 }
-.PostAd .category-box .lists {
+.PostAdList .category-box .lists {
   display: flex;
   flex-grow: 1;
 }
-.PostAd .category-box .lists .category-list {
+.PostAdList .category-box .lists .category-list {
   list-style: none;
   margin: 0;
   width: 50%;
   height: 100%;
   border-right: 2px solid #ddd;
 }
-.PostAd .category-box .lists .category-list li {
+.PostAdList .category-box .lists .category-list li {
   list-style: none;
   width: 100%;
   text-align: left;
@@ -81,55 +81,73 @@
   color: #333;
   transition: background 0.3s;
 }
-.PostAd .category-box .lists .category-list li span {
+.PostAdList .category-box .lists .category-list li span {
   margin-left: 2rem;
 }
-.PostAd .category-box .lists .category-list li:hover {
+.PostAdList .category-box .lists .category-list li:hover {
   background-color: rgba(187, 180, 180, 0.5764705882);
 }
-.PostAd .category-box .lists .category-list li.active {
+.PostAdList .category-box .lists .category-list li.active {
   background-color: #bbb4b4;
 }
-.PostAd .category-box .lists .subcategory-list {
+.PostAdList .category-box .lists .subcategory-list {
   width: 50%;
   height: 100%;
   list-style: none;
   margin: 0;
   border-left: 2px solid #ddd;
 }
-.PostAd .category-box .lists .subcategory-list li {
+.PostAdList .category-box .lists .subcategory-list li {
   font-size: 0.9rem;
   padding: 0.75rem;
   color: #555;
   cursor: pointer;
   transition: background-color 0.3s;
 }
-.PostAd .category-box .lists .subcategory-list li:hover {
+.PostAdList .category-box .lists .subcategory-list li:hover {
   background-color: rgba(187, 180, 180, 0.5764705882);
 }
 
 @media screen and (max-width: 767px) {
-  .PostAd {
+  .PostAdList {
     gap: 3rem;
   }
-  .PostAd .category-box {
+  .PostAdList .category-box {
     width: 95%;
   }
-  .PostAd .category-box .category-header h2 {
+  .PostAdList .category-box .category-header h2 {
     font-size: 1.25rem;
   }
-  .PostAd .category-box .category-header h4 {
+  .PostAdList .category-box .category-header h4 {
     font-size: 0.75rem;
   }
-  .PostAd .category-box .lists .category-item {
+  .PostAdList .category-box .lists .category-item {
     font-size: 0.9rem;
     padding: 10px;
   }
-  .PostAd .category-box .lists .category-item li {
+  .PostAdList .category-box .lists .category-item li {
     font-size: 0.75rem;
   }
-  .PostAd .category-box .lists .subcategory-item {
+  .PostAdList .category-box .lists .subcategory-item {
     font-size: 0.85rem;
     padding: 6px 10px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .PostAdList {
+    gap: 7rem;
+  }
+  .PostAdList .navigate {
+    height: 7.5rem;
+  }
+  .PostAdList .navigate i {
+    padding: 0.75rem;
+    font-size: 1.5rem;
+  }
+  .PostAdList .navigate p {
+    font-size: 1.5rem;
+  }
+  .PostAdList .category-box {
+    width: 75%;
   }
 }/*# sourceMappingURL=PostAdList.css.map */

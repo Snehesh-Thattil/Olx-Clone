@@ -1,4 +1,4 @@
-.PostAd {
+.PostAdList {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -128,7 +128,7 @@
 
 // MEDIA-QUERIES RESPONSIVENESS
 @media screen and (max-width: 767px) {
-    .PostAd {
+    .PostAdList {
         gap: 3rem;
 
         .category-box {
@@ -160,6 +160,29 @@
                     padding: 6px 10px;
                 }
             }
+        }
+    }
+}
+
+@media (min-width:768px) and (max-width: 1024px) {
+    .PostAdList {
+        gap: 7rem;
+
+        .navigate {
+            height: 7.5rem;
+
+            i {
+                padding: .75rem;
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1.5rem;
+            }
+        }
+
+        .category-box {
+            width: 75%;
         }
     }
 }

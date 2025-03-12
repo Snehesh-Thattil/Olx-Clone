@@ -129,11 +129,13 @@
   padding: 1rem;
   cursor: pointer;
   background-color: white;
+  color: #002b30;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .Header .right-section .language .options li:hover {
   background-color: rgba(211, 205, 205, 0.795);
+  color: #014b53;
 }
 .Header .right-section .language .options .pointer {
   position: absolute;
@@ -149,9 +151,13 @@
 .Header .right-section i {
   cursor: pointer;
   padding: 10px;
+  border-radius: 50%;
+}
+.Header .right-section i:hover {
+  background-color: rgba(189, 222, 235, 0.89);
 }
 .Header .right-section i:active {
-  background-color: rgba(111, 156, 161, 0.2745098039);
+  background-color: #12a1b1;
   border-radius: 50%;
 }
 .Header .right-section .notifications {
@@ -191,6 +197,7 @@
 }
 .Header .right-section .notifications .messgs li:hover {
   background-color: rgba(211, 205, 205, 0.795);
+  color: #014b53;
 }
 .Header .right-section .notifications .messgs .pointer {
   position: absolute;

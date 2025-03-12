@@ -3,7 +3,7 @@ import './ViewItem.css';
 import { useLocation } from 'react-router-dom';
 import VerifiedUserTag from '../../Assets/Images/verified-user-icon.png'
 import featuredIconTag from '../../Assets/Images/FeaturedIconTag.png'
-import { productsContext } from '../../Store/productContext';
+import { ProductsContext } from '../../Store/productContext';
 import RelatedItems from './SubComponents/RelatedItems';
 import useDateFormat from '../../Hooks/useDateFormat';
 
@@ -11,7 +11,7 @@ function ViewItem() {
   const [showInfo, setShowInfo] = useState(false)
   const [currentImgIndex, SetCurrentImgIndex] = useState(0)
   const [relatedItems, setRelatedItems] = useState([])
-  const { products } = useContext(productsContext)
+  const { products } = useContext(ProductsContext)
 
   const { formatDate } = useDateFormat()
 
