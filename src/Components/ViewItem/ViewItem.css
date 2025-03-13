@@ -70,6 +70,24 @@
      object-fit: contain;
   width: 100%;
 }
+.ViewItem .seller-tools {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.ViewItem .seller-tools button {
+  padding: 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #033136;
+  color: white;
+  font-weight: bold;
+  min-width: 5rem;
+  cursor: pointer;
+}
+.ViewItem .seller-tools button:hover {
+  background-color: rgba(0, 47, 52, 0.8352941176);
+}
 .ViewItem .productInfos {
   width: 100%;
   display: grid;

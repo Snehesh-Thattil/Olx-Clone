@@ -27,25 +27,28 @@ function ListingForm() {
     const navigate = useNavigate()
     const subcat = location.state?.subcategory || null
     const catgry = location.state?.category || null
+    const editProduct = location.state?.editProduct || null
     const fbFormName = FORM_NAME_MAP[subcat] || null
 
     const { user } = useContext(AuthContext)
     const [load, setLoad] = useState(false)
     const [fields, setFields] = useState([])
-    const [images, setImages] = useState([])
-    const [coverImage, setCoverImage] = useState()
+    const [images, setImages] = useState(editProduct ? [editProduct?.coverImgURL, ...editProduct?.imgURLs] : []);
+    const [coverImage, setCoverImage] = useState(editProduct?.coverImgURL)
     const [productInfo, setProductInfo] = useState({
         subcategory: subcat || null,
-        category: catgry || null
+        category: catgry || null,
+        'ad-title': editProduct ? editProduct['ad-title'] : null,
+        description: editProduct?.description || null,
     })
     const [sellerInfo, setSellerInfo] = useState({
-        name: user?.displayName,
         userId: user?.uid,
         email: user?.email,
-        photo: user?.photoURL,
-        state: user?.state,
-        district: user?.district,
-        neighbourhood: user?.neighbourhood,
+        name: editProduct?.sellerInfo.name || user?.displayName,
+        photo: editProduct?.sellerInfo.photo || user?.photoURL,
+        state: editProduct?.sellerInfo.state || user?.state,
+        district: editProduct?.sellerInfo.district || user?.district,
+        neighbourhood: editProduct?.sellerInfo.neighbourhood || user?.neighbourhood,
         coords: user?.coords
     })
 
@@ -73,11 +76,18 @@ function ListingForm() {
 
     // Handlers for Image upload delete and input changes
     const handleLocationChange = (e) => {
-        setSellerInfo({ ...sellerInfo, [e.target.name]: e.target.value })
+        setSellerInfo((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }))
+        // setSellerInfo({ ...sellerInfo, [e.target.name]: e.target.value })
     }
 
     const handleProductInfoChange = (e) => {
-        setProductInfo({ ...productInfo, [e.target.name]: e.target.value })
+        setProductInfo((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }))
     }
 
     const handleUploadImage = useCallback((e) => {
@@ -183,25 +193,26 @@ function ListingForm() {
         <div className='Listing'>
             <div className="navigate">
                 <i className="fa-solid fa-arrow-left" onClick={() => navigate(-1)}></i>
-                <p>Post Your Ad</p>
+                <p>{editProduct ? 'Edit Your Ad' : 'Post Your Ad'}</p>
             </div>
+
             <div className="details">
-                <h3>INCLUDE SOME DETAILS</h3>
+                <h3>{editProduct ? 'MODIFY YOUR AD DETAILS' : 'INCLUDE SOME DETAILS'}</h3>
 
                 <form onSubmit={handleFormSubmit}>
                     {fields.length > 0 &&
-                        <DynamicFields fields={fields} onChange={handleProductInfoChange} />}
+                        <DynamicFields editProduct={editProduct} fields={fields} onChange={handleProductInfoChange} />}
 
                     <div className="input-section">
                         <div className="input-field">
                             <label htmlFor="">Ad title</label>
-                            <input type="text" minLength={5} maxLength={70} name='ad-title' onChange={handleProductInfoChange} required />
+                            <input type="text" minLength={5} maxLength={70} name='ad-title' value={productInfo['ad-title'] || null} onChange={handleProductInfoChange} required />
                             <p>Mention the key features of your item (e.g. brand, model, age, type)</p>
                         </div>
 
                         <div className="input-field">
                             <label htmlFor="">Description</label>
-                            <textarea type="text" minLength={10} maxLength={4096} name='description' onChange={handleProductInfoChange} required />
+                            <textarea type="text" minLength={10} maxLength={4096} name='description' value={productInfo?.description || null} onChange={handleProductInfoChange} required />
                             <p>Include condition, features and reason for selling</p>
                         </div>
                     </div>
@@ -216,6 +227,7 @@ function ListingForm() {
                                 <input type="number"
                                     id="price"
                                     required
+                                    defaultValue={editProduct?.price}
                                     name='price'
                                     min={10} max={999999999}
                                     onChange={handleProductInfoChange} />
@@ -242,7 +254,7 @@ function ListingForm() {
                                 {images.map((img, index) => {
                                     return (
                                         <div key={index} className={coverImage === img ? "image-item cover" : "image-item"} >
-                                            <img src={URL.createObjectURL(img)} alt="item-image" />
+                                            <img src={img instanceof File ? URL.createObjectURL(img) : img} alt="item-image" />
                                             <p onClick={() => setCoverImage(img)}> {coverImage === img ? 'Cover Image' : 'Set as Cover'}</p>
                                             <i className="fa-solid fa-xmark" onClick={() => handleDeleteImage(img)}></i>
                                         </div>

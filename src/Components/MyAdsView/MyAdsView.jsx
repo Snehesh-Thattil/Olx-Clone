@@ -8,7 +8,7 @@ function MyAdsView() {
   const { products } = useContext(ProductsContext)
   const { user } = useContext(AuthContext)
 
-  const MyAdsList = products?.filter(item => item.sellerInfo.userId === user?.userId) || []
+  const MyAdsList = products?.filter(item => item.sellerInfo.userId === user?.uid) || []
 
   // JSX
   return (

@@ -1,20 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './ViewItem.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import VerifiedUserTag from '../../Assets/Images/verified-user-icon.png'
 import featuredIconTag from '../../Assets/Images/FeaturedIconTag.png'
 import { ProductsContext } from '../../Store/productContext';
 import RelatedItems from './SubComponents/RelatedItems';
 import useDateFormat from '../../Hooks/useDateFormat';
+import { AuthContext } from '../../Store/AuthContext';
 
 function ViewItem() {
   const [showInfo, setShowInfo] = useState(false)
   const [currentImgIndex, SetCurrentImgIndex] = useState(0)
   const [relatedItems, setRelatedItems] = useState([])
   const { products } = useContext(ProductsContext)
+  const { user } = useContext(AuthContext)
 
   const { formatDate } = useDateFormat()
 
+  const navigate = useNavigate()
   const location = useLocation()
   const { product } = location?.state || null
   const { latitude, longitude } = product.sellerInfo?.coords
@@ -69,6 +72,20 @@ function ViewItem() {
         <button className='share' onClick={handleShare}><i className="fa-solid fa-share-nodes"></i></button>
         <button className="wishlist"><i className="fa-solid fa-heart"></i></button>
       </div>
+
+      {user.uid === product.sellerInfo.userId &&
+        <div className="seller-tools">
+          <button>Delete</button>
+          <button>Mark as Sold out</button>
+          <button onClick={() => navigate('/listing-form', {
+            state: {
+              subcategory: product.subcategory,
+              category: product.category,
+              editProduct: product
+            }
+          })}>Edit</button>
+        </div>
+      }
 
       <div className="productInfos">
 
