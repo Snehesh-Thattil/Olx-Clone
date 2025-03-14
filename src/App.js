@@ -19,11 +19,6 @@ function App() {
   const { pathname } = useLocation()
   const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
-  // For scroll at top on page change
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
-
   // Fetching all products from Firebase
   const fetchProducts = useCallback(async () => {
     const productsCollRef = collection(db, 'products')
@@ -77,13 +72,18 @@ function App() {
     }
   }, [GOOGLE_API_KEY, setUser])
 
+  // Fetch products, users location and scroll top on page change
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    fetchProducts()
+    fetchLocation()
+  }, [pathname, fetchProducts, fetchLocation])
+
   // Checking user sign-in status
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(auth, (userAuth) => {
       if (userAuth?.emailVerified) {
         setUser(userAuth)
-        fetchProducts()
-        fetchLocation()
         console.log('User logged in :', userAuth.displayName, '|', userAuth.email)
       } else {
         setUser(null)
@@ -92,7 +92,7 @@ function App() {
     })
 
     return () => unsubscribe()
-  }, [setUser, fetchProducts, fetchLocation])
+  }, [setUser])
 
   return (
     <div className="App">

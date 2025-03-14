@@ -29,8 +29,7 @@ function ViewItem() {
   // Finding similar products to display
   useEffect(() => {
     const result = products?.filter((item) => item.category === product.category && item.subcategory === product.subcategory)
-      .filter((item) => item.id !== product.id)
-      .slice(0, 10)
+      .filter((item) => item.id !== product.id)?.slice(0, 10)
     setRelatedItems(result)
   }, [product, products])
 
@@ -77,7 +76,7 @@ function ViewItem() {
         <div className="seller-tools">
           <button>Delete</button>
           <button>Mark as Sold out</button>
-          <button onClick={() => navigate('/listing-form', {
+          <button onClick={() => navigate('/updating-form', {
             state: {
               subcategory: product.subcategory,
               category: product.category,
@@ -134,18 +133,23 @@ function ViewItem() {
           <h3>Overview</h3>
 
           <div className="items">
-            <div className='item'>
-              <i className="fa-solid fa-user"></i>
-              <p>Owner<span>{product['No. of Owners']}</span></p>
-            </div>
+
+            {product["No. of Owners"] !== undefined && product["No. of Owners"] !== "" &&
+              <div className='item'>
+                <i className="fa-solid fa-user"></i>
+                <p>Owner<span>{product["No. of Owners"]}</span></p>
+              </div>}
+
             <div className='item'>
               <i className="fa-solid fa-location-dot"></i>
               <p>Location<span>{product.neighbourhood}, {product.district}, {product.state}</span></p>
             </div>
+
             <div className='item'>
               <i className="fa-solid fa-calendar"></i>
               <p>Posting date<span>{formatDate(product.createdAt)}</span></p>
             </div>
+
           </div>
         </div>
 
@@ -171,7 +175,7 @@ function ViewItem() {
 
         <div className="description">
           <h3>Description</h3>
-          <p>{product.description}</p>
+          <pre>{product.description}</pre>
         </div>
 
         {relatedItems?.length > 0 && <RelatedItems products={relatedItems} />}

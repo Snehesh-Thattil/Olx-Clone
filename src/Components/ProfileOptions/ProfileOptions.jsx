@@ -34,7 +34,7 @@ function ProfileOptions({ mobile, setLoginBox }) {
         <div className={mobile ? "ProfileOptions mobile" : "ProfileOptions"}>
             <div className="view-profile">
                 <div className="info">
-                    {user && <h2>{user.displayName.slice(0, 1)}</h2>}
+                    {user && <h2>{user.displayName?.slice(0, 1)}</h2>}
                     {user && <h3>{user.displayName}</h3>}
                 </div>
                 {user ? <button>View and edit profile</button> : <button onClick={() => setLoginBox('Sign-up')}>Sign up now</button>}

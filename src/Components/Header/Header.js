@@ -128,7 +128,7 @@ function Header() {
         <div className="loginPage" ref={profileRef} onClick={() => user && profileRef.current?.classList.toggle('active')}>
           {user ?
             <div className='profile-box'>
-              <h3>{user.displayName.slice(0, 1)}</h3>
+              <h3>{user.displayName?.slice(0, 1)}</h3>
               <i className="fa-solid fa-angle-down"></i>
             </div> :
             <span className='link' onClick={() => setLoginBox('Sign-up')}>Sign Up</span>}

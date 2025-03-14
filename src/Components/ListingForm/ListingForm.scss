@@ -238,6 +238,25 @@
                         align-items: center;
                         justify-content: space-between;
                         padding: 0 .5rem;
+
+                        .phone-input {
+                            span {
+                                font-size: .85rem;
+                                margin-right: 5px;
+                            }
+
+                            input {
+                                padding: 5px 7.5px;
+                                border: 1px solid #ccc;
+                                border-radius: 4px;
+                                outline: none;
+                                transition: border-color 0.3s;
+
+                                &:focus {
+                                    border-color: #007bff;
+                                }
+                            }
+                        }
                     }
                 }
 

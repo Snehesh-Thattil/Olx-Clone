@@ -1,6 +1,6 @@
 import React from 'react'
 
-function DynamicFields({ editProduct = {}, fields, onChange }) {
+function DynamicFields({ fields, onChange }) {
 
     // JSX
     return (
@@ -17,7 +17,6 @@ function DynamicFields({ editProduct = {}, fields, onChange }) {
                                         <input type="radio"
                                             required
                                             value={opt}
-                                            checked={editProduct && editProduct[field.label] === opt}
                                             name={field.label}
                                             onChange={onChange}
                                         /> {opt}
@@ -27,7 +26,6 @@ function DynamicFields({ editProduct = {}, fields, onChange }) {
 
                         ) : (<input type={field.type}
                             min={field.min} max={field.max}
-                            defaultValue={editProduct?.[field.label] ?? ''}
                             minLength={field.minLength}
                             maxLength={field.maxLength}
                             onChange={onChange}

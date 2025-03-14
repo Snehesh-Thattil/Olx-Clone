@@ -207,6 +207,20 @@
   justify-content: space-between;
   padding: 0 0.5rem;
 }
+.Listing .details form .input-section .contact-infos .phone .phone-input span {
+  font-size: 0.85rem;
+  margin-right: 5px;
+}
+.Listing .details form .input-section .contact-infos .phone .phone-input input {
+  padding: 5px 7.5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.Listing .details form .input-section .contact-infos .phone .phone-input input:focus {
+  border-color: #007bff;
+}
 .Listing .details form .input-section .submit-btn {
   padding: 0.75rem 1rem;
   width: 10rem;

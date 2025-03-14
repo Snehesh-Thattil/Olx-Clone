@@ -264,7 +264,7 @@
   padding: 1.5rem 2rem;
   border-bottom: 1px solid rgba(128, 128, 128, 0.37);
 }
-.ViewItem .otherDetails .description p {
+.ViewItem .otherDetails .description pre {
   padding: 2rem;
 }
 .ViewItem .otherDetails .related-items {

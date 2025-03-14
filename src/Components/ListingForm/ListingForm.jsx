@@ -27,28 +27,26 @@ function ListingForm() {
     const navigate = useNavigate()
     const subcat = location.state?.subcategory || null
     const catgry = location.state?.category || null
-    const editProduct = location.state?.editProduct || null
     const fbFormName = FORM_NAME_MAP[subcat] || null
 
     const { user } = useContext(AuthContext)
     const [load, setLoad] = useState(false)
     const [fields, setFields] = useState([])
-    const [images, setImages] = useState(editProduct ? [editProduct?.coverImgURL, ...editProduct?.imgURLs] : []);
-    const [coverImage, setCoverImage] = useState(editProduct?.coverImgURL)
+    const [images, setImages] = useState([])
+    const [coverImage, setCoverImage] = useState()
     const [productInfo, setProductInfo] = useState({
         subcategory: subcat || null,
-        category: catgry || null,
-        'ad-title': editProduct ? editProduct['ad-title'] : null,
-        description: editProduct?.description || null,
+        category: catgry || null
     })
     const [sellerInfo, setSellerInfo] = useState({
+        name: user?.displayName,
         userId: user?.uid,
+        phone: user?.phone,
         email: user?.email,
-        name: editProduct?.sellerInfo.name || user?.displayName,
-        photo: editProduct?.sellerInfo.photo || user?.photoURL,
-        state: editProduct?.sellerInfo.state || user?.state,
-        district: editProduct?.sellerInfo.district || user?.district,
-        neighbourhood: editProduct?.sellerInfo.neighbourhood || user?.neighbourhood,
+        photo: user?.photoURL,
+        state: user?.state,
+        district: user?.district,
+        neighbourhood: user?.neighbourhood,
         coords: user?.coords
     })
 
@@ -75,12 +73,11 @@ function ListingForm() {
     }, [fbFormName])
 
     // Handlers for Image upload delete and input changes
-    const handleLocationChange = (e) => {
+    const handleSellerInfoChange = (e) => {
         setSellerInfo((prev) => ({
             ...prev,
             [e.target.name]: e.target.value
         }))
-        // setSellerInfo({ ...sellerInfo, [e.target.name]: e.target.value })
     }
 
     const handleProductInfoChange = (e) => {
@@ -193,15 +190,15 @@ function ListingForm() {
         <div className='Listing'>
             <div className="navigate">
                 <i className="fa-solid fa-arrow-left" onClick={() => navigate(-1)}></i>
-                <p>{editProduct ? 'Edit Your Ad' : 'Post Your Ad'}</p>
+                <p>Post Your Ad</p>
             </div>
 
             <div className="details">
-                <h3>{editProduct ? 'MODIFY YOUR AD DETAILS' : 'INCLUDE SOME DETAILS'}</h3>
+                <h3>INCLUDE SOME DETAILS</h3>
 
                 <form onSubmit={handleFormSubmit}>
                     {fields.length > 0 &&
-                        <DynamicFields editProduct={editProduct} fields={fields} onChange={handleProductInfoChange} />}
+                        <DynamicFields fields={fields} onChange={handleProductInfoChange} />}
 
                     <div className="input-section">
                         <div className="input-field">
@@ -227,7 +224,6 @@ function ListingForm() {
                                 <input type="number"
                                     id="price"
                                     required
-                                    defaultValue={editProduct?.price}
                                     name='price'
                                     min={10} max={999999999}
                                     onChange={handleProductInfoChange} />
@@ -272,21 +268,21 @@ function ListingForm() {
                             <label htmlFor="">State</label>
                             <input type="text" minLength={5} maxLength={70}
                                 value={sellerInfo?.state}
-                                onChange={handleLocationChange}
+                                onChange={handleSellerInfoChange}
                                 name='state' required />
                         </div>
                         <div className="input-field">
                             <label htmlFor="">District</label>
                             <input type="text" minLength={5} maxLength={70}
                                 value={sellerInfo?.district}
-                                onChange={handleLocationChange}
+                                onChange={handleSellerInfoChange}
                                 name='district' required />
                         </div>
                         <div className="input-field">
                             <label htmlFor="">Neighbourhood</label>
                             <input type="text" minLength={5} maxLength={70}
                                 value={sellerInfo?.neighbourhood}
-                                onChange={handleLocationChange}
+                                onChange={handleSellerInfoChange}
                                 name='neighbourhood' required />
                         </div>
                     </div>
@@ -312,7 +308,19 @@ function ListingForm() {
 
                             <div className="phone">
                                 <p>Phone number</p>
-                                <h4>{user?.phoneNumber}</h4>
+                                <div className='phone-input'>
+                                    <span>+91</span>
+                                    <input type="tel"
+                                        maxLength="10"
+                                        minLength="10"
+                                        pattern="\d{10}"
+                                        value={sellerInfo?.phone}
+                                        prefix='+91'
+                                        onChange={handleSellerInfoChange}
+                                        name='phone'
+                                        onInput={(e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10)}
+                                        required />
+                                </div>
                             </div>
                         </div>
                     </div>
