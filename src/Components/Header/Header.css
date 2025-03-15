@@ -30,16 +30,77 @@
   border: 2px solid #002f34;
   border-radius: 4px;
   background-color: white;
+  position: relative;
 }
 .Header .placeSearch i {
   cursor: pointer;
   margin: 0 2.5px;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: transform 0.3s ease-in-out;
+}
+.Header .placeSearch i.transform {
+  transform: rotate(180deg);
+  background-color: rgba(2, 95, 105, 0.2392156863);
 }
 .Header .placeSearch input {
   border: none;
   outline: none;
   flex-grow: 1;
   height: 100%;
+}
+.Header .placeSearch .place-options {
+  max-width: 100%;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: -1px 1px 10px black;
+  border-radius: 5px;
+  overflow: scroll;
+}
+.Header .placeSearch .place-options::-webkit-scrollbar {
+  display: none;
+}
+.Header .placeSearch .place-options .curr-loc-div {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.568);
+  cursor: pointer;
+}
+.Header .placeSearch .place-options .curr-loc-div .curr-loc {
+  display: flex;
+  flex-direction: column;
+}
+.Header .placeSearch .place-options .curr-loc-div i {
+  color: blue;
+}
+.Header .placeSearch .place-options .recent-loc-div,
+.Header .placeSearch .place-options .popular-loc-div {
+  border-bottom: 2px solid rgba(128, 128, 128, 0.568);
+}
+.Header .placeSearch .place-options .recent-loc-div p,
+.Header .placeSearch .place-options .popular-loc-div p {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  background-color: rgb(247, 244, 244);
+  text-align: center;
+}
+.Header .placeSearch .place-options .recent-loc-div li,
+.Header .placeSearch .place-options .popular-loc-div li {
+  width: 100%;
+  padding: 1rem;
+  list-style: none;
+  color: rgb(24, 23, 23);
+  cursor: pointer;
+}
+.Header .placeSearch .place-options .recent-loc-div li:hover,
+.Header .placeSearch .place-options .popular-loc-div li:hover {
+  background-color: rgba(1, 75, 83, 0.1568627451);
 }
 .Header .productSearch {
   border: 2px solid #002f34;

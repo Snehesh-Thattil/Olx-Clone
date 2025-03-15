@@ -35,10 +35,19 @@
         border: 2px solid #002f34;
         border-radius: 4px;
         background-color: white;
+        position: relative;
 
         i {
             cursor: pointer;
             margin: 0 2.5px;
+            padding: .5rem;
+            border-radius: 50%;
+            transition: transform .3s ease-in-out;
+
+            &.transform {
+                transform: rotate(180deg);
+                background-color: #025f693d;
+            }
         }
 
         input {
@@ -46,6 +55,65 @@
             outline: none;
             flex-grow: 1;
             height: 100%;
+        }
+
+        .place-options {
+            max-width: 100%;
+            position: absolute;
+            top: 110%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: -1px 1px 10px black;
+            border-radius: 5px;
+            overflow: scroll;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .curr-loc-div {
+                display: flex;
+                gap: 1rem;
+                padding: 1rem;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 2px solid rgba(128, 128, 128, 0.568);
+                cursor: pointer;
+
+                .curr-loc {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                i {
+                    color: blue;
+                }
+            }
+
+            .recent-loc-div,
+            .popular-loc-div {
+                border-bottom: 2px solid rgba(128, 128, 128, 0.568);
+
+                p {
+                    padding: 0.5rem 1rem;
+                    width: 100%;
+                    background-color: rgb(247, 244, 244);
+                    text-align: center;
+                }
+
+                li {
+                    width: 100%;
+                    padding: 1rem;
+                    list-style: none;
+                    color: rgb(24, 23, 23);
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: #014b5328;
+                    }
+                }
+            }
         }
     }
 
