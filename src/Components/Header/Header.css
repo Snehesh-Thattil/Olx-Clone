@@ -110,6 +110,7 @@
   background-color: white;
   justify-content: space-between;
   z-index: -1;
+  position: relative;
 }
 .Header .productSearch .input {
   width: 100%;
@@ -142,6 +143,43 @@
   left: 50%;
   transform: translate(-50%, -50%);
   fill: white;
+}
+.Header .productSearch .product-options {
+  max-width: 100%;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: -1px 1px 10px black;
+  border-radius: 5px;
+  overflow: scroll;
+}
+.Header .productSearch .product-options::-webkit-scrollbar {
+  display: none;
+}
+.Header .productSearch .product-options .recent-product-div,
+.Header .productSearch .product-options .popular-product-div {
+  border-bottom: 2px solid rgba(128, 128, 128, 0.568);
+}
+.Header .productSearch .product-options .recent-product-div p,
+.Header .productSearch .product-options .popular-product-div p {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  background-color: rgb(247, 244, 244);
+  text-align: center;
+}
+.Header .productSearch .product-options .recent-product-div li,
+.Header .productSearch .product-options .popular-product-div li {
+  width: 100%;
+  padding: 1rem;
+  list-style: none;
+  color: rgb(24, 23, 23);
+  cursor: pointer;
+}
+.Header .productSearch .product-options .recent-product-div li:hover,
+.Header .productSearch .product-options .popular-product-div li:hover {
+  background-color: rgba(1, 75, 83, 0.1568627451);
 }
 .Header .right-section {
   display: flex;

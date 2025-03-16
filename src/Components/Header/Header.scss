@@ -125,6 +125,7 @@
         background-color: white;
         justify-content: space-between;
         z-index: -1;
+        position: relative;
 
         .input {
             width: 100%;
@@ -160,6 +161,46 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 fill: white;
+            }
+        }
+
+        .product-options {
+            max-width: 100%;
+            position: absolute;
+            top: 110%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: -1px 1px 10px black;
+            border-radius: 5px;
+            overflow: scroll;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .recent-product-div,
+            .popular-product-div {
+                border-bottom: 2px solid rgba(128, 128, 128, 0.568);
+
+                p {
+                    padding: 0.5rem 1rem;
+                    width: 100%;
+                    background-color: rgb(247, 244, 244);
+                    text-align: center;
+                }
+
+                li {
+                    width: 100%;
+                    padding: 1rem;
+                    list-style: none;
+                    color: rgb(24, 23, 23);
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: #014b5328;
+                    }
+                }
             }
         }
     }

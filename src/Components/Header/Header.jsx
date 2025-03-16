@@ -15,6 +15,7 @@ function Header({ search, setSearch }) {
   const [loginBox, setLoginBox] = useState(null)
   const [language, setLanguage] = useState('English')
   const [locationOpts, setLocationOpts] = useState(false)
+  const [productOpts, setProductOpts] = useState(false)
   const { user } = useContext(AuthContext)
 
   const navigate = useNavigate()
@@ -107,6 +108,7 @@ function Header({ search, setSearch }) {
     }
   }
 
+
   // JSX
   if (loginBox === "Sign-in") return <SignIn setLoginBox={setLoginBox} />
   if (loginBox === "Sign-up") return <SignUp setLoginBox={setLoginBox} />
@@ -162,12 +164,29 @@ function Header({ search, setSearch }) {
         <div className="input">
           <input type="text"
             placeholder="Find car,mobile phone and more..."
+            onFocus={() => setProductOpts(true)}
+            onBlur={() => setTimeout(() => setProductOpts(false), 200)}
             ref={productInputRef}
           />
         </div>
         <div className="searchAction" onClick={handleSearchBtnClick}>
           <Search color="#ffffff"></Search>
         </div>
+        {productOpts && <div className="product-options">
+          <div className="recent-product-div">
+            <p>Recent</p>
+            {user?.recentProductSearches?.slice(0, 4).map((product, index) => (
+              <li key={index} onClick={() => productInputRef.current.value = product}>{product}</li>
+            ))}
+          </div>
+
+          <div className="popular-product-div">
+            <p>Poplular</p>
+            {['Cars', 'Mobile', 'Scooter', 'Tv'].map((product, index) => (
+              <li key={index} onClick={() => productInputRef.current.value = product}>{product}</li>
+            ))}
+          </div>
+        </div>}
       </div>
 
       <div className="right-section">
