@@ -45,8 +45,8 @@
     }
 }
 
-@media (min-width:768px) and (max-width:1024px) {
+@media screen and (max-width: 1024px) {
     .MyAdsView {
-        padding: 9rem 2rem 1rem;
+        padding: 8rem .50rem 1rem;
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import MyAdsView from '../Components/MyAdsView/MyAdsView'
+import MyAdsAndWishlist from '../Components/MyAds&Wishlist/MyAds&Wishlist'
 import Header from '../Components/Header/Header'
 import Footer from '../Components/Footer/Footer'
 
@@ -7,8 +7,8 @@ function MyAds() {
     return (
         <div>
             <Header />
-            <MyAdsView />
-            <Footer/>
+            <MyAdsAndWishlist MyAds />
+            <Footer />
         </div>
     )
 }

@@ -72,7 +72,7 @@ function ViewItem() {
         <button className="wishlist"><i className="fa-solid fa-heart"></i></button>
       </div>
 
-      {user.uid === product.sellerInfo.userId &&
+      {user?.uid === product.sellerInfo?.userId &&
         <div className="seller-tools">
           <button>Delete</button>
           <button>Mark as Sold out</button>

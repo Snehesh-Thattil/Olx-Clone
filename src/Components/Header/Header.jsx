@@ -3,20 +3,21 @@ import './Header.css';
 import OlxLogo from '../../Assets/OlxLogo';
 import Search from '../../Assets/Search';
 import SellBotton from '../../Assets/Images/Sell-Button.png'
+import SignIn from '../Signup/SignIn'
+import SignUp from '../Signup/SignUp'
 import { useNavigate } from 'react-router-dom';
-import SignUp from '../Signup/SignUp';
-import SignIn from '../Signup/SignIn';
 import { AuthContext } from '../../Store/AuthContext';
 import ProfileOptions from '../ProfileOptions/ProfileOptions';
 import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../../Firebase/firbase-config';
+import { LoginBoxContext } from '../../Store/LoginBoxContext';
 
 function Header({ search, setSearch }) {
-  const [loginBox, setLoginBox] = useState(null)
   const [language, setLanguage] = useState('English')
   const [locationOpts, setLocationOpts] = useState(false)
   const [productOpts, setProductOpts] = useState(false)
-  const { user } = useContext(AuthContext)
+  const { user, setUser } = useContext(AuthContext)
+  const { loginBox, setLoginBox } = useContext(LoginBoxContext)
 
   const navigate = useNavigate()
 
@@ -75,14 +76,16 @@ function Header({ search, setSearch }) {
       const recentPlaceSearches = userDocSnap.docs[0].data().recentPlaceSearches || []
       const recentProductSearches = userDocSnap.docs[0].data().recentProductSearches || []
 
-      if (!recentPlaceSearches.some((item) => item.toLowerCase().trim() === place.toLowerCase().trim())) {
+      if (place !== '' && !recentPlaceSearches.some((item) => item.toLowerCase().trim() === place.toLowerCase().trim())) {
         const updatedPlaces = [place, ...recentPlaceSearches].slice(0, 5)
         await updateDoc(userDocRef, { recentPlaceSearches: updatedPlaces })
+        setUser((prev) => ({ ...prev, recentPlaceSearches: updatedPlaces }))
       }
 
-      if (!recentProductSearches.some((item) => item.toLowerCase().trim() === product.toLowerCase().trim())) {
+      if (product !== '' && !recentProductSearches.some((item) => item.toLowerCase().trim() === product.toLowerCase().trim())) {
         const updatedProducts = [product, ...recentProductSearches].slice(0, 5)
         await updateDoc(userDocRef, { recentProductSearches: updatedProducts })
+        setUser((prev) => ({ ...prev, recentProductSearches: updatedProducts }))
       }
     }
     catch (err) {
@@ -92,7 +95,8 @@ function Header({ search, setSearch }) {
 
   // Search button click after place & product input
   const handleSearchBtnClick = async () => {
-    const place = placeInputRef.current?.value || `${user?.district}, ${user?.state}`
+    // const place = placeInputRef.current?.value || `${user?.district}, ${user?.state}`
+    const place = placeInputRef.current?.value || ''
     const product = productInputRef.current?.value || ''
 
     setSearch(prev => ({ ...prev, place, product }))
@@ -107,7 +111,6 @@ function Header({ search, setSearch }) {
       placeInputRef.current.value = search
     }
   }
-
 
   // JSX
   if (loginBox === "Sign-in") return <SignIn setLoginBox={setLoginBox} />
@@ -218,13 +221,14 @@ function Header({ search, setSearch }) {
         </div>
 
         <div className="loginPage" ref={profileRef} onClick={() => user && profileRef.current?.classList.toggle('active')}>
-          {user ?
+          {user?.displayName ?
             <div className='profile-box'>
               <h3>{user?.displayName?.charAt(0)}</h3>
               <i className="fa-solid fa-angle-down"></i>
-            </div> :
-            <span className='link' onClick={() => setLoginBox('Sign-up')}>Sign Up</span>}
-
+            </div>
+            :
+            <span className='link' onClick={() => setLoginBox('Sign-up')}>Sign Up</span>
+          }
           {user && <ProfileOptions />}
         </div>
 
@@ -238,4 +242,4 @@ function Header({ search, setSearch }) {
   )
 }
 
-export default Header;
+export default Header

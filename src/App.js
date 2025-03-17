@@ -6,12 +6,13 @@ import PostAd from './Pages/PostAd'
 import ViewPost from './Pages/ViewPost'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { AuthContext } from './Store/AuthContext'
+import { ProductsContext } from './Store/productContext'
 import { onIdTokenChanged } from 'firebase/auth'
 import axios from "axios"
-import MyAds from './Pages/MyAdListings'
-import { ProductsContext } from './Store/productContext'
+import MyAds from './Pages/MyAds'
 import { auth, db } from './Firebase/firbase-config'
 import { collection, getDocs, query, where } from 'firebase/firestore'
+import Wishlist from './Pages/Wishlist'
 
 function App() {
   const { user, setUser } = useContext(AuthContext)
@@ -49,6 +50,8 @@ function App() {
 
         const addressComponents = data.results[0].address_components
         const formattedAddress = data.results[0].formatted_address
+
+        const country = addressComponents.find(comp => comp.types.includes("country"))?.long_name
         const state = addressComponents.find(comp => comp.types.includes("administrative_area_level_1"))?.long_name
         const district = addressComponents.find(comp => comp.types.includes("administrative_area_level_3"))?.long_name
         const neighbourhood = addressComponents.find(comp => comp.types.some(type => ["sublocality", "neighborhood", "locality"].includes(type)))?.long_name
@@ -56,9 +59,10 @@ function App() {
         setUser(prev => ({
           ...prev,
           formattedAddress,
-          state,
-          district,
           neighbourhood,
+          district,
+          state,
+          country,
           coords: { latitude, longitude }
         }))
       } catch (err) {
@@ -127,6 +131,7 @@ function App() {
           <Route element={<PostAd />} path='/post-ads-list' />
           <Route element={<Listing />} path='/listing-form' />
           <Route element={<MyAds />} path='/my-ads' />
+          <Route element={<Wishlist />} path='/wishlist' />
         </Routes>
       }
     </div>

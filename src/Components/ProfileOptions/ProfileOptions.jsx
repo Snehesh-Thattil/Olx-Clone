@@ -46,7 +46,7 @@ function ProfileOptions({ mobile, setLoginBox }) {
             {mobile && <li onClick={() => handleVerifyUser('/chats')}><i className="fa-regular fa-comment-dots"></i>Chats</li>}
             {mobile && <li><i className="fa-regular fa-bell"></i>Notifications</li>}
             <li><i className="fa-solid fa-gear"></i>Settings</li>
-            <li onClick={() => (window.location.href = 'https://help.olx.in/hc/en-us')}><i className="fa-solid fa-question"></i>Help</li>
+            <li onClick={() => window.open('https://help.olx.in/hc/en-us', '_blank')}><i className="fa-solid fa-question"></i>Help</li>
             <li><i className="fa-solid fa-download"></i>Install OLX Lite app</li>
             <li onClick={() => handleSignOut()}><i className="fa-solid fa-arrow-right-from-bracket"></i>Logout</li>
             {!mobile && <div className="pointer" ></div>}

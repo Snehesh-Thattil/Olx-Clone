@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Header from '../Components/Header/Header';
-import Posts from '../Components/Posts/Posts';
-import Footer from '../Components/Footer/Footer';
-import Categories from '../Components/Categories/Categories';
-import { AuthContext } from '../Store/AuthContext';
+import React, { useContext, useEffect, useState } from 'react'
+import Header from '../Components/Header/Header'
+import Posts from '../Components/Posts/Posts'
+import Footer from '../Components/Footer/Footer'
+import Categories from '../Components/Categories/Categories'
+import { AuthContext } from '../Store/AuthContext'
 
 function Home() {
   const { user } = useContext(AuthContext)
@@ -17,9 +17,17 @@ function Home() {
 
   return (
     <div className="homeParentDiv">
-      <Header search={search} setSearch={setSearch} />
-      <Categories setSearch={setSearch} />
-      <Posts search={search} setSearch={setSearch} />
+      <Header
+        search={search}
+        setSearch={setSearch} />
+
+      <Categories
+        setSearch={setSearch} />
+
+      <Posts
+        search={search}
+        setSearch={setSearch} />
+
       <Footer />
     </div>
   )

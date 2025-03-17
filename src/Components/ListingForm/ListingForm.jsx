@@ -44,9 +44,10 @@ function ListingForm() {
         phone: user?.phone,
         email: user?.email,
         photo: user?.photoURL,
-        state: user?.state,
-        district: user?.district,
         neighbourhood: user?.neighbourhood,
+        district: user?.district,
+        state: user?.state,
+        country: user?.country,
         coords: user?.coords
     })
 
@@ -165,6 +166,7 @@ function ListingForm() {
                     ...sellerInfo,
                     photo: sellerPhotoURL
                 },
+                country: sellerInfo.country,
                 state: sellerInfo.state,
                 district: sellerInfo.district,
                 neighbourhood: sellerInfo.neighbourhood,

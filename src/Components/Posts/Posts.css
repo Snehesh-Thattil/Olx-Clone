@@ -3,6 +3,7 @@
   margin-top: 1.25rem;
   background: rgb(235, 238, 239);
   padding: 1.5rem;
+  min-height: 50vh;
 }
 .Posts.related-items {
   margin-top: 0;
@@ -23,6 +24,7 @@
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 15px;
+  text-align: center;
 }
 .Posts .cards {
   width: 100%;
@@ -48,15 +50,18 @@
   position: absolute;
   top: 0.85rem;
   right: 0.85rem;
-  transition: transform 0.25s ease-in-out;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
   color: rgb(189, 175, 175);
   text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
   font-size: 1.25rem;
 }
+.Posts .cards .card i.included {
+  color: rgba(247, 34, 34, 0.842);
+  transform: rotate3d(40deg);
+}
 .Posts .cards .card i:hover {
   transform: scale(1.2);
-  color: rgb(158, 141, 141);
 }
 .Posts .cards .card .image {
   padding: 7.5px;

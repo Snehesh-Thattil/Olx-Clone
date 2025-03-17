@@ -3,6 +3,7 @@
   margin-top: 1.25rem;
   background: rgba(235, 238, 239, 1);
   padding: 1.5rem;
+  min-height: 50vh;
 
   &.related-items {
     margin-top: 0;
@@ -27,6 +28,7 @@
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 15px;
+    text-align: center;
   }
 
   .cards {
@@ -46,8 +48,6 @@
       display: flex;
       flex-direction: column;
 
-
-
       &:hover {
         transform: translateY(-5px);
       }
@@ -56,15 +56,19 @@
         position: absolute;
         top: .85rem;
         right: .85rem;
-        transition: transform .25s ease-in-out;
+        transition: all .2s ease-in-out;
         cursor: pointer;
         color: rgb(189, 175, 175);
         text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
         font-size: 1.25rem;
 
+        &.included {
+          color: rgba(247, 34, 34, 0.842);
+          transform: rotate3d(40deg);
+        }
+
         &:hover {
           transform: scale(1.2);
-          color: rgb(158, 141, 141);
         }
       }
 
