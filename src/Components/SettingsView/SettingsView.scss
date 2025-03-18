@@ -1,0 +1,255 @@
+.SettingsView {
+    width: 100%;
+    padding: 7.5rem 5rem 3rem;
+    display: flex;
+    gap: 2rem;
+    font-family: Arial, sans-serif;
+
+    .options {
+        min-height: 40vh;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        flex: 1;
+        list-style: none;
+
+        li {
+            padding: 10px 0;
+            cursor: pointer;
+            color: rgba(66, 65, 65, 0.699);
+            font-weight: bold;
+            width: fit-content;
+
+            &.active {
+                color: #004c3f;
+            }
+
+            &:hover {
+                color: #004c3fa9;
+            }
+        }
+    }
+
+    .action {
+        height: fit-content;
+        flex: 2;
+        background: #f9f9f9;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+
+        .change-pswrd {
+            outline: 1px solid rgba(128, 128, 128, 0.596);
+            border-radius: 3px;
+
+            h3 {
+                margin-bottom: 1rem;
+                border-bottom: 1px solid rgba(128, 128, 128, 0.363);
+                padding: 1.5rem 2rem;
+            }
+
+            .content {
+                padding: 1rem 2rem 2rem;
+
+                input {
+                    display: block;
+                    width: 100%;
+                    padding: 10px;
+                    margin-bottom: 1rem;
+                    outline: 1px solid #ccc;
+                    border: none;
+                    border-radius: 3px;
+
+                    &:focus {
+                        outline: 2px solid #02947c;
+                    }
+                }
+
+                button {
+                    background-color: #004c3fdc;
+                    color: white;
+                    border: none;
+                    padding: 10px 15px;
+                    border-radius: 5px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: background-color .2s ease-in-out;
+
+                    &:hover {
+                        background-color: #004c3f;
+                    }
+                }
+            }
+        }
+
+        .logout-all,
+        .delete-acc {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.658);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+
+            .box {
+                width: 25rem;
+                padding: 1rem;
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+                text-align: center;
+                border-radius: 3px;
+                box-shadow: 3px 3px 15px black;
+
+                p {
+                    text-align: left;
+                    color: rgb(105, 104, 104);
+                    font-size: 15px;
+                }
+
+                .buttons {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+
+                    button {
+                        width: 50%;
+                        padding: .75rem 1rem;
+                        color: #02241e;
+                        font-weight: bold;
+                        outline: none;
+                        border: 4px solid #002b36;
+                        border-radius: 2px;
+                        cursor: pointer;
+                        transition: all .2s ease-in-out;
+                        background-color: white;
+
+                        &.proceed {
+                            background-color: #002b36;
+                            color: white;
+                            margin-right: .5rem;
+
+                            &:hover {
+                                background-color: white;
+                                color: #002b36;
+                                border: 4px solid rgba(155, 5, 5, 0.808);
+                            }
+                        }
+
+                        &:hover {
+                            background-color: rgba(202, 192, 192, 0.753);
+                            color: #004c3f;
+                        }
+                    }
+                }
+            }
+        }
+
+        .chat-safety {
+            outline: 1px solid rgba(128, 128, 128, 0.596);
+            border-radius: 3px;
+
+            h3 {
+                margin-bottom: 1rem;
+                border-bottom: 1px solid rgba(128, 128, 128, 0.363);
+                padding: 1rem 2rem;
+            }
+
+            .content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: #f9f9f9;
+                padding: 1rem 2rem;
+
+                .setting-info {
+                    strong {
+                        color: #02241e;
+                    }
+
+                    p {
+                        margin: 5px 0;
+                        color: gray;
+                    }
+                }
+
+                .toggle {
+                    position: relative;
+                    width: 40px;
+                    height: 20px;
+                    display: inline-block;
+
+                    input {
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+
+                        &:checked+.slider:before {
+                            transform: translateX(20px);
+                        }
+
+                        &:checked+.slider {
+                            background-color: #002b36;
+                        }
+                    }
+
+                    .slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: #ccc;
+                        border-radius: 20px;
+                        transition: 0.3s;
+
+                        &:before {
+                            position: absolute;
+                            content: "";
+                            height: 14px;
+                            width: 14px;
+                            left: 3px;
+                            bottom: 3px;
+                            background-color: white;
+                            border-radius: 50%;
+                            transition: 0.3s;
+                        }
+                    }
+                }
+            }
+        }
+
+        .nothing {
+            height: 20rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            i {
+                scale: 10;
+            }
+        }
+    }
+}
+
+// Responsive design
+@media (max-width: 600px) {
+    .SettingsView {
+        flex-direction: column;
+        align-items: center;
+
+        .options {
+            text-align: center;
+        }
+
+        .action {
+            width: 100%;
+        }
+    }
+}

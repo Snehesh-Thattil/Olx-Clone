@@ -67,6 +67,7 @@
             box-shadow: -1px 1px 10px black;
             border-radius: 5px;
             overflow: scroll;
+            z-index: 1;
 
             &::-webkit-scrollbar {
                 display: none;
@@ -138,7 +139,7 @@
                 width: 100%;
                 align-items: center;
                 padding: 0 1rem;
-                font-size: 17px;
+                font-size: 1rem;
 
                 &:focus {
                     border: 1px solid black;
@@ -148,7 +149,7 @@
 
         .searchAction {
             min-width: 48px;
-            height: 48px;
+            height: 100%;
             position: relative;
             display: flex;
             cursor: pointer;
@@ -452,6 +453,7 @@
         position: absolute;
         padding: 15px;
         grid-template-columns: repeat(5, 1fr);
+        align-items: center;
         grid-template-rows: 1fr 1fr;
         gap: 0.5rem;
         border-bottom: .5px solid #002b30;
@@ -475,7 +477,7 @@
         }
 
         .logo {
-            grid-area: 1/1/2/2;
+            grid-area: 1/1/2/3;
 
             .fa-bars {
                 display: block;
@@ -491,11 +493,42 @@
         }
 
         .placeSearch {
-            grid-area: 1/2/2/6;
+            grid-area: 1/3/2/6;
+            padding: 0 .25rem;
+            justify-content: flex-end;
+            height: 2rem;
+            border: 1px solid #002f3450;
+            max-width: 100%;
+            width: max-content;
+
+            i {
+                width: 10%;
+                margin: 0 1px;
+                transform: scale(.8);
+                padding: 0.15rem;
+            }
+
+            input {
+                width: fit-content;
+            }
+
+            .place-options {
+                left: unset;
+                max-width: unset;
+                width: max-content;
+            }
         }
 
         .productSearch {
             grid-area: 2/1/3/5;
+            height: 2.5rem;
+
+            .input {
+                input {
+                    padding: .75rem;
+                    font-size: .75rem;
+                }
+            }
         }
 
         .right-section {
@@ -506,7 +539,7 @@
                 transform: scale(1.5);
                 outline: 2px solid #002b30;
                 padding: 2.5px;
-                border-radius: 2.5px;
+                border-radius: 50%;
             }
 
             i.fa-comment-dots,
@@ -532,8 +565,9 @@
 @media (min-width:768px) and (max-width: 1024px) {
     .Header {
         padding: 10px 15px;
-        grid-template-columns: .5fr 3fr 6fr;
+        grid-template-columns: 1fr 4fr 5fr;
         grid-template-rows: 1fr 1fr;
+        align-items: center;
         gap: .5rem;
         border-bottom: .5px solid #002b30;
 
@@ -543,15 +577,28 @@
 
         .placeSearch {
             grid-area: 1/2/2/3;
+            padding: 0 .25rem;
+            height: 2.5rem;
+
+            i {
+                width: 10%;
+                margin: 0 1px;
+                transform: scale(.8);
+                padding: 0.15rem;
+            }
+
+            input {
+                width: fit-content;
+            }
         }
 
         .productSearch {
             grid-area: 1/3/2/4;
+            height: 2.5rem;
         }
 
         .right-section {
-            grid-area: 2/3/3/4;
-            flex-direction: row-reverse;
+            grid-area: 2/2/3/4;
             gap: 0;
 
             .sellMenu {

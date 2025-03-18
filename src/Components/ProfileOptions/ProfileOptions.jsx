@@ -40,14 +40,14 @@ function ProfileOptions({ mobile, setLoginBox }) {
                 {user ? <button>View and edit profile</button> : <button onClick={() => setLoginBox('Sign-up')}>Sign up now</button>}
             </div>
             <li onClick={() => navigate('/my-ads')}><i className="fa-solid fa-address-card"></i>My ADS</li>
-            <li><i className="fa-solid fa-file-contract"></i>Buy Business Package</li>
-            <li><i className="fa-regular fa-credit-card"></i>Bought Packages & Billing</li>
+            <li onClick={() => window.open('https://www.olx.in/payments/businesspackages/my_account', '_blank')}><i className="fa-solid fa-file-contract"></i>Buy Business Package</li>
+            <li onClick={() => window.open('https://www.olx.in/myorders/orders', '_blank')}><i className="fa-regular fa-credit-card"></i>Bought Packages & Billing</li>
             {mobile && <li onClick={() => handleVerifyUser('/wishlist')}><i className="fa-regular fa-heart"></i>Wishlist</li>}
             {mobile && <li onClick={() => handleVerifyUser('/chats')}><i className="fa-regular fa-comment-dots"></i>Chats</li>}
-            {mobile && <li><i className="fa-regular fa-bell"></i>Notifications</li>}
-            <li><i className="fa-solid fa-gear"></i>Settings</li>
+            {mobile && <li onClick={() => navigate('/notifications')}><i className="fa-regular fa-bell"></i>Notifications</li>}
+            <li onClick={() => navigate('/settings')}><i className="fa-solid fa-gear"></i>Settings</li>
             <li onClick={() => window.open('https://help.olx.in/hc/en-us', '_blank')}><i className="fa-solid fa-question"></i>Help</li>
-            <li><i className="fa-solid fa-download"></i>Install OLX Lite app</li>
+            <li onClick={() => window.open('https://www.olx.in/settings/privacy', '_blank')}><i className="fa-solid fa-download"></i>Install OLX Lite app</li>
             <li onClick={() => handleSignOut()}><i className="fa-solid fa-arrow-right-from-bracket"></i>Logout</li>
             {!mobile && <div className="pointer" ></div>}
         </div>

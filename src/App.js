@@ -13,6 +13,7 @@ import MyAds from './Pages/MyAds'
 import { auth, db } from './Firebase/firbase-config'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import Wishlist from './Pages/Wishlist'
+import Settings from './Pages/Settings'
 
 function App() {
   const { user, setUser } = useContext(AuthContext)
@@ -132,6 +133,7 @@ function App() {
           <Route element={<Listing />} path='/listing-form' />
           <Route element={<MyAds />} path='/my-ads' />
           <Route element={<Wishlist />} path='/wishlist' />
+          <Route element={<Settings />} path='/settings' />
         </Routes>
       }
     </div>

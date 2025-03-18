@@ -1,0 +1,226 @@
+.SettingsView {
+  width: 100%;
+  padding: 7.5rem 5rem 3rem;
+  display: flex;
+  gap: 2rem;
+  font-family: Arial, sans-serif;
+}
+.SettingsView .options {
+  min-height: 40vh;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex: 1;
+  list-style: none;
+}
+.SettingsView .options li {
+  padding: 10px 0;
+  cursor: pointer;
+  color: rgba(66, 65, 65, 0.699);
+  font-weight: bold;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.SettingsView .options li.active {
+  color: #004c3f;
+}
+.SettingsView .options li:hover {
+  color: rgba(0, 76, 63, 0.662745098);
+}
+.SettingsView .action {
+  height: -moz-fit-content;
+  height: fit-content;
+  flex: 2;
+  background: #f9f9f9;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.SettingsView .action .change-pswrd {
+  outline: 1px solid rgba(128, 128, 128, 0.596);
+  border-radius: 3px;
+}
+.SettingsView .action .change-pswrd h3 {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.363);
+  padding: 1.5rem 2rem;
+}
+.SettingsView .action .change-pswrd .content {
+  padding: 1rem 2rem 2rem;
+}
+.SettingsView .action .change-pswrd .content input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  outline: 1px solid #ccc;
+  border: none;
+  border-radius: 3px;
+}
+.SettingsView .action .change-pswrd .content input:focus {
+  outline: 2px solid #02947c;
+}
+.SettingsView .action .change-pswrd .content button {
+  background-color: rgba(0, 76, 63, 0.862745098);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.SettingsView .action .change-pswrd .content button:hover {
+  background-color: #004c3f;
+}
+.SettingsView .action .logout-all,
+.SettingsView .action .delete-acc {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.658);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.SettingsView .action .logout-all .box,
+.SettingsView .action .delete-acc .box {
+  width: 25rem;
+  padding: 1rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  border-radius: 3px;
+  box-shadow: 3px 3px 15px black;
+}
+.SettingsView .action .logout-all .box p,
+.SettingsView .action .delete-acc .box p {
+  text-align: left;
+  color: rgb(105, 104, 104);
+  font-size: 15px;
+}
+.SettingsView .action .logout-all .box .buttons,
+.SettingsView .action .delete-acc .box .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.SettingsView .action .logout-all .box .buttons button,
+.SettingsView .action .delete-acc .box .buttons button {
+  width: 50%;
+  padding: 0.75rem 1rem;
+  color: #02241e;
+  font-weight: bold;
+  outline: none;
+  border: 4px solid #002b36;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: white;
+}
+.SettingsView .action .logout-all .box .buttons button.proceed,
+.SettingsView .action .delete-acc .box .buttons button.proceed {
+  background-color: #002b36;
+  color: white;
+  margin-right: 0.5rem;
+}
+.SettingsView .action .logout-all .box .buttons button.proceed:hover,
+.SettingsView .action .delete-acc .box .buttons button.proceed:hover {
+  background-color: white;
+  color: #002b36;
+  border: 4px solid rgba(155, 5, 5, 0.808);
+}
+.SettingsView .action .logout-all .box .buttons button:hover,
+.SettingsView .action .delete-acc .box .buttons button:hover {
+  background-color: rgba(202, 192, 192, 0.753);
+  color: #004c3f;
+}
+.SettingsView .action .chat-safety {
+  outline: 1px solid rgba(128, 128, 128, 0.596);
+  border-radius: 3px;
+}
+.SettingsView .action .chat-safety h3 {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.363);
+  padding: 1rem 2rem;
+}
+.SettingsView .action .chat-safety .content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9f9f9;
+  padding: 1rem 2rem;
+}
+.SettingsView .action .chat-safety .content .setting-info strong {
+  color: #02241e;
+}
+.SettingsView .action .chat-safety .content .setting-info p {
+  margin: 5px 0;
+  color: gray;
+}
+.SettingsView .action .chat-safety .content .toggle {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  display: inline-block;
+}
+.SettingsView .action .chat-safety .content .toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.SettingsView .action .chat-safety .content .toggle input:checked + .slider:before {
+  transform: translateX(20px);
+}
+.SettingsView .action .chat-safety .content .toggle input:checked + .slider {
+  background-color: #002b36;
+}
+.SettingsView .action .chat-safety .content .toggle .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+.SettingsView .action .chat-safety .content .toggle .slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.SettingsView .action .nothing {
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.SettingsView .action .nothing i {
+  scale: 10;
+}
+
+@media (max-width: 600px) {
+  .SettingsView {
+    flex-direction: column;
+    align-items: center;
+  }
+  .SettingsView .options {
+    text-align: center;
+  }
+  .SettingsView .action {
+    width: 100%;
+  }
+}/*# sourceMappingURL=SettingsView.css.map */

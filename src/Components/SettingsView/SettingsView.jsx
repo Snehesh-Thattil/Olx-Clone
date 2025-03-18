@@ -1,0 +1,136 @@
+import React, { useState } from 'react'
+import { auth } from '../../Firebase/firbase-config'
+import './SettingsView.css'
+import { deleteUser, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth'
+import { useNavigate } from 'react-router-dom'
+
+function SettingsView() {
+  const [action, setAction] = useState('')
+  const [toggle, setToggle] = useState(false)
+  const navigate = useNavigate()
+  const userAuth = auth.currentUser
+
+  // Logout user from all devices
+  const handleDeleteUser = async () => {
+    if (!userAuth) return alert("No user logged in")
+    const password = prompt("Please enter your password to confirm account deletion")
+    if (!password) return alert("Password is required to proceed")
+
+    try {
+      const credential = EmailAuthProvider.credential(userAuth.email, password)
+      await reauthenticateWithCredential(userAuth, credential)
+      await deleteUser(userAuth)
+      alert("User deleted successfully")
+      navigate('/')
+    }
+    catch (error) {
+      console.error("Error deleting user:", error.message)
+      alert(error.message)
+    }
+  }
+
+  // Logout from all devices with express.js (ref: server.js)
+  const handleLogoutFromAllDevices = async () => {
+    if (!userAuth) return alert("No user logged in")
+
+    try {
+      const response = await fetch("http://localhost:5000/logout-all", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid: userAuth.uid }),
+      })
+
+      if (!response.ok) throw new Error("Failed to log out")
+
+      const data = await response.json()
+      alert(data.message)
+      navigate("/")
+      window.location.reload()
+    }
+    catch (err) {
+      console.error("Error logging out from all devices:", err)
+      alert("Failed to log out from all devices.", err.message)
+    }
+  }
+
+  // JSX
+  return (
+    <div className='SettingsView'>
+      <div className="options">
+        <li className={action === 'privacy' ? 'active' : ''} onClick={() => setAction('privacy')}>Privacy</li>
+        <li className={action === 'logout-all' ? 'active' : ''} onClick={() => setAction('logout-all')}>Logout from all devices</li>
+        <li className={action === 'delete-acc' ? 'active' : ''} onClick={() => setAction('delete-acc')}>Delete account</li>
+        <li className={action === 'chat-safety' ? 'active' : ''} onClick={() => setAction('chat-safety')}>Chat safety tips</li>
+      </div>
+
+      <div className="action">
+
+        {action === 'privacy' && <div className="change-pswrd">
+          <h3>Change passwor</h3>
+          <div className="content">
+            <input type="password"
+              name='current'
+              placeholder='Current password'
+            />
+            <input type="password"
+              name='change'
+              placeholder='New password'
+            />
+            <input type="password"
+              name='change'
+              placeholder='Confirm password'
+            />
+            <button>Change Password</button>
+          </div>
+        </div>}
+
+        {action === 'logout-all' && <div className='logout-all'>
+          <div className="box">
+            <h3>Logout from everywhere</h3>
+            <p>You'll get logged out from all devices and browsers. Do you still want to continue?</p>
+            <div className="buttons">
+              <button className='proceed' onClick={handleLogoutFromAllDevices}>Logout</button>
+              <button onClick={() => setAction('')}>Cancel</button>
+            </div>
+          </div>
+        </div>}
+
+        {action === 'delete-acc' && <div className='delete-acc'>
+          <div className="box">
+            <h3>Delete account</h3>
+            <p>You are about to permanently delete your account. Are you sure about this?</p>
+            <div className="buttons">
+              <button className='proceed' onClick={handleDeleteUser}>Delete</button>
+              <button onClick={() => setAction('')}>Cancel</button>
+            </div>
+          </div>
+        </div>}
+
+        {action === 'chat-safety' && <div className="chat-safety">
+          <h3>Notifications</h3>
+          <div className="content">
+            <div className="setting-info">
+              <strong>Safety Tips</strong>
+              <p>Receive safety tips based on your chat activity</p>
+            </div>
+            <label className="toggle">
+              <input
+                type="checkbox"
+                checked={toggle}
+                onChange={() => setToggle(!toggle)}
+              />
+              <span className="slider"></span>
+            </label>
+          </div>
+        </div>}
+
+        {action === '' && <div className='nothing'>
+          <i class="fa-solid fa-gears"></i>
+        </div>}
+
+      </div>
+    </div>
+  )
+}
+
+export default SettingsView
