@@ -3,7 +3,7 @@ import './ViewItem.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import VerifiedUserTag from '../../Assets/Images/verified-user-icon.png'
 import featuredIconTag from '../../Assets/Images/FeaturedIconTag.png'
-import { ProductsContext } from '../../Store/productContext';
+import { ProductsContext } from '../../Store/ProductContext';
 import RelatedItems from './SubComponents/RelatedItems';
 import useDateFormat from '../../Hooks/useDateFormat';
 import { AuthContext } from '../../Store/AuthContext';

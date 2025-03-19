@@ -1,0 +1,156 @@
+.ProfileView {
+    padding: 6rem 3rem 2rem;
+    width: 100%;
+    height: 93vh;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    .profile-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-grow: 1;
+        height: 100%;
+        background: #fff;
+        padding: 2rem 1rem;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+        transition: box-shadow .3s ease-in-out, transform .3s ease-in-out;
+
+        &:hover {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+            transform: scale(1.005);
+        }
+
+        .img-and-name {
+            .profile-image {
+                width: 100px;
+                border-radius: 50%;
+            }
+
+            .profile-name {
+                margin: 10px 0;
+                font-size: 1.5rem;
+            }
+        }
+
+        .infos {
+
+            .profile-info,
+            .profile-stats,
+            .profile-location {
+                font-size: 0.9rem;
+                color: #666;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            button {
+                width: 100%;
+                margin-top: 10px;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                color: #fff;
+                opacity: .85;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .edit-button {
+                background: #007bff;
+            }
+
+            .share-profile {
+                background: #28a745;
+            }
+        }
+    }
+
+    .my-ads-section {
+        width: 70%;
+        height: 100%;
+        padding: 2rem .5rem 0 .5rem;
+        border-radius: 8px;
+        position: relative;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+        transition: box-shadow .3s ease-in-out, transform .3s ease-in-out;
+
+        &:hover {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+            transform: scale(1.005);
+        }
+
+        i {
+            position: absolute;
+            top: .5rem;
+            right: .5rem;
+            background-color: rgba(22, 5, 61, 0.384);
+            padding: .5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform .3s ease-in-out;
+            box-shadow: 1px 1px 20px rgba(146, 144, 144, 0.562);
+
+            &:hover {
+                transform: scale(1.25);
+            }
+        }
+    }
+}
+
+
+// MEDIA-QUERIES RESPONSIVENESS
+@media screen and (max-width:767px) {
+    .ProfileView {
+        padding: 10.5rem 1rem 3rem;
+        flex-direction: column;
+        height: fit-content;
+
+        .profile-card {
+            width: 100%;
+        }
+
+        .my-ads-section {
+            width: 100%;
+            padding: .5rem;
+        }
+    }
+}
+
+@media (min-width: 768px) and (max-width:1024px) {
+    .ProfileView {
+        padding: 11rem 2rem 3rem;
+        height: min-content;
+        flex-direction: column;
+        align-items: center;
+
+        .profile-card {
+            width: 100%;
+
+            .buttons {
+                flex-direction: row;
+                gap: 1rem;
+                width: 25rem;
+            }
+        }
+
+        .my-ads-section {
+            width: 100%;
+            padding: .5rem;
+            height: max-content;
+        }
+    }
+}

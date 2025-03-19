@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import './Header.css';
-import OlxLogo from '../../Assets/OlxLogo';
-import Search from '../../Assets/Search';
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import './Header.css'
+import OlxLogo from '../../Assets/OlxLogo'
+import Search from '../../Assets/Search'
 import SellBotton from '../../Assets/Images/Sell-Button.png'
 import SignIn from '../Signup/SignIn'
 import SignUp from '../Signup/SignUp'
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../Store/AuthContext';
-import ProfileOptions from '../ProfileOptions/ProfileOptions';
-import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore';
-import { db } from '../../Firebase/firbase-config';
-import { LoginBoxContext } from '../../Store/LoginBoxContext';
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../Store/AuthContext'
+import ProfileOptions from '../ProfileOptions/ProfileOptions'
+import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore'
+import { db } from '../../Firebase/firbase-config'
+import { LoginBoxContext } from '../../Store/LoginBoxContext'
 
 function Header({ search, setSearch }) {
   const [language, setLanguage] = useState('English')
@@ -148,7 +148,7 @@ function Header({ search, setSearch }) {
           </div>
 
           <div className="recent-loc-div">
-            <p>Recent</p>
+            {user?.recentPlaceSearches?.length > 0 && <p>Recent</p>}
             {user?.recentPlaceSearches?.slice(0, 4).map((search, index) => (
               <li key={index} onClick={() => handleLocSelect(search)}>{search}</li>
             ))}
@@ -177,7 +177,7 @@ function Header({ search, setSearch }) {
         </div>
         {productOpts && <div className="product-options">
           <div className="recent-product-div">
-            <p>Recent</p>
+            {user?.recentProductSearches?.length > 0 && <p>Recent</p>}
             {user?.recentProductSearches?.slice(0, 4).map((product, index) => (
               <li key={index} onClick={() => productInputRef.current.value = product}>{product}</li>
             ))}

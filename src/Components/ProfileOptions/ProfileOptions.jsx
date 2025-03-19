@@ -37,7 +37,9 @@ function ProfileOptions({ mobile, setLoginBox }) {
                     {user && <h2>{user.displayName?.slice(0, 1)}</h2>}
                     {user && <h3>{user.displayName}</h3>}
                 </div>
-                {user ? <button>View and edit profile</button> : <button onClick={() => setLoginBox('Sign-up')}>Sign up now</button>}
+                {user ?
+                    <button onClick={() => navigate('/profile')}>View and edit profile</button>
+                    : <button onClick={() => setLoginBox('Sign-up')}>Sign up now</button>}
             </div>
             <li onClick={() => navigate('/my-ads')}><i className="fa-solid fa-address-card"></i>My ADS</li>
             <li onClick={() => window.open('https://www.olx.in/payments/businesspackages/my_account', '_blank')}><i className="fa-solid fa-file-contract"></i>Buy Business Package</li>

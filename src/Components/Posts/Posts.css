@@ -5,6 +5,20 @@
   padding: 1.5rem;
   min-height: 50vh;
 }
+.Posts.fromProfile {
+  min-height: unset;
+}
+.Posts.fromProfile .cards {
+  display: flex;
+  overflow: scroll;
+}
+.Posts.fromProfile .cards::-webkit-scrollbar {
+  display: none;
+}
+.Posts.fromProfile .cards .card {
+  min-width: 15rem;
+  max-width: 15rem;
+}
 .Posts.related-items {
   margin-top: 0;
   padding: 1rem;
@@ -29,8 +43,8 @@
 .Posts .cards {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(5, minmax(200px, 1fr));
   gap: 15px;
+  grid-template-columns: repeat(5, minmax(200px, 1fr));
 }
 .Posts .cards .card {
   border: 1px solid #b9b8b8;

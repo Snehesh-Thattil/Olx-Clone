@@ -1,6 +1,6 @@
 import './Posts.css'
 import React, { useContext, useEffect, useMemo } from 'react'
-import { ProductsContext } from '../../Store/productContext'
+import { ProductsContext } from '../../Store/ProductContext'
 import { AuthContext } from '../../Store/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { db } from '../../Firebase/firbase-config'
@@ -8,7 +8,7 @@ import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore
 import useDateFormat from '../../Hooks/useDateFormat'
 import { LoginBoxContext } from '../../Store/LoginBoxContext'
 
-function Posts({ MyWishlist, MyAdsList, title, search }) {
+function Posts({ MyWishlist, MyAdsList, title, search, fromProfile }) {
   const { products } = useContext(ProductsContext)
   const { setUser, user } = useContext(AuthContext)
   const { setLoginBox } = useContext(LoginBoxContext)
@@ -125,8 +125,7 @@ function Posts({ MyWishlist, MyAdsList, title, search }) {
 
   // JSX
   return (
-    <div className="Posts">
-
+    <div className={fromProfile ? "Posts fromProfile" : "Posts"}>
       <div className="heading">
         <span>
           {title ? title
@@ -137,7 +136,6 @@ function Posts({ MyWishlist, MyAdsList, title, search }) {
       </div>
 
       <div className="cards">
-
         {sortedProducts?.map((product, index) => {
           return (
             <div className="card" key={index} onClick={() => {
@@ -171,7 +169,6 @@ function Posts({ MyWishlist, MyAdsList, title, search }) {
           )
         })}
       </div>
-
     </div>
   )
 }

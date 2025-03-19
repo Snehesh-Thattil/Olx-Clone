@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from 'react'
 import './MyAds&Wishlist.css'
-import { ProductsContext } from '../../Store/productContext'
+import { ProductsContext } from '../../Store/ProductContext'
 import { AuthContext } from '../../Store/AuthContext'
 import Posts from '../Posts/Posts'
 import { useNavigate } from 'react-router-dom'

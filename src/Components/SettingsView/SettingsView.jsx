@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { auth } from '../../Firebase/firbase-config'
 import './SettingsView.css'
 import { deleteUser, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth'
@@ -10,8 +10,16 @@ function SettingsView() {
   const navigate = useNavigate()
   const userAuth = auth.currentUser
 
+  useEffect(() => {
+    if (action === 'logout-all' || action === 'delete-acc') {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "auto"
+    }
+  }, [action])
+
   // Logout user from all devices
-  const handleDeleteUser = async () => {
+  const handleDeleteUser = useCallback(async () => {
     if (!userAuth) return alert("No user logged in")
     const password = prompt("Please enter your password to confirm account deletion")
     if (!password) return alert("Password is required to proceed")
@@ -27,10 +35,10 @@ function SettingsView() {
       console.error("Error deleting user:", error.message)
       alert(error.message)
     }
-  }
+  }, [navigate, userAuth])
 
   // Logout from all devices with express.js (ref: server.js)
-  const handleLogoutFromAllDevices = async () => {
+  const handleLogoutFromAllDevices = useCallback(async () => {
     if (!userAuth) return alert("No user logged in")
 
     try {
@@ -51,7 +59,7 @@ function SettingsView() {
       console.error("Error logging out from all devices:", err)
       alert("Failed to log out from all devices.", err.message)
     }
-  }
+  }, [navigate, userAuth])
 
   // JSX
   return (
@@ -63,7 +71,7 @@ function SettingsView() {
         <li className={action === 'chat-safety' ? 'active' : ''} onClick={() => setAction('chat-safety')}>Chat safety tips</li>
       </div>
 
-      <div className="action">
+      <div className="actions">
 
         {action === 'privacy' && <div className="change-pswrd">
           <h3>Change passwor</h3>
@@ -125,7 +133,7 @@ function SettingsView() {
         </div>}
 
         {action === '' && <div className='nothing'>
-          <i class="fa-solid fa-gears"></i>
+          <i className="fa-solid fa-gears"></i>
         </div>}
 
       </div>

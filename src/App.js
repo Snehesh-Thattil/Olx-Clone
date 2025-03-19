@@ -6,7 +6,7 @@ import PostAd from './Pages/PostAd'
 import ViewPost from './Pages/ViewPost'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { AuthContext } from './Store/AuthContext'
-import { ProductsContext } from './Store/productContext'
+import { ProductsContext } from './Store/ProductContext'
 import { onIdTokenChanged } from 'firebase/auth'
 import axios from "axios"
 import MyAds from './Pages/MyAds'
@@ -14,6 +14,7 @@ import { auth, db } from './Firebase/firbase-config'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import Wishlist from './Pages/Wishlist'
 import Settings from './Pages/Settings'
+import Profile from './Pages/Profile'
 
 function App() {
   const { user, setUser } = useContext(AuthContext)
@@ -134,6 +135,7 @@ function App() {
           <Route element={<MyAds />} path='/my-ads' />
           <Route element={<Wishlist />} path='/wishlist' />
           <Route element={<Settings />} path='/settings' />
+          <Route element={<Profile />} path='/profile' />
         </Routes>
       }
     </div>
