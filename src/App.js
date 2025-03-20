@@ -15,6 +15,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import Wishlist from './Pages/Wishlist'
 import Settings from './Pages/Settings'
 import Profile from './Pages/Profile'
+import EditProfile from './Pages/EditProfile'
 
 function App() {
   const { user, setUser } = useContext(AuthContext)
@@ -136,6 +137,7 @@ function App() {
           <Route element={<Wishlist />} path='/wishlist' />
           <Route element={<Settings />} path='/settings' />
           <Route element={<Profile />} path='/profile' />
+          <Route element={<EditProfile />} path='/profile/edit-profile' />
         </Routes>
       }
     </div>

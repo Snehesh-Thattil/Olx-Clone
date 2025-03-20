@@ -189,7 +189,7 @@ function ListingForm() {
     // JSX
     if (load) return <Loader />
     return (
-        <div className='Listing'>
+        <div className='ListingForm'>
             <div className="navigate">
                 <i className="fa-solid fa-arrow-left" onClick={() => navigate(-1)}></i>
                 <p>Post Your Ad</p>

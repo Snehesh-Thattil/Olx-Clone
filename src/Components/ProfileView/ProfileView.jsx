@@ -14,6 +14,24 @@ function ProfileView() {
         return products?.filter((item) => item.sellerInfo.userId === user.uid) || []
     }, [products, user?.uid])
 
+    const handleShareProfile = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: document.title,
+                    url: "Yet to set up",
+                    text: "Hey, Check out my OLX profile!"
+                })
+            }
+            catch (err) {
+                console.error("Error sharing profile :", err.message)
+            }
+        } else {
+            navigator.clipboard.writeText("Yet to set up")
+            alert('Link copied to clipboard')
+        }
+    }
+
     // JSX
     return (
         <div className='ProfileView'>
@@ -30,7 +48,7 @@ function ProfileView() {
 
                 <div className="buttons">
                     <button className="edit-button" onClick={() => navigate('/profile/edit-profile')}>Edit Profile</button>
-                    <button className="share-profile">Share Profile</button>
+                    <button className="share-profile" onClick={handleShareProfile}>Share Profile</button>
                 </div>
             </div>
 
