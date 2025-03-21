@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext, useRef } from 'react'
+import './EditProfileView.css'
 import '../ListingForm/ListingForm.css'
+import { AuthContext } from '../../Store/AuthContext'
 
 function EditProfileView() {
+    const { user } = useContext(AuthContext)
+    const profilePicRef = useRef()
 
     // Handle eidtted profile details submition
     const submitProfileEdit = () => {
@@ -57,6 +61,14 @@ function EditProfileView() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="input-section">
+                        <h4>Profile photo</h4>
+                        <input type="file"
+                            accept='image/*'
+                            style={{ display: 'none' }}
+                            ref={profilePicRef} />
+                        <img src={user?.photoURL || "https://img.icons8.com/?size=100&id=65342&format=png&color=000000"} onClick={() => profilePicRef.current?.click()} alt="user-profile" style={{ width: '7.5rem' }} />
                     </div>
                     <div className="input-section">
                         <button type='submit' className='submit-btn editProfile'>Save Changes</button>
