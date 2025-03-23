@@ -103,6 +103,8 @@ function App() {
   // Check user sign-in status
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(auth, (userAuth) => {
+      console.log("From App.js :", userAuth) // Temp
+      
       if (userAuth?.emailVerified) {
         setUser((prev) => ({ ...prev, ...userAuth }))
         console.log('User logged in :', userAuth.displayName, '|', userAuth.email)

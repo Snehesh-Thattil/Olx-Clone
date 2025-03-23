@@ -1,3 +1,7 @@
+.EditProfileForm {
+  padding-top: 5rem;
+}
+
 .ListingForm,
 .EditProfileForm {
   width: 100%;
@@ -61,6 +65,15 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+.ListingForm .details form .input-section .editFormImg,
+.EditProfileForm .details form .input-section .editFormImg {
+  border: 4px solid rgb(33, 115, 148);
+  border-radius: 50%;
+  width: 7.5rem;
+  height: 7.5rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
 .ListingForm .details form .input-section h4,
 .EditProfileForm .details form .input-section h4 {
   color: #333;
@@ -68,6 +81,22 @@
 .ListingForm .details form .input-section .input-field,
 .EditProfileForm .details form .input-section .input-field {
   width: 50%;
+  position: relative;
+}
+.ListingForm .details form .input-section .input-field .note,
+.EditProfileForm .details form .input-section .input-field .note {
+  position: absolute;
+  left: 110%;
+  top: 11%;
+  width: 20rem;
+  text-align: justify;
+  font-weight: normal;
+  outline: 1px solid rgba(128, 128, 128, 0.582);
+  padding: 0.75rem;
+}
+.ListingForm .details form .input-section .input-field .note span,
+.EditProfileForm .details form .input-section .input-field .note span {
+  font-weight: bold;
 }
 .ListingForm .details form .input-section .input-field label,
 .EditProfileForm .details form .input-section .input-field label {
@@ -83,7 +112,7 @@
 .EditProfileForm .details form .input-section .input-field textarea {
   width: 100%;
   padding: 10px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   font-size: 0.85rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -220,6 +249,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding: 1rem 0;
 }
 .ListingForm .details form .input-section .contact-infos .name-photo,
 .EditProfileForm .details form .input-section .contact-infos .name-photo {
@@ -247,18 +277,47 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 0.5rem;
+  position: relative;
+}
+.ListingForm .details form .input-section .contact-infos .phone .note,
+.ListingForm .details form .input-section .contact-infos .email .note,
+.EditProfileForm .details form .input-section .contact-infos .phone .note,
+.EditProfileForm .details form .input-section .contact-infos .email .note {
+  position: absolute;
+  left: 110%;
+  top: 0%;
+  width: 15rem;
+  text-align: justify;
+  font-weight: normal;
+  outline: 1px solid rgba(128, 128, 128, 0.582);
+  padding: 0.25rem;
+}
+.ListingForm .details form .input-section .contact-infos .phone .note span,
+.ListingForm .details form .input-section .contact-infos .email .note span,
+.EditProfileForm .details form .input-section .contact-infos .phone .note span,
+.EditProfileForm .details form .input-section .contact-infos .email .note span {
+  font-weight: bold;
+  word-spacing: 0px;
 }
 .ListingForm .details form .input-section .contact-infos .phone .phone-input span,
+.ListingForm .details form .input-section .contact-infos .phone .email-input span,
 .ListingForm .details form .input-section .contact-infos .email .phone-input span,
+.ListingForm .details form .input-section .contact-infos .email .email-input span,
 .EditProfileForm .details form .input-section .contact-infos .phone .phone-input span,
-.EditProfileForm .details form .input-section .contact-infos .email .phone-input span {
+.EditProfileForm .details form .input-section .contact-infos .phone .email-input span,
+.EditProfileForm .details form .input-section .contact-infos .email .phone-input span,
+.EditProfileForm .details form .input-section .contact-infos .email .email-input span {
   font-size: 0.85rem;
   margin-right: 5px;
 }
 .ListingForm .details form .input-section .contact-infos .phone .phone-input input,
+.ListingForm .details form .input-section .contact-infos .phone .email-input input,
 .ListingForm .details form .input-section .contact-infos .email .phone-input input,
+.ListingForm .details form .input-section .contact-infos .email .email-input input,
 .EditProfileForm .details form .input-section .contact-infos .phone .phone-input input,
-.EditProfileForm .details form .input-section .contact-infos .email .phone-input input {
+.EditProfileForm .details form .input-section .contact-infos .phone .email-input input,
+.EditProfileForm .details form .input-section .contact-infos .email .phone-input input,
+.EditProfileForm .details form .input-section .contact-infos .email .email-input input {
   padding: 5px 7.5px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -266,9 +325,13 @@
   transition: border-color 0.3s;
 }
 .ListingForm .details form .input-section .contact-infos .phone .phone-input input:focus,
+.ListingForm .details form .input-section .contact-infos .phone .email-input input:focus,
 .ListingForm .details form .input-section .contact-infos .email .phone-input input:focus,
+.ListingForm .details form .input-section .contact-infos .email .email-input input:focus,
 .EditProfileForm .details form .input-section .contact-infos .phone .phone-input input:focus,
-.EditProfileForm .details form .input-section .contact-infos .email .phone-input input:focus {
+.EditProfileForm .details form .input-section .contact-infos .phone .email-input input:focus,
+.EditProfileForm .details form .input-section .contact-infos .email .phone-input input:focus,
+.EditProfileForm .details form .input-section .contact-infos .email .email-input input:focus {
   border-color: #007bff;
 }
 .ListingForm .details form .input-section .submit-btn,
@@ -298,32 +361,110 @@
 }
 
 @media screen and (max-width: 767px) {
-  .Listing .details {
+  .EditProfileForm {
+    padding-top: 10rem;
+  }
+  .ListingForm .details,
+  .EditProfileForm .details {
     width: 95%;
   }
-  .Listing .details form .input-section .contact-infos,
-  .Listing .details form .input-section .input-field {
+  .ListingForm .details form .input-section .input-field,
+  .EditProfileForm .details form .input-section .input-field {
     width: 100%;
   }
-  .Listing .details form .input-section .contact-infos .images-grid,
-  .Listing .details form .input-section .input-field .images-grid {
+  .ListingForm .details form .input-section .input-field .note,
+  .EditProfileForm .details form .input-section .input-field .note {
+    position: unset;
+    left: unset;
+    top: unset;
+    display: flex;
+    flex-direction: column;
+    width: unset;
+  }
+  .ListingForm .details form .input-section .input-field .images-grid,
+  .EditProfileForm .details form .input-section .input-field .images-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .ListingForm .details form .input-section .contact-infos,
+  .EditProfileForm .details form .input-section .contact-infos {
+    width: 100%;
+  }
+  .ListingForm .details form .input-section .contact-infos .phone,
+  .ListingForm .details form .input-section .contact-infos .email,
+  .EditProfileForm .details form .input-section .contact-infos .phone,
+  .EditProfileForm .details form .input-section .contact-infos .email {
+    display: flex;
+    gap: 0.5rem;
+    align-items: start;
+    flex-direction: column;
+  }
+  .ListingForm .details form .input-section .contact-infos .phone .email-input,
+  .ListingForm .details form .input-section .contact-infos .phone .phone-input,
+  .ListingForm .details form .input-section .contact-infos .email .email-input,
+  .ListingForm .details form .input-section .contact-infos .email .phone-input,
+  .EditProfileForm .details form .input-section .contact-infos .phone .email-input,
+  .EditProfileForm .details form .input-section .contact-infos .phone .phone-input,
+  .EditProfileForm .details form .input-section .contact-infos .email .email-input,
+  .EditProfileForm .details form .input-section .contact-infos .email .phone-input {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .ListingForm .details form .input-section .contact-infos .phone .email-input input,
+  .ListingForm .details form .input-section .contact-infos .phone .phone-input input,
+  .ListingForm .details form .input-section .contact-infos .email .email-input input,
+  .ListingForm .details form .input-section .contact-infos .email .phone-input input,
+  .EditProfileForm .details form .input-section .contact-infos .phone .email-input input,
+  .EditProfileForm .details form .input-section .contact-infos .phone .phone-input input,
+  .EditProfileForm .details form .input-section .contact-infos .email .email-input input,
+  .EditProfileForm .details form .input-section .contact-infos .email .phone-input input {
+    width: 100%;
+  }
+  .ListingForm .details form .input-section .contact-infos .phone .note,
+  .ListingForm .details form .input-section .contact-infos .email .note,
+  .EditProfileForm .details form .input-section .contact-infos .phone .note,
+  .EditProfileForm .details form .input-section .contact-infos .email .note {
+    position: unset;
+    left: unset;
+    top: unset;
+    width: 100%;
   }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
-  .Listing .details {
-    width: 70%;
+  .EditProfileForm {
+    padding-top: 10rem;
   }
-  .Listing .details form .input-section .contact-infos,
-  .Listing .details form .input-section .input-field {
-    width: 70%;
+  .ListingForm .details,
+  .EditProfileForm .details {
+    width: 75%;
   }
-  .Listing .details form .input-section .contact-infos .images-grid,
-  .Listing .details form .input-section .input-field .images-grid {
+  .ListingForm .details form .input-section .input-field,
+  .EditProfileForm .details form .input-section .input-field {
+    width: 60%;
+  }
+  .ListingForm .details form .input-section .input-field .note,
+  .EditProfileForm .details form .input-section .input-field .note {
+    left: 105%;
+    width: 12.5rem;
+    padding: 0.5rem;
+  }
+  .ListingForm .details form .input-section .input-field .images-grid,
+  .EditProfileForm .details form .input-section .input-field .images-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  .Listing .details form .input-section .contact-infos .images-grid .image-item,
-  .Listing .details form .input-section .input-field .images-grid .image-item {
+  .ListingForm .details form .input-section .input-field .images-grid .image-item,
+  .EditProfileForm .details form .input-section .input-field .images-grid .image-item {
     height: 7rem;
+  }
+  .ListingForm .details form .input-section .contact-infos,
+  .EditProfileForm .details form .input-section .contact-infos {
+    width: 65%;
+  }
+  .ListingForm .details form .input-section .contact-infos .phone .note,
+  .ListingForm .details form .input-section .contact-infos .email .note,
+  .EditProfileForm .details form .input-section .contact-infos .phone .note,
+  .EditProfileForm .details form .input-section .contact-infos .email .note {
+    left: 100%;
+    width: 12.5rem;
   }
 }/*# sourceMappingURL=ListingForm.css.map */
