@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { auth } from '../../Firebase/firbase-config'
+import { auth } from '../../Firebase/firebase-config'
 import './SettingsView.css'
 import { deleteUser, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'

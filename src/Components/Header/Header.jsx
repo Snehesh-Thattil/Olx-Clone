@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../Store/AuthContext'
 import ProfileOptions from '../ProfileOptions/ProfileOptions'
 import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore'
-import { db } from '../../Firebase/firbase-config'
+import { db } from '../../Firebase/firebase-config'
 import { LoginBoxContext } from '../../Store/LoginBoxContext'
 
 function Header({ search, setSearch }) {

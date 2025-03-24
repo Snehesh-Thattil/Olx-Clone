@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Logo from '../../Assets/Images/olx-logo.png';
 import '../Signup/SignUp.css';
 import { sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../Firebase/firbase-config';
+import { auth } from '../../Firebase/firebase-config';
 import Loader from '../Loader/Loader';
 
 function SignIn({ setLoginBox }) {

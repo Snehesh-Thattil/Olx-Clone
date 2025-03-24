@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react'
 import './ProfileOptions.css'
 import { AuthContext } from '../../Store/AuthContext'
 import { signOut } from 'firebase/auth'
-import { auth } from '../../Firebase/firbase-config'
+import { auth } from '../../Firebase/firebase-config'
 import { useNavigate } from 'react-router-dom'
 
 function ProfileOptions({ mobile, setLoginBox }) {

@@ -10,7 +10,7 @@ import { ProductsContext } from './Store/ProductContext'
 import { onIdTokenChanged } from 'firebase/auth'
 import axios from "axios"
 import MyAds from './Pages/MyAds'
-import { auth, db } from './Firebase/firbase-config'
+import { auth, db } from './Firebase/firebase-config'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import Wishlist from './Pages/Wishlist'
 import Settings from './Pages/Settings'

@@ -1,74 +1,165 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useRef, useState, useEffect } from 'react'
 import '../ListingForm/ListingForm.css'
 import { AuthContext } from '../../Store/AuthContext'
-import { EmailAuthProvider, reauthenticateWithCredential, updateEmail, updateProfile } from 'firebase/auth'
-import { auth } from '../../Firebase/firbase-config'
+import { EmailAuthProvider, PhoneAuthProvider, reauthenticateWithCredential, sendEmailVerification, signInWithCredential, updateEmail, updateProfile } from 'firebase/auth';
+import { auth, storage } from '../../Firebase/firebase-config'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { RecaptchaVerifier } from "firebase/auth"
 
 function EditProfileView() {
     const { user } = useContext(AuthContext)
     const profilePicRef = useRef()
+    const [password, setPassword] = useState('')
     const [update, setUpdate] = useState({
-        email: user?.email || '',
-        phone: user?.phone || '',
-        name: user?.displayName || '',
-        about: user?.about || '',
-        address: user?.address || '',
-        photo: user?.photoURL
+        email: '',
+        phone: '',
+        name: '',
+        about: '',
+        address: '',
+        photo: ''
     })
-
-    console.log("ContextUser", user) // Temp
-
+    const [selectedPhoto, setSelectedPhoto] = useState(null)
     const currUser = auth?.currentUser
 
-    console.log("CurrentUser :", currUser) // Temp
+    console.log(currUser)
 
-    // Update email address of the user
-    const changeEmail = async (newEmail, password) => {
+    // Sync user data with form state when context updates
+    useEffect(() => {
+        setUpdate({
+            email: user?.email || '',
+            phone: user?.phone || '',
+            name: user?.displayName || '',
+            about: user?.about || '',
+            address: user?.address || '',
+            photo: user?.photoURL || ''
+        });
+    }, [user])
+
+    // Add reCAPTCHA verifier for security before sending OTP.
+    useEffect(() => {
+        const initializeRecaptcha = () => {
+            const recaptchaContainer = document.getElementById("recaptcha-container")
+            if (recaptchaContainer && !window.recaptchaVerifier) {
+                window.recaptchaVerifier = new RecaptchaVerifier(
+                    'recaptcha-container',
+                    { size: "invisible" }, auth)
+            }
+        }
+
+        // Delay initialization slightly to ensure DOM is ready
+        const timer = setTimeout(initializeRecaptcha, 100)
+        return () => clearTimeout(timer)
+    }, [])
+
+    // Function to update phone number
+    const updatePhoneNumber = async (newPhone) => {
+        if (!auth) {
+            console.error("Firebase auth not initialized")
+            return
+        }
+
+        if (!window.recaptchaVerifier) {
+            alert("reCAPTCHA not initialized properly.")
+            return
+        }
+
         try {
-            const credentials = EmailAuthProvider.credential(user?.email, password)
-            await reauthenticateWithCredential(currUser, credentials)
+            const provider = new PhoneAuthProvider(auth)
+            const verificationId = await provider.verifyPhoneNumber(`+91${newPhone}`, window.recaptchaVerifier)
+
+            const otp = prompt("Enter the OTP sent to your phone:")
+            const credential = PhoneAuthProvider.credential(verificationId, otp)
+
+            await signInWithCredential(auth, credential)
+            console.log("Phone number updated successfully!")
+        }
+        catch (err) {
+            console.error("Error updating phone number", err.message)
+        }
+    }
+
+    // Function to update email after re-authentication
+    const changeEmail = async (newEmail) => {
+        try {
+            const credential = EmailAuthProvider.credential(currUser?.email, password)
+            await reauthenticateWithCredential(currUser, credential)
 
             await updateEmail(currUser, newEmail)
             console.log("Email updated successfully!")
+
+            await sendEmailVerification(currUser)
+            console.log("Verification email sent. Please check your inbox.")
         }
         catch (err) {
-            alert("Ohh no!, Something went wrong, cant update email")
+            alert("Ohh no! Something went wrong, can't update email")
             console.error("Error updating email", err.message)
         }
     }
 
-    // Handle edited profile details submition
-    const submitProfileEdit = () => {
-        const passwordInput = prompt("Confirm your current password")
-
-        if (user?.email !== update?.email) {
-            changeEmail(update?.email, passwordInput)
-        }
-
-        if (currUser?.phoneNumber !== update?.phone) {
-            changePhoneNumber(update?.phone, passwordInput)
-        }
-
-        updateProfile(currUser, {
-            displayName: update?.name,
-            about: update?.about, address: update?.address,
-            photoURL: update?.photo,
-            phoneNumber: update?.phone
-        })
+    // Generates a unique filename for profile pictures
+    const generateUniqueFileName = (file) => {
+        const timestamp = Date.now()
+        const randomStr = Math.random().toString(36).substring(2, 10)
+        return `${timestamp}_${randomStr}_${file.name}`
     }
 
-    // Handle input field changes realtime
-    const handleInputChange = (e) => {
+    // Uploads file to Firebase Storage and returns the download URL
+    const uploadFileAndGetURL = async (file) => {
+        const filename = generateUniqueFileName(file)
+        const storageRef = ref(storage, `/Users/profile/${filename}`)
+        const snapshot = await uploadBytes(storageRef, file)
+        return getDownloadURL(snapshot.ref)
+    }
 
-        setUpdate((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }))
+    // Handles the profile update submission
+    const submitProfileEdit = async (e) => {
+        e.preventDefault()
+        if (!password) {
+            alert("Please enter your password to proceed.")
+            return
+        }
+
+        if (user?.email !== update.email) {
+            await changeEmail(update.email)
+        }
+
+        let profileURL = update.photo
+        if (selectedPhoto) {
+            profileURL = await uploadFileAndGetURL(selectedPhoto)
+        }
+
+        if (user?.phone !== update.phone) {
+            await updatePhoneNumber(update.phone)
+        }
+
+        try {
+            await updateProfile(currUser, {
+                displayName: update.name,
+                photoURL: profileURL,
+            })
+            console.log("Profile updated successfully!")
+        } catch (err) {
+            console.error("Error updating profile", err.message)
+        }
+    }
+
+    // Handles real-time form input changes
+    const handleInputChange = (e) => {
+        setUpdate(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    }
+
+    // Handles profile picture selection
+    const handleFileChange = (e) => {
+        if (e.target.files[0]) {
+            setSelectedPhoto(e.target.files[0])
+        }
     }
 
     // JSX
     return (
         <div className='EditProfileForm'>
+            <div id="recaptcha-container"></div>  {/* Change Later */}
+
             <div className="details">
                 <h3>Edit Profile</h3>
 
@@ -150,9 +241,16 @@ function EditProfileView() {
                         <input type="file"
                             accept='image/*'
                             style={{ display: 'none' }}
-                            onChange={(e) => setUpdate({ ...update, photo: e.target.files[0] })}
+                            onChange={handleFileChange}
                             ref={profilePicRef} />
-                        <img className='editFormImg' src={update?.photo instanceof File ? URL.createObjectURL(update?.photo) : update?.photo || "https://img.icons8.com/?size=100&id=65342&format=png&color=000000"} onClick={() => profilePicRef.current?.click()} alt="user-profile" style={{ width: '7.5rem' }} />
+                        <img className='editFormImg' src={selectedPhoto ? URL.createObjectURL(selectedPhoto) : update?.photo || "https://img.icons8.com/?size=100&id=65342&format=png&color=000000"} onClick={() => profilePicRef.current?.click()} alt="user-profile" style={{ width: '7.5rem' }} />
+                    </div>
+                    <div className="input-section">
+                        <div className="input-field">
+                            <label>Password</label>
+                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                            <p>Enter your password for confirmation</p>
+                        </div>
                     </div>
                     <div className="input-section">
                         <button type='submit' className='submit-btn editProfile'>Save Changes</button>

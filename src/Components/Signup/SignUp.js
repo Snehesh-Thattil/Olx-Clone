@@ -3,7 +3,7 @@ import Logo from '../../Assets/Images/olx-logo.png';
 import './SignUp.css';
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';
-import { auth, db } from '../../Firebase/firbase-config';
+import { auth, db } from '../../Firebase/firebase-config';
 import Loader from '../Loader/Loader'
 
 function SignUp({ setLoginBox }) {
