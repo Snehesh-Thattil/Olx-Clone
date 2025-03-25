@@ -1,112 +1,34 @@
-import React, { useContext, useRef, useState, useEffect } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import '../ListingForm/ListingForm.css'
 import { AuthContext } from '../../Store/AuthContext'
-import { EmailAuthProvider, PhoneAuthProvider, reauthenticateWithCredential, sendEmailVerification, signInWithCredential, updateEmail, updateProfile } from 'firebase/auth';
-import { auth, storage } from '../../Firebase/firebase-config'
+import { EmailAuthCredential, reauthenticateWithCredential, updateProfile } from 'firebase/auth'
+import { auth, storage, db } from '../../Firebase/firebase-config'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { RecaptchaVerifier } from "firebase/auth"
+import { query, updateDoc } from 'firebase/firestore'
+import { collection, getDocs, where } from 'firebase/firestore'
+import { useNavigate } from 'react-router-dom'
 
 function EditProfileView() {
-    const { user } = useContext(AuthContext)
-    const profilePicRef = useRef()
+    const { user, setUser } = useContext(AuthContext)
     const [password, setPassword] = useState('')
-    const [update, setUpdate] = useState({
-        email: '',
-        phone: '',
-        name: '',
-        about: '',
-        address: '',
-        photo: ''
-    })
     const [selectedPhoto, setSelectedPhoto] = useState(null)
-    const currUser = auth?.currentUser
-
-    console.log(currUser)
-
-    // Sync user data with form state when context updates
-    useEffect(() => {
-        setUpdate({
-            email: user?.email || '',
-            phone: user?.phone || '',
-            name: user?.displayName || '',
-            about: user?.about || '',
-            address: user?.address || '',
-            photo: user?.photoURL || ''
-        });
-    }, [user])
-
-    // Add reCAPTCHA verifier for security before sending OTP.
-    useEffect(() => {
-        const initializeRecaptcha = () => {
-            const recaptchaContainer = document.getElementById("recaptcha-container")
-            if (recaptchaContainer && !window.recaptchaVerifier) {
-                window.recaptchaVerifier = new RecaptchaVerifier(
-                    'recaptcha-container',
-                    { size: "invisible" }, auth)
-            }
-        }
-
-        // Delay initialization slightly to ensure DOM is ready
-        const timer = setTimeout(initializeRecaptcha, 100)
-        return () => clearTimeout(timer)
-    }, [])
-
-    // Function to update phone number
-    const updatePhoneNumber = async (newPhone) => {
-        if (!auth) {
-            console.error("Firebase auth not initialized")
-            return
-        }
-
-        if (!window.recaptchaVerifier) {
-            alert("reCAPTCHA not initialized properly.")
-            return
-        }
-
-        try {
-            const provider = new PhoneAuthProvider(auth)
-            const verificationId = await provider.verifyPhoneNumber(`+91${newPhone}`, window.recaptchaVerifier)
-
-            const otp = prompt("Enter the OTP sent to your phone:")
-            const credential = PhoneAuthProvider.credential(verificationId, otp)
-
-            await signInWithCredential(auth, credential)
-            console.log("Phone number updated successfully!")
-        }
-        catch (err) {
-            console.error("Error updating phone number", err.message)
-        }
-    }
-
-    // Function to update email after re-authentication
-    const changeEmail = async (newEmail) => {
-        try {
-            const credential = EmailAuthProvider.credential(currUser?.email, password)
-            await reauthenticateWithCredential(currUser, credential)
-
-            await updateEmail(currUser, newEmail)
-            console.log("Email updated successfully!")
-
-            await sendEmailVerification(currUser)
-            console.log("Verification email sent. Please check your inbox.")
-        }
-        catch (err) {
-            alert("Ohh no! Something went wrong, can't update email")
-            console.error("Error updating email", err.message)
-        }
-    }
-
-    // Generates a unique filename for profile pictures
-    const generateUniqueFileName = (file) => {
-        const timestamp = Date.now()
-        const randomStr = Math.random().toString(36).substring(2, 10)
-        return `${timestamp}_${randomStr}_${file.name}`
-    }
+    const [update, setUpdate] = useState({
+        phone: user?.phone || '',
+        name: user?.displayName || '',
+        about: user?.about || '',
+        address: user?.address || '',
+        photo: user?.photoURL || ''
+    })
+    const profilePicRef = useRef()
+    const navigate = useNavigate()
 
     // Uploads file to Firebase Storage and returns the download URL
     const uploadFileAndGetURL = async (file) => {
-        const filename = generateUniqueFileName(file)
-        const storageRef = ref(storage, `/Users/profile/${filename}`)
+        const timestamp = Date.now()
+        const randomStr = Math.random().toString(36).substring(2, 10)
+        const filename = `${timestamp}_${randomStr}_${file.name}`
+
+        const storageRef = ref(storage, `/Images/Users/${filename}`)
         const snapshot = await uploadBytes(storageRef, file)
         return getDownloadURL(snapshot.ref)
     }
@@ -114,32 +36,39 @@ function EditProfileView() {
     // Handles the profile update submission
     const submitProfileEdit = async (e) => {
         e.preventDefault()
-        if (!password) {
-            alert("Please enter your password to proceed.")
-            return
-        }
-
-        if (user?.email !== update.email) {
-            await changeEmail(update.email)
-        }
-
-        let profileURL = update.photo
-        if (selectedPhoto) {
-            profileURL = await uploadFileAndGetURL(selectedPhoto)
-        }
-
-        if (user?.phone !== update.phone) {
-            await updatePhoneNumber(update.phone)
-        }
+        if (!password) return alert('Please enter your password.')
+        const currUser = auth?.currentUser
 
         try {
-            await updateProfile(currUser, {
-                displayName: update.name,
-                photoURL: profileURL,
+            const credential = EmailAuthCredential(currUser.email, password)
+            await reauthenticateWithCredential(currUser, credential)
+
+            let profileURL = selectedPhoto ? await uploadFileAndGetURL(selectedPhoto) : update.photo
+            await updateProfile(currUser, { displayName: update.name, photoURL: profileURL })
+
+            const q = query(collection(db, 'users'), where('id', '==', user.uid))
+            const snapshot = await getDocs(q)
+
+            await updateDoc(snapshot.docs[0].ref, {
+                about: update.about,
+                address: update.address,
+                phone: update.phone
             })
-            console.log("Profile updated successfully!")
-        } catch (err) {
-            console.error("Error updating profile", err.message)
+
+            setUser((prev) => ({
+                ...prev,
+                photoURL: profileURL,
+                displayName: update.name,
+                about: update.about,
+                address: update.address,
+                phone: update.phone
+            }))
+
+            console.log("Profile updated successfully")
+            navigate('/profile')
+        }
+        catch (err) {
+            console.error('Error updating profile:', err.message)
         }
     }
 
@@ -158,8 +87,6 @@ function EditProfileView() {
     // JSX
     return (
         <div className='EditProfileForm'>
-            <div id="recaptcha-container"></div>  {/* Change Later */}
-
             <div className="details">
                 <h3>Edit Profile</h3>
 
@@ -218,7 +145,6 @@ function EditProfileView() {
                                         onInput={(e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10)}
                                         required />
                                 </div>
-                                <h5 className='note'><span>✅ Yay! Your phone is verified.</span></h5>
                             </div>
                             <div className="email">
                                 <p>Email Id</p>
@@ -226,14 +152,13 @@ function EditProfileView() {
                                     <input type="email"
                                         maxLength="30"
                                         minLength="10"
-                                        placeholder='example@gmail.com'
-                                        value={update?.email}
+                                        value={user?.email}
+                                        readOnly
                                         name='email'
-                                        onChange={handleInputChange}
                                         required />
                                 </div>
-                                <h5 className='note'>{user?.emailVerified && <span>✅ Yay! Your email is verified.</span>} Email is never shared with external parties nor do we use it to spam you in any way.</h5>
                             </div>
+                            <h5 className='note'>{user?.emailVerified && <span>✅ Yay! Your email is verified.</span>} Email and phone never shared with external parties nor do we use it to spam you in any way.</h5>
                         </div>
                     </div>
                     <div className="input-section">

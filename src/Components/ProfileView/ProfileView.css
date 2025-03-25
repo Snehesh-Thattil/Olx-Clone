@@ -27,8 +27,12 @@
   transform: scale(1.005);
 }
 .ProfileView .profile-card .img-and-name .profile-image {
-  width: 100px;
+  width: 7.5rem;
+  height: 7.5rem;
   border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  outline: 3px solid rgb(206, 197, 197);
 }
 .ProfileView .profile-card .img-and-name .profile-name {
   margin: 10px 0;

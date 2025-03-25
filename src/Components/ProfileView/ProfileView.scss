@@ -29,8 +29,11 @@
 
         .img-and-name {
             .profile-image {
-                width: 100px;
+                width: 7.5rem;
+                height: 7.5rem;
                 border-radius: 50%;
+                object-fit: cover;
+                outline: 3px solid rgb(206, 197, 197);
             }
 
             .profile-name {

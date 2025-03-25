@@ -12,7 +12,23 @@ function Loader() {
     // Rendering Loader
     return (
         <div className="loader">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect fill="#CB0000" stroke="#CB0000" strokeWidth="15" width="30" height="30" x="25" y="50"><animate attributeName="y" calcMode="spline" dur="2" values="50;120;50;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></rect><rect fill="#CB0000" stroke="#CB0000" strokeWidth="15" width="30" height="30" x="85" y="50"><animate attributeName="y" calcMode="spline" dur="2" values="50;120;50;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></rect><rect fill="#CB0000" stroke="#CB0000" strokeWidth="15" width="30" height="30" x="145" y="50"><animate attributeName="y" calcMode="spline" dur="2" values="50;120;50;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></rect></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                <rect fill="#ADD8E6" stroke="#ADD8E6" strokeWidth="15" width="30" height="30" x="25" y="50">
+                    <animate attributeName="y" calcMode="spline" dur="2" values="50;120;50;"
+                        keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4">
+                    </animate>
+                </rect>
+                <rect fill="#ADD8E6" stroke="#ADD8E6" strokeWidth="15" width="30" height="30" x="85" y="50">
+                    <animate attributeName="y" calcMode="spline" dur="2" values="50;120;50;"
+                        keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2">
+                    </animate>
+                </rect>
+                <rect fill="#ADD8E6" stroke="#ADD8E6" strokeWidth="15" width="30" height="30" x="145" y="50">
+                    <animate attributeName="y" calcMode="spline" dur="2" values="50;120;50;"
+                        keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0">
+                    </animate>
+                </rect>
+            </svg>
         </div>
     )
 }

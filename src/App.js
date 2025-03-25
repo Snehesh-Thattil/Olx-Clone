@@ -83,16 +83,15 @@ function App() {
         const q = query(collection(db, 'users'), where('id', '==', user.uid))
         const userDocSnap = await getDocs(q)
 
-        if (!userDocSnap.empty) {
-          const userData = userDocSnap.docs[0].data()
-
-          setUser(prev => ({
-            ...prev,
-            recentPlaceSearches: userData.recentPlaceSearches || [],
-            recentProductSearches: userData.recentProductSearches || [],
-          }))
+        if (userDocSnap.empty) {
+          alert("No user document found!")
+          return
         }
-      } catch (err) {
+
+        const userData = userDocSnap.docs[0].data()
+        setUser(prev => ({ ...prev, ...userData }))
+      }
+      catch (err) {
         console.error("Error fetching recent searches:", err.message)
       }
     }
@@ -103,8 +102,6 @@ function App() {
   // Check user sign-in status
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(auth, (userAuth) => {
-      console.log("From App.js :", userAuth) // Temp
-      
       if (userAuth?.emailVerified) {
         setUser((prev) => ({ ...prev, ...userAuth }))
         console.log('User logged in :', userAuth.displayName, '|', userAuth.email)

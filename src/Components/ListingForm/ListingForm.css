@@ -250,6 +250,23 @@
   flex-direction: column;
   gap: 2rem;
   padding: 1rem 0;
+  position: relative;
+}
+.ListingForm .details form .input-section .contact-infos .note,
+.EditProfileForm .details form .input-section .contact-infos .note {
+  position: absolute;
+  left: 110%;
+  top: 11%;
+  width: 12.5rem;
+  text-align: justify;
+  font-weight: normal;
+  outline: 1px solid rgba(128, 128, 128, 0.582);
+  padding: 0.25rem;
+}
+.ListingForm .details form .input-section .contact-infos .note span,
+.EditProfileForm .details form .input-section .contact-infos .note span {
+  font-weight: bold;
+  word-spacing: 0px;
 }
 .ListingForm .details form .input-section .contact-infos .name-photo,
 .EditProfileForm .details form .input-section .contact-infos .name-photo {
@@ -277,27 +294,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 0.5rem;
-  position: relative;
-}
-.ListingForm .details form .input-section .contact-infos .phone .note,
-.ListingForm .details form .input-section .contact-infos .email .note,
-.EditProfileForm .details form .input-section .contact-infos .phone .note,
-.EditProfileForm .details form .input-section .contact-infos .email .note {
-  position: absolute;
-  left: 110%;
-  top: 0%;
-  width: 15rem;
-  text-align: justify;
-  font-weight: normal;
-  outline: 1px solid rgba(128, 128, 128, 0.582);
-  padding: 0.25rem;
-}
-.ListingForm .details form .input-section .contact-infos .phone .note span,
-.ListingForm .details form .input-section .contact-infos .email .note span,
-.EditProfileForm .details form .input-section .contact-infos .phone .note span,
-.EditProfileForm .details form .input-section .contact-infos .email .note span {
-  font-weight: bold;
-  word-spacing: 0px;
 }
 .ListingForm .details form .input-section .contact-infos .phone .phone-input span,
 .ListingForm .details form .input-section .contact-infos .phone .email-input span,
@@ -389,6 +385,13 @@
   .EditProfileForm .details form .input-section .contact-infos {
     width: 100%;
   }
+  .ListingForm .details form .input-section .contact-infos .note,
+  .EditProfileForm .details form .input-section .contact-infos .note {
+    position: unset;
+    left: unset;
+    top: unset;
+    width: 100%;
+  }
   .ListingForm .details form .input-section .contact-infos .phone,
   .ListingForm .details form .input-section .contact-infos .email,
   .EditProfileForm .details form .input-section .contact-infos .phone,
@@ -418,15 +421,6 @@
   .EditProfileForm .details form .input-section .contact-infos .phone .phone-input input,
   .EditProfileForm .details form .input-section .contact-infos .email .email-input input,
   .EditProfileForm .details form .input-section .contact-infos .email .phone-input input {
-    width: 100%;
-  }
-  .ListingForm .details form .input-section .contact-infos .phone .note,
-  .ListingForm .details form .input-section .contact-infos .email .note,
-  .EditProfileForm .details form .input-section .contact-infos .phone .note,
-  .EditProfileForm .details form .input-section .contact-infos .email .note {
-    position: unset;
-    left: unset;
-    top: unset;
     width: 100%;
   }
 }
@@ -460,11 +454,9 @@
   .EditProfileForm .details form .input-section .contact-infos {
     width: 65%;
   }
-  .ListingForm .details form .input-section .contact-infos .phone .note,
-  .ListingForm .details form .input-section .contact-infos .email .note,
-  .EditProfileForm .details form .input-section .contact-infos .phone .note,
-  .EditProfileForm .details form .input-section .contact-infos .email .note {
-    left: 100%;
+  .ListingForm .details form .input-section .contact-infos .note,
+  .EditProfileForm .details form .input-section .contact-infos .note {
+    left: 101%;
     width: 12.5rem;
   }
 }/*# sourceMappingURL=ListingForm.css.map */

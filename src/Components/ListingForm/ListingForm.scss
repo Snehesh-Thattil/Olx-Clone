@@ -245,6 +245,23 @@
                     flex-direction: column;
                     gap: 2rem;
                     padding: 1rem 0;
+                    position: relative;
+
+                    .note {
+                        position: absolute;
+                        left: 110%;
+                        top: 11%;
+                        width: 12.5rem;
+                        text-align: justify;
+                        font-weight: normal;
+                        outline: 1px solid rgba(128, 128, 128, 0.582);
+                        padding: .25rem;
+
+                        span {
+                            font-weight: bold;
+                            word-spacing: 0px;
+                        }
+                    }
 
                     .name-photo {
                         width: 100%;
@@ -270,23 +287,6 @@
                         align-items: center;
                         justify-content: space-between;
                         padding: 0 .5rem;
-                        position: relative;
-
-                        .note {
-                            position: absolute;
-                            left: 110%;
-                            top: 0%;
-                            width: 15rem;
-                            text-align: justify;
-                            font-weight: normal;
-                            outline: 1px solid rgba(128, 128, 128, 0.582);
-                            padding: .25rem;
-
-                            span {
-                                font-weight: bold;
-                                word-spacing: 0px;
-                            }
-                        }
 
                         .phone-input,
                         .email-input {
@@ -373,6 +373,13 @@
                     .contact-infos {
                         width: 100%;
 
+                        .note {
+                            position: unset;
+                            left: unset;
+                            top: unset;
+                            width: 100%;
+                        }
+
                         .phone,
                         .email {
                             display: flex;
@@ -390,13 +397,6 @@
                                 input {
                                     width: 100%;
                                 }
-                            }
-
-                            .note {
-                                position: unset;
-                                left: unset;
-                                top: unset;
-                                width: 100%;
                             }
                         }
                     }
@@ -440,12 +440,9 @@
                     .contact-infos {
                         width: 65%;
 
-                        .phone,
-                        .email {
-                            .note {
-                                left: 100%;
-                                width: 12.5rem;
-                            }
+                        .note {
+                            left: 101%;
+                            width: 12.5rem;
                         }
                     }
                 }
