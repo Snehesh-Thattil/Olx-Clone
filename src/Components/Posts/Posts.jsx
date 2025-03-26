@@ -7,11 +7,13 @@ import { db } from '../../Firebase/firebase-config'
 import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import useDateFormat from '../../Hooks/useDateFormat'
 import { LoginBoxContext } from '../../Store/LoginBoxContext'
+import { SearchContext } from '../../Store/SearchContext'
 
-function Posts({ MyWishlist, MyAdsList, title, search, fromProfile }) {
+function Posts({ MyWishlist, MyAdsList, title, fromProfile }) {
   const { products } = useContext(ProductsContext)
   const { setUser, user } = useContext(AuthContext)
   const { setLoginBox } = useContext(LoginBoxContext)
+  const { search } = useContext(SearchContext)
 
   const navigate = useNavigate()
   const { formatDate } = useDateFormat()

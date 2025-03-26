@@ -146,17 +146,18 @@ function ListingForm() {
         try {
             const productCollRef = collection(db, "products")
 
-            const uploadPromises = images.map((img) => {
-                const filename = generateUniqueFileName(img)
-                return uploadFileAndGetURL(img, `/Images/products/${filename}`)
-            })
+            const uploadPromises = images.filter((img) => img !== coverImage)
+                .map((img) => {
+                    const filename = generateUniqueFileName(img)
+                    return uploadFileAndGetURL(img, `/Images/products/${filename}`)
+                })
+
             const imgURLs = await Promise.all(uploadPromises)
+            const coverImgName = generateUniqueFileName(coverImage)
+            const coverImgURL = await uploadFileAndGetURL(coverImage, `/Images/products/${coverImgName}`)
 
             const sellerPhotoName = generateUniqueFileName(sellerInfo.photo)
             const sellerPhotoURL = await uploadFileAndGetURL(sellerInfo.photo, `/Images/products/${sellerPhotoName}`)
-
-            const coverImgName = generateUniqueFileName(coverImage)
-            const coverImgURL = await uploadFileAndGetURL(coverImage, `/Images/products/${coverImgName}`)
 
             await addDoc(productCollRef, {
                 ...productInfo,
@@ -300,7 +301,7 @@ function ListingForm() {
                                     style={{ display: 'none' }}
                                     onChange={(e) => setSellerInfo({ ...sellerInfo, photo: e.target.files[0] })} />
 
-                                <img src={sellerInfo.photo instanceof File ? URL.createObjectURL(sellerInfo?.photo) : sellerInfo?.photo || user?.photoURL || "https://img.icons8.com/?size=100&id=65342&format=png&color=000000"} onClick={() => profileInputRef.current?.click()} alt="" />
+                                <img src={sellerInfo.photo instanceof File ? URL.createObjectURL(sellerInfo?.photo) : sellerInfo?.photo || "https://img.icons8.com/?size=100&id=65342&format=png&color=000000"} onClick={() => profileInputRef.current?.click()} alt="" />
 
                                 <div className="name-input input-field">
                                     <label htmlFor="">Name</label>

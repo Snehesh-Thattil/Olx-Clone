@@ -1,8 +1,10 @@
-import React from "react"
+import React, { useContext } from "react"
 import "./Categories.css"
+import { SearchContext } from "../../Store/SearchContext"
 
-function Categories({ setSearch }) {
-    
+function Categories() {
+    const { setSearch } = useContext(SearchContext)
+
     // Handle selection of a category
     const handleSelect = (e) => {
         const category = e.currentTarget.textContent.trim()

@@ -1,0 +1,28 @@
+.ChatsView {
+  width: 100%;
+  padding: 6rem 1rem 2rem;
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ChatsView .box {
+  outline: 2px solid rgba(128, 128, 128, 0.692);
+  width: 30rem;
+  height: 15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 767px) {
+  .ChatsView {
+    padding: 10rem 1rem 1rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .ChatsView {
+    padding: 10rem 1rem 2rem;
+  }
+}/*# sourceMappingURL=ChatsView.css.map */

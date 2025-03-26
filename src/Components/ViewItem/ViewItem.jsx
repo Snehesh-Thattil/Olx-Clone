@@ -114,12 +114,17 @@ function ViewItem() {
 
             </div>
           </div>
-          :
-          <div className='details'>
-            {product.sellerInfo?.userVerified ? <img src={VerifiedUserTag} alt="loadimage" /> : <img src={featuredIconTag} alt='loadimage' />}
-            <h1>{product?.Brand}</h1>
-            <h2>{product['ad-title']}</h2>
-          </div>}
+          : product.category === 'Mobiles' ?
+            <div className='details'>
+              {product.sellerInfo?.userVerified ? <img src={VerifiedUserTag} alt="loadimage" /> : <img src={featuredIconTag} alt='loadimage' />}
+              <h1>{product?.Brand}</h1>
+              <h2>{product['ad-title']}</h2>
+            </div>
+            :
+            <div className='details'>
+              {product.sellerInfo?.userVerified ? <img src={VerifiedUserTag} alt="loadimage" /> : <img src={featuredIconTag} alt='loadimage' />}
+              <h1>{product['ad-title']}</h1>
+            </div>}
 
         <div className="price">
           <h1>&#x20B9; {product?.price} </h1>

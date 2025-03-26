@@ -171,6 +171,7 @@
 .EditProfileForm .details form .input-section .input-field.price-input .price-input-wrapper .currency-symbol {
   position: absolute;
   left: 1rem;
+  top: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
   color: #555353;
@@ -277,9 +278,11 @@
 }
 .ListingForm .details form .input-section .contact-infos .name-photo img,
 .EditProfileForm .details form .input-section .contact-infos .name-photo img {
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
   outline: 0.25rem outset skyblue;
 }
 .ListingForm .details form .input-section .contact-infos .name-photo .name-input,
@@ -391,6 +394,11 @@
     left: unset;
     top: unset;
     width: 100%;
+  }
+  .ListingForm .details form .input-section .contact-infos .name-photo img,
+  .EditProfileForm .details form .input-section .contact-infos .name-photo img {
+    width: 7rem;
+    height: 5rem;
   }
   .ListingForm .details form .input-section .contact-infos .phone,
   .ListingForm .details form .input-section .contact-infos .email,

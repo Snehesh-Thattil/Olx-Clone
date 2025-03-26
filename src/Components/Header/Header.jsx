@@ -11,13 +11,15 @@ import ProfileOptions from '../ProfileOptions/ProfileOptions'
 import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import { db } from '../../Firebase/firebase-config'
 import { LoginBoxContext } from '../../Store/LoginBoxContext'
+import { SearchContext } from '../../Store/SearchContext'
 
-function Header({ search, setSearch }) {
+function Header() {
   const [language, setLanguage] = useState('English')
   const [locationOpts, setLocationOpts] = useState(false)
   const [productOpts, setProductOpts] = useState(false)
   const { user, setUser } = useContext(AuthContext)
   const { loginBox, setLoginBox } = useContext(LoginBoxContext)
+  const { search, setSearch } = useContext(SearchContext)
 
   const navigate = useNavigate()
 
@@ -101,6 +103,7 @@ function Header({ search, setSearch }) {
 
     setSearch(prev => ({ ...prev, place, product }))
     await updateSearchLog(place, product)
+    navigate('/')
   }
 
   // Handle location select by options

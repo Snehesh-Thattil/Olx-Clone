@@ -162,6 +162,7 @@
                             .currency-symbol {
                                 position: absolute;
                                 left: 1rem;
+                                top: .5rem;
                                 font-size: 1rem;
                                 font-weight: 600;
                                 color: #555353;
@@ -270,9 +271,10 @@
                         align-items: center;
 
                         img {
-                            width: 5.5rem;
-                            height: 5.5rem;
+                            width: 6rem;
+                            height: 6rem;
                             border-radius: 50%;
+                            object-fit: cover;
                             outline: .25rem outset skyblue;
                         }
 
@@ -378,6 +380,13 @@
                             left: unset;
                             top: unset;
                             width: 100%;
+                        }
+
+                        .name-photo {
+                            img {
+                                width: 7rem;
+                                height: 5rem;
+                            }
                         }
 
                         .phone,

@@ -16,6 +16,7 @@ import Wishlist from './Pages/Wishlist'
 import Settings from './Pages/Settings'
 import Profile from './Pages/Profile'
 import EditProfile from './Pages/EditProfile'
+import Chats from './Pages/Chats'
 
 function App() {
   const { user, setUser } = useContext(AuthContext)
@@ -137,6 +138,7 @@ function App() {
           <Route element={<Settings />} path='/settings' />
           <Route element={<Profile />} path='/profile' />
           <Route element={<EditProfile />} path='/profile/edit-profile' />
+          <Route element={<Chats />} path='/chats' />
         </Routes>
       }
     </div>
