@@ -31,10 +31,13 @@
   border-radius: 4px;
   background-color: white;
   position: relative;
+  z-index: 1;
 }
 .Header .placeSearch i {
   cursor: pointer;
-  margin: 0 2.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.5rem;
   border-radius: 50%;
   transition: transform 0.3s ease-in-out;
@@ -59,17 +62,16 @@
   box-shadow: -1px 1px 10px black;
   border-radius: 5px;
   overflow: scroll;
-  z-index: 1;
 }
 .Header .placeSearch .place-options::-webkit-scrollbar {
   display: none;
 }
 .Header .placeSearch .place-options .curr-loc-div {
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
   gap: 1rem;
   padding: 1rem;
-  justify-content: center;
-  align-items: center;
   border-bottom: 2px solid rgba(128, 128, 128, 0.568);
   cursor: pointer;
 }
@@ -110,7 +112,7 @@
   align-items: center;
   background-color: white;
   justify-content: space-between;
-  z-index: -1;
+  z-index: 1;
   position: relative;
 }
 .Header .productSearch .input {

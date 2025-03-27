@@ -7,7 +7,8 @@ function Categories() {
 
     // Handle selection of a category
     const handleSelect = (e) => {
-        const category = e.currentTarget.textContent.trim()
+        const category = e.currentTarget.textContent.trim().replace(/\s+/g, '')
+        console.log(category)
         setSearch(prev => ({ ...prev, product: category }))
     }
 

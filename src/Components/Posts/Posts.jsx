@@ -19,7 +19,7 @@ function Posts({ MyWishlist, MyAdsList, title, fromProfile }) {
   const { formatDate } = useDateFormat()
 
   // Filter products on the basis of search
-  const productsSearched = useMemo(() => {
+  const productsSearched = useMemo(() => { 
     if (!search?.product && !search?.place) return products
     if (!products) return
 

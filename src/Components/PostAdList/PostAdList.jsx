@@ -6,7 +6,7 @@ const categories = [
     { name: "Cars", subcategories: ["Cars"] },
     { name: "Mobiles", subcategories: ["Mobile Phones", "Accessories", "Tablets"] },
     { name: "Bikes", subcategories: ["Motorcycles", "Scooters", "Spare Parts", "Bicycles"] },
-    { name: "Furniture", subcategories: ["Sofa & Dining", "Beds & Wardrobes", "Home Decor & Garden", "Kids Furniture", "Other Household Items"] },
+    { name: "Furnitures", subcategories: ["Sofa & Dining", "Beds & Wardrobes", "Home Decor & Garden", "Kids Furniture", "Other Household Items"] },
     { name: "Fashion", subcategories: ["Men", "Women", "Kids"] },
     { name: "Electronics", subcategories: ["TVs Video - Audio", "Kitchen & Other Appliances", "Computers & Laptops, Accessories", "Cameras & Lenses", "Hard Disks, Printers & Monitors", "Games & Entertainment", "Fridges", "Washing Machines", "ACs"] },
     { name: "Vehicles & Spares", subcategories: ["Commercial & Other Vehicles", "Vehicle Spares"] },
