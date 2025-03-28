@@ -179,6 +179,7 @@ function ViewItem() {
         }
 
         <div className="description">
+          {user?.uid === product.sellerInfo?.userId && <i className="fa-solid fa-pen"></i>}
           <h3>Description</h3>
           <pre>{product.description}</pre>
         </div>
@@ -199,4 +200,5 @@ function ViewItem() {
     </div >
   )
 }
-export default ViewItem;
+
+export default ViewItem
