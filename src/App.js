@@ -17,6 +17,8 @@ import Settings from './Pages/Settings'
 import Profile from './Pages/Profile'
 import EditProfile from './Pages/EditProfile'
 import Chats from './Pages/Chats'
+import EditItem from './Pages/EditItem'
+import Notifications from './Pages/Notifications'
 
 function App() {
   const { user, setUser } = useContext(AuthContext)
@@ -139,6 +141,8 @@ function App() {
           <Route element={<Profile />} path='/profile' />
           <Route element={<EditProfile />} path='/profile/edit-profile' />
           <Route element={<Chats />} path='/chats' />
+          <Route element={<EditItem />} path='/view/edit-item' />
+          <Route element={<Notifications />} path='/notifications' />
         </Routes>
       }
     </div>

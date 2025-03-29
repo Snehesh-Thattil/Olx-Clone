@@ -214,12 +214,13 @@ function Header() {
         <div className="notifications" ref={notificationsRef} onClick={() => notificationsRef.current.classList.toggle('active')}>
           <i className="fa-regular fa-bell"></i>
           <div className="messgs" >
-            <li>dummy1</li>
-            <li>dummy2</li>
-            <li>dummy2</li>
-            <li>dummy4</li>
-            <li>dummy5</li>
             <div className="pointer"></div>
+            <li>New message from a buyer</li>
+            <li>notification dummy sample 1</li>
+            <li>dummy sample notification 2</li>
+            <li>notification dummy sample 3</li>
+            <li>sample dummy notification 4</li>
+            <li onClick={() => navigate('/notifications')}><i className="fa-solid fa-square-up-right"></i></li>
           </div>
         </div>
 

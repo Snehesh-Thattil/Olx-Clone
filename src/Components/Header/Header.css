@@ -301,6 +301,15 @@
   background-color: rgba(211, 205, 205, 0.795);
   color: #014b53;
 }
+.Header .right-section .notifications .messgs li i {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.75;
+  border-radius: 2px;
+  padding: 3px;
+}
 .Header .right-section .notifications .messgs .pointer {
   position: absolute;
   rotate: 45deg;

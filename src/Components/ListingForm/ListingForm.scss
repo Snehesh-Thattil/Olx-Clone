@@ -3,6 +3,7 @@
 }
 
 .ListingForm,
+.ItemEditForm,
 .EditProfileForm {
     width: 100%;
     display: flex;
@@ -349,6 +350,7 @@
     }
 
     .ListingForm,
+    .ItemEditForm,
     .EditProfileForm {
         .details {
             width: 95%;
@@ -384,7 +386,7 @@
 
                         .name-photo {
                             img {
-                                width: 7rem;
+                                width: 5rem;
                                 height: 5rem;
                             }
                         }
@@ -421,6 +423,7 @@
     }
 
     .ListingForm,
+    .ItemEditForm,
     .EditProfileForm {
         .details {
             width: 75%;

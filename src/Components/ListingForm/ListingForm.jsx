@@ -146,18 +146,17 @@ function ListingForm() {
         try {
             const productCollRef = collection(db, "products")
 
-            const uploadPromises = images.filter((img) => img !== coverImage)
-                .map((img) => {
-                    const filename = generateUniqueFileName(img)
-                    return uploadFileAndGetURL(img, `/Images/products/${filename}`)
-                })
+            const uploadPromises = images.filter((img) => img !== coverImage).map((img) => {
+                const filename = generateUniqueFileName(img)
+                return uploadFileAndGetURL(img, `/Images/products/${filename}`)
+            })
 
             const imgURLs = await Promise.all(uploadPromises)
             const coverImgName = generateUniqueFileName(coverImage)
             const coverImgURL = await uploadFileAndGetURL(coverImage, `/Images/products/${coverImgName}`)
 
             const sellerPhotoName = generateUniqueFileName(sellerInfo.photo)
-            const sellerPhotoURL = await uploadFileAndGetURL(sellerInfo.photo, `/Images/products/${sellerPhotoName}`)
+            const sellerPhotoURL = await uploadFileAndGetURL(sellerInfo.photo, `/Images/users/${sellerPhotoName}`)
 
             await addDoc(productCollRef, {
                 ...productInfo,

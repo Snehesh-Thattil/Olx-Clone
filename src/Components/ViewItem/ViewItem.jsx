@@ -19,12 +19,10 @@ function ViewItem() {
 
   const navigate = useNavigate()
   const location = useLocation()
-  const { product } = location?.state || null
-  const { latitude, longitude } = product.sellerInfo?.coords
+  const { product } = location?.state || {}
+  const { latitude, longitude } = product.sellerInfo?.coords || null
   const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
   const images = [product.coverImgURL, ...product.imgURLs]
-
-  console.log(product)
 
   // Finding similar products to display
   useEffect(() => {
@@ -76,20 +74,14 @@ function ViewItem() {
         <div className="seller-tools">
           <button>Delete</button>
           <button>Mark as Sold out</button>
-          <button onClick={() => navigate('/updating-form', {
-            state: {
-              subcategory: product.subcategory,
-              category: product.category,
-              editProduct: product
-            }
-          })}>Edit</button>
+          <button onClick={() => navigate('/view/edit-item', { state: { editProduct: product } })}>Edit</button>
         </div>
       }
 
       <div className="productInfos">
 
         {['Cars', 'Scooters', 'Motorcycles', 'Commercial & Other Vehicles']
-          .includes(product.category) ?
+          .includes(product.category || product?.subcategory) ?
           <div className="details">
             {product.sellerInfo?.userVerified ? <img src={VerifiedUserTag} alt="loadimage" /> : <img src={featuredIconTag} alt='loadimage' />}
             <h1>{product?.Brand} {product?.Model} ({product?.Year})</h1>
