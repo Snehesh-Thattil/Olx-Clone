@@ -10,7 +10,8 @@
   justify-content: center;
   gap: 0.5rem;
   text-align: left;
-  padding: 2rem;
+  padding: 3rem 1rem 1rem;
+  max-width: 100%;
 }
 .MyAdsView .stats .title {
   color: #265764;
@@ -40,8 +41,19 @@
   text-shadow: 2px 2px 10px black;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 767px) {
   .MyAdsView {
     padding: 8rem 0.5rem 1rem;
+  }
+  .MyAdsView .stats h4 {
+    font-size: 11px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .MyAdsView {
+    padding: 8rem 0.5rem 1rem;
+  }
+  .MyAdsView .stats h4 {
+    font-size: 15px;
   }
 }/*# sourceMappingURL=MyAds&Wishlist.css.map */

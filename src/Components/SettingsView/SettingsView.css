@@ -230,6 +230,9 @@
   .SettingsView .actions .delete-acc .box {
     margin: 0 1rem;
   }
+  .SettingsView .actions .chat-safety .content .toggle {
+    width: 55px;
+  }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
   .SettingsView {

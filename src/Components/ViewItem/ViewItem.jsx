@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './ViewItem.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import VerifiedUserTag from '../../Assets/Images/verified-user-icon.png'
@@ -7,8 +7,12 @@ import { ProductsContext } from '../../Store/ProductContext';
 import RelatedItems from './SubComponents/RelatedItems';
 import useDateFormat from '../../Hooks/useDateFormat';
 import { AuthContext } from '../../Store/AuthContext';
+import { doc, deleteDoc } from 'firebase/firestore'
+import { db } from '../../Firebase/firebase-config';
+import Loader from '../Loader/Loader';
 
 function ViewItem() {
+  const [load, setLoad] = useState(false)
   const [showInfo, setShowInfo] = useState(false)
   const [currentImgIndex, SetCurrentImgIndex] = useState(0)
   const [relatedItems, setRelatedItems] = useState([])
@@ -21,8 +25,11 @@ function ViewItem() {
   const location = useLocation()
   const { product } = location?.state || {}
   const { latitude, longitude } = product.sellerInfo?.coords || null
+
   const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
   const images = [product.coverImgURL, ...product.imgURLs]
+
+  const deleteBoxRef = useRef()
 
   // Finding similar products to display
   useEffect(() => {
@@ -58,9 +65,46 @@ function ViewItem() {
     }
   }
 
+  // Handle product deletion as per sellers request
+  const handleDeleteProduct = async () => {
+    setLoad(true)
+    const productDocRef = doc(db, "products", product.id)
+
+    try {
+      await deleteDoc(productDocRef)
+
+      console.log("Successfully deleted product from firebase")
+      navigate('/')
+      window.location.reload()
+    }
+    catch (err) {
+      alert("Error deleting the product :", err.message)
+      console.error("Error deleting the product:", err.message)
+    }
+    finally {
+      setLoad(false)
+    }
+  }
+
+
   // JSX
+  if (load) return <Loader />
   return (
     <div className="ViewItem" >
+
+      <div className='delete-product' ref={deleteBoxRef}>
+        <div className="box">
+          <h3>Delete product</h3>
+          <p>You are about to permanently delete this product. Are you sure about this?</p>
+          <div className="buttons">
+            <button className='proceed' onClick={handleDeleteProduct}>Delete</button>
+            <button onClick={() => {
+              deleteBoxRef.current.style.display = 'none'
+              document.body.style.overflow = "auto"
+            }}>Cancel</button>
+          </div>
+        </div>
+      </div>
 
       <div className="imageSection">
         <button className='prev' onClick={handlePrev} ><i className="fa-solid fa-chevron-left"></i></button>
@@ -68,15 +112,16 @@ function ViewItem() {
         <img src={images[currentImgIndex]} alt="product-photo" />
         <button className='share' onClick={handleShare}><i className="fa-solid fa-share-nodes"></i></button>
         <button className="wishlist"><i className="fa-solid fa-heart"></i></button>
-      </div>
 
-      {user?.uid === product.sellerInfo?.userId &&
-        <div className="seller-tools">
-          <button>Delete</button>
-          <button>Mark as Sold out</button>
-          <button onClick={() => navigate('/view/edit-item', { state: { editProduct: product } })}>Edit</button>
-        </div>
-      }
+        {user?.uid === product.sellerInfo?.userId &&
+          <button className='delete' onClick={() => {
+            deleteBoxRef.current.style.display = 'flex'
+            document.body.style.overflow = "hidden"
+          }}>Delete</button>}
+
+        {user?.uid === product.sellerInfo?.userId &&
+          <button className='edit' onClick={() => navigate('/view/edit-item', { state: { editProduct: product } })}>Edit</button>}
+      </div>
 
       <div className="productInfos">
 

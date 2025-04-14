@@ -8,6 +8,67 @@
   background: rgb(208, 214, 216);
   color: rgba(36, 34, 34, 0.952);
 }
+.ViewItem .delete-product {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.ViewItem .delete-product .box {
+  width: 25rem;
+  padding: 1rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  border-radius: 3px;
+  box-shadow: 3px 3px 15px black;
+}
+.ViewItem .delete-product .box p {
+  text-align: left;
+  color: rgb(105, 104, 104);
+  font-size: 15px;
+}
+.ViewItem .delete-product .box .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.ViewItem .delete-product .box .buttons button {
+  width: 50%;
+  padding: 0.75rem 1rem;
+  color: #02241e;
+  font-weight: bold;
+  outline: none;
+  border: 4px solid #002b36;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: white;
+}
+.ViewItem .delete-product .box .buttons button.proceed {
+  background-color: #002b36;
+  color: white;
+  margin-right: 0.5rem;
+}
+.ViewItem .delete-product .box .buttons button.proceed:hover {
+  background-color: white;
+  color: #002b36;
+  border: 4px solid rgba(155, 5, 5, 0.808);
+}
+.ViewItem .delete-product .box .buttons button:hover {
+  background-color: rgba(202, 192, 192, 0.753);
+  color: #004c3f;
+}
 .ViewItem .imageSection {
   width: 100%;
   height: 70vh;
@@ -61,6 +122,21 @@
   transform: scale(2);
   text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3), -2px 2px 3px rgba(0, 0, 0, 0.3), 2px -2px 3px rgba(0, 0, 0, 0.3), -2px -2px 3px rgba(0, 0, 0, 0.3);
 }
+.ViewItem .imageSection button.edit, .ViewItem .imageSection button.delete {
+  bottom: 0;
+  top: unset;
+  padding: 0.75rem 0.5rem;
+  width: 6rem;
+  font-weight: bold;
+  background-color: rgba(0, 47, 52, 0.9098039216);
+  color: white;
+}
+.ViewItem .imageSection button.edit {
+  right: 1rem;
+}
+.ViewItem .imageSection button.delete {
+  right: 7.5rem;
+}
 .ViewItem .imageSection button:hover {
   background-color: #3e4242;
   color: rgb(190, 185, 185);
@@ -69,24 +145,6 @@
   -o-object-fit: contain;
      object-fit: contain;
   width: 100%;
-}
-.ViewItem .seller-tools {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-.ViewItem .seller-tools button {
-  padding: 1rem;
-  border-radius: 5px;
-  border: none;
-  background-color: #033136;
-  color: white;
-  font-weight: bold;
-  min-width: 5rem;
-  cursor: pointer;
-}
-.ViewItem .seller-tools button:hover {
-  background-color: rgba(0, 47, 52, 0.8352941176);
 }
 .ViewItem .productInfos {
   width: 100%;
@@ -333,6 +391,16 @@
   .ViewItem .imageSection button.wishlist i {
     transform: scale(2.5);
   }
+  .ViewItem .imageSection button.edit, .ViewItem .imageSection button.delete {
+    padding: 0.85rem;
+    width: 7rem;
+  }
+  .ViewItem .imageSection button.edit {
+    right: 2rem;
+  }
+  .ViewItem .imageSection button.delete {
+    right: 10rem;
+  }
   .ViewItem .productInfos {
     grid-template-columns: 1fr;
     gap: 0.75rem;
@@ -376,6 +444,9 @@
   .ViewItem {
     padding: 10rem 1rem 1rem;
   }
+  .ViewItem .delete-product .box {
+    margin: 0 1rem;
+  }
   .ViewItem .imageSection {
     height: 40vh;
     padding: 0;
@@ -405,6 +476,18 @@
   }
   .ViewItem .imageSection button.wishlist i {
     transform: scale(1.5);
+  }
+  .ViewItem .imageSection button.edit, .ViewItem .imageSection button.delete {
+    transform: scale(0.75);
+    bottom: 0.5rem;
+    padding: 1rem;
+    width: 7rem;
+  }
+  .ViewItem .imageSection button.edit {
+    right: 0.25rem;
+  }
+  .ViewItem .imageSection button.delete {
+    right: 6rem;
   }
   .ViewItem .productInfos {
     grid-template-columns: 1fr;

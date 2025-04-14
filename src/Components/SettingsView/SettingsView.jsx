@@ -1,12 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { auth } from '../../Firebase/firebase-config'
 import './SettingsView.css'
-import { deleteUser, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth'
+import { deleteUser, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
+import Loader from '../Loader/Loader'
 
 function SettingsView() {
   const [action, setAction] = useState('')
   const [toggle, setToggle] = useState(false)
+  const [load, setLoad] = useState(false)
+  const [password, setPassword] = useState({ current: '', newPassword: '', confirmPassword: '' })
   const navigate = useNavigate()
   const userAuth = auth.currentUser
 
@@ -17,6 +20,41 @@ function SettingsView() {
       document.body.style.overflow = "auto"
     }
   }, [action])
+
+  // Change password of the user
+  const changePassword = async () => {
+    const user = auth.currentUser
+    if (!user) return
+
+    setLoad(true)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/
+
+    if (password.newPassword !== password.confirmPassword) {
+      alert("Passwords does not matching!")
+      setLoad(false)
+      return
+    }
+
+    if (!passwordRegex.test(password.newPassword)) {
+      alert("Password must be at least 6 characters, with uppercase, lowercase, and a special character.")
+      setLoad(false)
+      return
+    }
+
+    try {
+      const credential = EmailAuthProvider.credential(user.email, password.current)
+      await reauthenticateWithCredential(user, credential)
+      await updatePassword(user, password.confirmPassword)
+      alert("Password updated successfully!")
+      setPassword({ current: '', newPassword: '', confirmPassword: '' })
+    }
+    catch (error) {
+      console.error("Error updating password:", error.message)
+    }
+    finally {
+      setLoad(false)
+    }
+  }
 
   // Logout user from all devices
   const handleDeleteUser = useCallback(async () => {
@@ -62,6 +100,7 @@ function SettingsView() {
   }, [navigate, userAuth])
 
   // JSX
+  if (load) return <Loader />
   return (
     <div className='SettingsView'>
       <div className="options">
@@ -74,21 +113,27 @@ function SettingsView() {
       <div className="actions">
 
         {action === 'privacy' && <div className="change-pswrd">
-          <h3>Change passwor</h3>
+          <h3>Change Password</h3>
           <div className="content">
             <input type="password"
               name='current'
               placeholder='Current password'
+              value={password?.current}
+              onChange={(e) => setPassword((prev) => ({ ...prev, current: e.target.value }))}
             />
             <input type="password"
               name='change'
               placeholder='New password'
+              value={password?.newPassword}
+              onChange={(e) => setPassword((prev) => ({ ...prev, newPassword: e.target.value }))}
             />
             <input type="password"
               name='change'
               placeholder='Confirm password'
+              value={password?.confirmPassword}
+              onChange={(e) => setPassword((prev) => ({ ...prev, confirmPassword: e.target.value }))}
             />
-            <button>Change Password</button>
+            <button onClick={changePassword} disabled={load}> {load ? "Changing..." : "Change Password"} </button>
           </div>
         </div>}
 

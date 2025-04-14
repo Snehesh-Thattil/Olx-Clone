@@ -10,7 +10,8 @@
         justify-content: center;
         gap: .5rem;
         text-align: left;
-        padding: 2rem;
+        padding: 3rem 1rem 1rem;
+        max-width: 100%;
 
         .title {
             color: #265764;
@@ -45,8 +46,28 @@
     }
 }
 
-@media screen and (max-width: 1024px) {
+
+// MEDIA-QUERIES RESPOSIVENESS
+@media screen and (max-width: 767px) {
     .MyAdsView {
         padding: 8rem .50rem 1rem;
+
+        .stats {
+            h4 {
+                font-size: 11px;
+            }
+        }
+    }
+}
+
+@media (min-width:768px) and (max-width: 1024px) {
+    .MyAdsView {
+        padding: 8rem .50rem 1rem;
+
+        .stats {
+            h4 {
+                font-size: 15px;
+            }
+        }
     }
 }

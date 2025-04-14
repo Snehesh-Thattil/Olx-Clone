@@ -132,7 +132,7 @@ function SignUp({ setLoginBox }) {
             required
           />
 
-          <button>Signup</button>
+          <button>Create new user</button>
         </form>
 
         <p>Already have an account?<span onClick={() => setLoginBox('Sign-in')}>Login</span></p>

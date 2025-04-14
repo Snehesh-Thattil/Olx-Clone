@@ -38,12 +38,11 @@ function ProfileView() {
             <div className="profile-card">
                 <div className="img-and-name">
                     <img className="profile-image" src={user?.photoURL || "https://img.icons8.com/?size=100&id=65342&format=png&color=000000"} alt="Profile" />
-                    <h2 className="profile-name">Snehesh Thattil</h2>
+                    <h2 className="profile-name">{user?.displayName}</h2>
                 </div>
                 <div className="infos">
                     <p className="profile-info">Member since Jun 2021</p>
-                    <p className="profile-stats">0 Followers | 0 Following</p>
-                    <p className="profile-location">Paravoor, Ernakulam, Kerala</p>
+                    <p className="profile-location">{user?.address}</p>
                 </div>
 
                 <div className="buttons">

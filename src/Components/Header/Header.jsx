@@ -32,7 +32,11 @@ function Header() {
 
   // Verify user before proceeding certain clicks
   const handleVerifyUser = (path) => {
-    user ? navigate(path) : setLoginBox('Login')
+    if (user?.uid || user?.id) {
+      navigate(path)
+    } else {
+      setLoginBox('Sign-up')
+    }
   }
 
   // Handle Collapse both dropdowns
@@ -120,7 +124,7 @@ function Header() {
   if (loginBox === "Sign-up") return <SignUp setLoginBox={setLoginBox} />
   return (
     <div className="Header" ref={mobileNavRef}>
-      <ProfileOptions mobile setLoginBox={setLoginBox} />
+      <ProfileOptions mobile />
 
       <div className="logo">
         <i className="fa-solid fa-bars" onClick={() => mobileNavRef.current.classList.toggle('active')}></i>
@@ -233,7 +237,7 @@ function Header() {
             :
             <span className='link' onClick={() => setLoginBox('Sign-up')}>Sign Up</span>
           }
-          {user && <ProfileOptions />}
+          {(user?.uid || user?.id) && <ProfileOptions />}
         </div>
 
         <div className="sellButton" onClick={() => handleVerifyUser('/post-ads-list')}>

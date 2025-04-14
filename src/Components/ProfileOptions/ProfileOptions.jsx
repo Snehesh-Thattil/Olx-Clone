@@ -4,9 +4,11 @@ import { AuthContext } from '../../Store/AuthContext'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../Firebase/firebase-config'
 import { useNavigate } from 'react-router-dom'
+import { LoginBoxContext } from '../../Store/LoginBoxContext'
 
-function ProfileOptions({ mobile, setLoginBox }) {
+function ProfileOptions({ mobile }) {
     const { user } = useContext(AuthContext)
+    const { setLoginBox } = useContext(LoginBoxContext)
     const navigate = useNavigate()
 
     // Signing out user
@@ -22,10 +24,10 @@ function ProfileOptions({ mobile, setLoginBox }) {
 
     // Verify user before proceeding certain clicks
     const handleVerifyUser = (path) => {
-        if (user) {
+        if (user?.uid || user?.id) {
             navigate(path)
         } else {
-            setLoginBox('Login')
+            setLoginBox('Sign-up')
         }
     }
 
@@ -34,14 +36,14 @@ function ProfileOptions({ mobile, setLoginBox }) {
         <div className={mobile ? "ProfileOptions mobile" : "ProfileOptions"}>
             <div className="view-profile">
                 <div className="info">
-                    {user && <h2>{user.displayName?.slice(0, 1)}</h2>}
-                    {user && <h3>{user.displayName}</h3>}
+                    {user?.uid && <h2>{user.displayName?.slice(0, 1)}</h2>}
+                    {user?.uid && <h3>{user.displayName}</h3>}
                 </div>
-                {user ?
+                {user?.uid || user?.id ?
                     <button onClick={() => navigate('/profile')}>View and edit profile</button>
                     : <button onClick={() => setLoginBox('Sign-up')}>Sign up now</button>}
             </div>
-            <li onClick={() => navigate('/my-ads')}><i className="fa-solid fa-address-card"></i>My ADS</li>
+            <li onClick={() => handleVerifyUser('/my-ads')}><i className="fa-solid fa-address-card"></i>My ADS</li>
             <li onClick={() => window.open('https://www.olx.in/payments/businesspackages/my_account', '_blank')}><i className="fa-solid fa-file-contract"></i>Buy Business Package</li>
             <li onClick={() => window.open('https://www.olx.in/myorders/orders', '_blank')}><i className="fa-regular fa-credit-card"></i>Bought Packages & Billing</li>
             {mobile && <li onClick={() => handleVerifyUser('/wishlist')}><i className="fa-regular fa-heart"></i>Wishlist</li>}
@@ -50,7 +52,9 @@ function ProfileOptions({ mobile, setLoginBox }) {
             <li onClick={() => navigate('/settings')}><i className="fa-solid fa-gear"></i>Settings</li>
             <li onClick={() => window.open('https://help.olx.in/hc/en-us', '_blank')}><i className="fa-solid fa-question"></i>Help</li>
             <li onClick={() => window.open('https://www.olx.in/settings/privacy', '_blank')}><i className="fa-solid fa-download"></i>Install OLX Lite app</li>
-            <li onClick={() => handleSignOut()}><i className="fa-solid fa-arrow-right-from-bracket"></i>Logout</li>
+            {(user?.uid || user?.id) ?
+                <li onClick={() => handleSignOut()}><i className="fa-solid fa-arrow-right-from-bracket"></i>Logout</li>
+                : <li onClick={() => setLoginBox('Sign-up')}><i className="fa-solid fa-arrow-right-from-bracket"></i>Sign up</li>}
             {!mobile && <div className="pointer" ></div>}
         </div>
     )
