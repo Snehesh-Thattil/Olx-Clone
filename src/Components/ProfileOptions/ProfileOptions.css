@@ -20,7 +20,7 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  border-bottom: 1px solid #014b53;
+  border-bottom: 1px solid rgba(66, 180, 66, 0.7882352941);
 }
 .ProfileOptions .view-profile .info {
   display: flex;
@@ -32,7 +32,7 @@
 .ProfileOptions .view-profile .info h2 {
   text-decoration: none;
   color: white;
-  background-color: #002b30;
+  background-color: rgba(43, 156, 43, 0.8980392157);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,16 +43,18 @@
 .ProfileOptions .view-profile button {
   width: 100%;
   color: white;
-  padding: 7px;
+  padding: 10px;
   font-weight: 700;
-  border: 5px solid #002b30;
-  background-color: #002b30;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #4caf50, #7fcc76);
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .ProfileOptions .view-profile button:hover {
-  background-color: white;
-  color: black;
+  background: linear-gradient(135deg, #388e3c, #81c784);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.3);
 }
 .ProfileOptions li {
   width: 100%;
@@ -69,7 +71,7 @@
   justify-content: flex-start;
 }
 .ProfileOptions li:hover {
-  background-color: rgba(211, 205, 205, 0.795);
+  background-color: rgba(144, 238, 144, 0.3);
 }
 .ProfileOptions .pointer {
   position: absolute;
@@ -99,11 +101,15 @@
     transform: translateY(-150%);
     transition: transform 0.75s ease-in-out;
     overflow: scroll;
+    background-color: white;
   }
   .ProfileOptions.mobile::-webkit-scrollbar {
     display: none;
   }
   .ProfileOptions.mobile li {
     padding: 1rem;
+  }
+  .ProfileOptions.mobile li:hover {
+    background-color: rgba(144, 238, 144, 0.3);
   }
 }/*# sourceMappingURL=ProfileOptions.css.map */

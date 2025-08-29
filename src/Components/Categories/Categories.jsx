@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 import "./Categories.css"
 import { SearchContext } from "../../Store/SearchContext"
+import Banner from '../../Assets/Images/Grab-Banner.jpg'
 
 function Categories() {
     const { setSearch } = useContext(SearchContext)
@@ -16,7 +17,7 @@ function Categories() {
     return (
         <div className="Categories">
             <div className="banner">
-                <img src="../../../Images/banner copy.png" alt="Banner" />
+                <img src={Banner} alt="Banner" />
             </div>
             <ul className="icons">
                 {[{ name: "Mobiles", icon: "yL8eNVNhjNED" },

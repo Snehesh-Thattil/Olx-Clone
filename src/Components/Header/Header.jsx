@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import './Header.css'
-import OlxLogo from '../../Assets/OlxLogo'
+import Logo from '../../Assets/Images/Grab-Logo.jpeg'
 import Search from '../../Assets/Search'
 import SellBotton from '../../Assets/Images/Sell-Button.png'
 import SignIn from '../Signup/SignIn'
@@ -128,9 +128,11 @@ function Header() {
 
       <div className="logo">
         <i className="fa-solid fa-bars" onClick={() => mobileNavRef.current.classList.toggle('active')}></i>
-        <div onClick={() => navigate('/')} className="brandName">
-          <OlxLogo></OlxLogo>
-        </div>
+
+        <img src={Logo} alt="" onClick={() => navigate('/')} />
+        {/* <div onClick={() => navigate('/')} className="brandName">
+          <img src={Logo} alt="" />
+        </div> */}
       </div>
 
       <div className="placeSearch">

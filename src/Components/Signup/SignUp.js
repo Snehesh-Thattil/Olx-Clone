@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import Logo from '../../Assets/Images/olx-logo.png';
+import Logo from '../../Assets/Images/Grab-Logo.jpeg';
 import './SignUp.css';
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';

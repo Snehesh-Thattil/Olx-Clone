@@ -1,7 +1,7 @@
 .Posts {
   width: 100%;
   margin-top: 1.25rem;
-  background: rgb(235, 238, 239);
+  background: rgba(120, 255, 120, 0.2941176471);
   padding: 1.5rem;
   min-height: 50vh;
 }

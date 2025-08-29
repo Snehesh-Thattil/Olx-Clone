@@ -1,4 +1,4 @@
-import React from 'react';
+import Logo from '../../Assets/Images/Grab-Logo.jpeg'
 import './Footer.css';
 
 function Footer() {
@@ -24,7 +24,7 @@ function Footer() {
 
         <div className="about">
           <h3>ABOUT US</h3>
-          <a href="https://tech.olx.in/">Tech@OLX</a>
+          <a href="https://tech.olx.in/">Tech@Grab</a>
         </div>
 
         <div className="olx-links">
@@ -48,12 +48,12 @@ function Footer() {
             <a href="https://play.google.com/store/apps/details?id=com.olx.southasia"><img src="https://b.zmtcdn.com/data/webuikit/9f0c85a5e33adb783fa0aef667075f9e1556003622.png" alt="" /></a>
             <a href="https://itunes.apple.com/in/app/olx-buy-sell-near-you/id913492792?mt=8"><img src="https://b.zmtcdn.com/data/webuikit/23e930757c3df49840c482a8638bf5c31556001144.png" alt="" /></a>
           </div>
-        </div>   
+        </div>
       </div>
 
       <div className="subsidiaries">
         <div className="logos">
-          <a href="/"><img src="https://statics.olx.in/external/base/img/cartrade/logo/olx.svg?v=1" alt="" /></a>
+          <a href="/"><img className='grab-logo' src={Logo} alt="" /></a>
           <a href="/"><img src="https://statics.olx.in/external/base/img/cartrade/logo/cartrade_tech.svg?v=1" alt="" /></a>
           <a href="https://www.carwale.com/"><img src="https://statics.olx.in/external/base/img/cartrade/logo/carwale.svg?v=1" alt="" /></a>
           <a href="https://www.bikewale.com/"><img src="https://statics.olx.in/external/base/img/cartrade/logo/bikewale.svg?v=1" alt="" /></a>
@@ -62,7 +62,7 @@ function Footer() {
         </div>
         <div className="help">
           <a href="https://www.olx.in/en-in/sitemap/most-popular">Help - Sitemap</a>
-          <p>All rights reserved © 2006-2025 OLX</p>
+          <p>All rights reserved © 2006-2025 Grab</p>
         </div>
       </div>
 

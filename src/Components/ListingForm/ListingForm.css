@@ -395,7 +395,7 @@
   padding: 0.75rem 1rem;
   width: 10rem;
   font-weight: bold;
-  background-color: rgba(67, 169, 209, 0.836);
+  background-color: rgba(144, 238, 144, 0.85);
   border-radius: 5px;
   border: 0.5px solid gray;
   cursor: pointer;
@@ -404,19 +404,19 @@
 .ListingForm .details form .input-section .submit-btn:hover,
 .ItemEditForm .details form .input-section .submit-btn:hover,
 .EditProfileForm .details form .input-section .submit-btn:hover {
-  background-color: rgb(13, 155, 211);
+  background-color: rgb(60, 179, 113);
 }
 .ListingForm .details form .input-section .submit-btn.editProfile,
 .ItemEditForm .details form .input-section .submit-btn.editProfile,
 .EditProfileForm .details form .input-section .submit-btn.editProfile {
   margin-left: auto;
-  background-color: rgba(29, 45, 133, 0.836);
+  background-color: rgba(34, 139, 34, 0.85);
   color: white;
 }
 .ListingForm .details form .input-section .submit-btn.editProfile:hover,
 .ItemEditForm .details form .input-section .submit-btn.editProfile:hover,
 .EditProfileForm .details form .input-section .submit-btn.editProfile:hover {
-  background-color: rgba(29, 45, 133, 0.986);
+  background-color: rgb(34, 139, 34);
 }
 
 @media screen and (max-width: 767px) {

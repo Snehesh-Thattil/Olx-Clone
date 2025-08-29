@@ -19,10 +19,11 @@
             display: none;
         }
 
-        .brandName {
-            &:hover {
-                cursor: pointer;
-            }
+        img {
+            width: 5rem;
+            outline: 2px dotted lightgreen;
+            border-radius: 5px;
+            cursor: pointer;
         }
     }
 
@@ -32,7 +33,7 @@
         justify-content: space-between;
         gap: 10px;
         padding: 0 .5rem;
-        border: 2px solid #002f34;
+        border: 2px solid #039b0369;
         border-radius: 4px;
         background-color: white;
         position: relative;
@@ -49,7 +50,7 @@
 
             &.transform {
                 transform: rotate(180deg);
-                background-color: #025f693d;
+                background-color: rgba(144, 238, 144, 0.3);
             }
         }
 
@@ -90,7 +91,7 @@
                 }
 
                 i {
-                    color: blue;
+                    color: green;
                 }
             }
 
@@ -113,7 +114,7 @@
                     cursor: pointer;
 
                     &:hover {
-                        background-color: #014b5328;
+                        background-color: rgba(144, 238, 144, 0.3);
                     }
                 }
             }
@@ -121,7 +122,7 @@
     }
 
     .productSearch {
-        border: 2px solid #002f34;
+        border: 2px solid #039b0369;
         border-radius: 4px;
         display: flex;
         align-items: center;
@@ -144,7 +145,7 @@
                 font-size: 1rem;
 
                 &:focus {
-                    border: 1px solid black;
+                    border: 1px solid darkgreen;
                 }
             }
         }
@@ -155,8 +156,14 @@
             position: relative;
             display: flex;
             cursor: pointer;
-            background-color: #002f34;
+            background-color: #0d6b0dd8;
             border-radius: 0 4px 4px 0;
+            transform: scale(.9);
+            transition: transform .2s ease-in-out;
+
+            &:hover {
+                transform: scale(1);
+            }
 
             svg {
                 position: absolute;
@@ -201,7 +208,7 @@
                     cursor: pointer;
 
                     &:hover {
-                        background-color: #014b5328;
+                        background-color: rgba(144, 238, 144, 0.3);
                     }
                 }
             }
@@ -261,13 +268,13 @@
                     padding: 1rem;
                     cursor: pointer;
                     background-color: white;
-                    color: #002b30;
+                    color: #006400;
                     font-size: 15px;
                     font-weight: 600;
 
                     &:hover {
-                        background-color: rgba(211, 205, 205, 0.795);
-                        color: #014b53;
+                        background-color: rgba(144, 238, 144, 0.4);
+                        color: #013220;
                     }
                 }
 
@@ -291,11 +298,11 @@
             border-radius: 50%;
 
             &:hover {
-                background-color: rgba(189, 222, 235, 0.89);
+                background-color: rgba(144, 238, 144, 0.3);
             }
 
             &:active {
-                background-color: #12a1b1;
+                background-color: #228B22;
                 border-radius: 50%;
             }
         }
@@ -309,7 +316,7 @@
 
             &.active {
                 i {
-                    background-color: #6f9ca146;
+                    background-color: rgba(144, 238, 144, 0.25);
                 }
 
                 .messgs {
@@ -341,8 +348,8 @@
                     background-color: white;
 
                     &:hover {
-                        background-color: rgba(211, 205, 205, 0.795);
-                        color: #014b53;
+                        background-color: rgba(144, 238, 144, 0.3);
+                        color: #013220;
                     }
 
                     i {
@@ -376,9 +383,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all .2s ease-in-out;
+            background-color: #006400;
 
             img {
                 border-radius: 30px;
+            }
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
             }
         }
 
@@ -393,7 +407,7 @@
             cursor: pointer;
 
             &.active {
-                background-color: #6f9ca146;
+                background-color: rgba(144, 238, 144, 0.25);
 
                 .ProfileOptions {
                     display: unset;
@@ -417,7 +431,7 @@
                 h3 {
                     text-decoration: none;
                     color: white;
-                    background-color: #002b30;
+                    background-color: #006400;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -427,7 +441,7 @@
                     cursor: pointer;
 
                     &:hover {
-                        background-color: #014b53;
+                        background-color: #228B22;
                     }
                 }
 
@@ -455,11 +469,10 @@
             }
         }
     }
-
 }
 
 
-// MEDIA-QUERIRES RESPONSIVENESS
+// MEDIA-QUERIES RESPONSIVENESS
 @media only screen and (max-width: 767px) {
     .Header {
         position: absolute;
@@ -468,7 +481,7 @@
         align-items: center;
         grid-template-rows: 1fr 1fr;
         gap: 0.5rem;
-        border-bottom: .5px solid #002b30;
+        border-bottom: .5px solid #006400;
 
         &.fixed {
             position: fixed;
@@ -478,7 +491,7 @@
             .logo {
                 .fa-bars {
                     transform: rotate(90deg) scale(1.2);
-                    background-color: #002b309d;
+                    background-color: rgba(34, 139, 34, 0.75);
                     color: white;
                 }
             }
@@ -490,6 +503,10 @@
 
         .logo {
             grid-area: 1/1/2/3;
+
+            img {
+                width: 3rem;
+            }
 
             .fa-bars {
                 display: block;
@@ -509,7 +526,7 @@
             padding: 0 .25rem;
             justify-content: flex-end;
             height: 2rem;
-            border: 1px solid #002f3450;
+            border: 1px solid rgba(0, 100, 0, 0.4);
             max-width: 100%;
             width: max-content;
 
@@ -549,7 +566,7 @@
 
             i.fa-heart {
                 transform: scale(1.5);
-                outline: 2px solid #002b30;
+                outline: 2px solid #006400;
                 padding: 2.5px;
                 border-radius: 50%;
             }
@@ -564,11 +581,11 @@
 
             .sellButton {
                 position: fixed;
-                bottom: 2.5rem;
+                bottom: 2rem;
                 left: 50%;
                 transform: translateX(-50%);
-                outline: .5px solid rgb(158, 151, 151);
-                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+                outline: 1px solid rgb(158, 151, 151);
+                box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
             }
         }
     }
@@ -581,10 +598,14 @@
         grid-template-rows: 1fr 1fr;
         align-items: center;
         gap: .5rem;
-        border-bottom: .5px solid #002b30;
+        border-bottom: .5px solid #006400;
 
         .logo {
             grid-area: 1/1/2/2;
+
+            img {
+                width: 4rem;
+            }
         }
 
         .placeSearch {
@@ -615,6 +636,10 @@
 
             .sellMenu {
                 margin-right: 10px;
+            }
+
+            .sellButton {
+                box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
             }
         }
     }

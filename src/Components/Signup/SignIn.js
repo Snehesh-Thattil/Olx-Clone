@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Logo from '../../Assets/Images/olx-logo.png';
+import Logo from '../../Assets/Images/Grab-Logo.jpeg';
 import '../Signup/SignUp.css';
 import { sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../Firebase/firebase-config';
@@ -74,7 +74,7 @@ function SignIn({ setLoginBox }) {
           <button>Login</button>
         </form>
 
-        <p className='link'>New to OLX? <span onClick={() => setLoginBox('Sign-up')}>SignUp</span></p>
+        <p className='link'>New to Grab? <span onClick={() => setLoginBox('Sign-up')}>SignUp</span></p>
 
         <div className="bottom-side">
           <h5>All your personal details are safe with us.</h5>

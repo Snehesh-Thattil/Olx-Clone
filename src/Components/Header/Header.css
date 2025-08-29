@@ -18,7 +18,10 @@
 .Header .logo .fa-bars {
   display: none;
 }
-.Header .logo .brandName:hover {
+.Header .logo img {
+  width: 5rem;
+  outline: 2px dotted lightgreen;
+  border-radius: 5px;
   cursor: pointer;
 }
 .Header .placeSearch {
@@ -27,7 +30,7 @@
   justify-content: space-between;
   gap: 10px;
   padding: 0 0.5rem;
-  border: 2px solid #002f34;
+  border: 2px solid rgba(3, 155, 3, 0.4117647059);
   border-radius: 4px;
   background-color: white;
   position: relative;
@@ -44,7 +47,7 @@
 }
 .Header .placeSearch i.transform {
   transform: rotate(180deg);
-  background-color: rgba(2, 95, 105, 0.2392156863);
+  background-color: rgba(144, 238, 144, 0.3);
 }
 .Header .placeSearch input {
   border: none;
@@ -80,7 +83,7 @@
   flex-direction: column;
 }
 .Header .placeSearch .place-options .curr-loc-div i {
-  color: blue;
+  color: green;
 }
 .Header .placeSearch .place-options .recent-loc-div,
 .Header .placeSearch .place-options .popular-loc-div {
@@ -103,10 +106,10 @@
 }
 .Header .placeSearch .place-options .recent-loc-div li:hover,
 .Header .placeSearch .place-options .popular-loc-div li:hover {
-  background-color: rgba(1, 75, 83, 0.1568627451);
+  background-color: rgba(144, 238, 144, 0.3);
 }
 .Header .productSearch {
-  border: 2px solid #002f34;
+  border: 2px solid rgba(3, 155, 3, 0.4117647059);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -129,7 +132,7 @@
   font-size: 1rem;
 }
 .Header .productSearch .input input:focus {
-  border: 1px solid black;
+  border: 1px solid darkgreen;
 }
 .Header .productSearch .searchAction {
   min-width: 48px;
@@ -137,8 +140,13 @@
   position: relative;
   display: flex;
   cursor: pointer;
-  background-color: #002f34;
+  background-color: rgba(13, 107, 13, 0.8470588235);
   border-radius: 0 4px 4px 0;
+  transform: scale(0.9);
+  transition: transform 0.2s ease-in-out;
+}
+.Header .productSearch .searchAction:hover {
+  transform: scale(1);
 }
 .Header .productSearch .searchAction svg {
   position: absolute;
@@ -182,7 +190,7 @@
 }
 .Header .productSearch .product-options .recent-product-div li:hover,
 .Header .productSearch .product-options .popular-product-div li:hover {
-  background-color: rgba(1, 75, 83, 0.1568627451);
+  background-color: rgba(144, 238, 144, 0.3);
 }
 .Header .right-section {
   display: flex;
@@ -231,13 +239,13 @@
   padding: 1rem;
   cursor: pointer;
   background-color: white;
-  color: #002b30;
+  color: #006400;
   font-size: 15px;
   font-weight: 600;
 }
 .Header .right-section .language .options li:hover {
-  background-color: rgba(211, 205, 205, 0.795);
-  color: #014b53;
+  background-color: rgba(144, 238, 144, 0.4);
+  color: #013220;
 }
 .Header .right-section .language .options .pointer {
   position: absolute;
@@ -256,10 +264,10 @@
   border-radius: 50%;
 }
 .Header .right-section i:hover {
-  background-color: rgba(189, 222, 235, 0.89);
+  background-color: rgba(144, 238, 144, 0.3);
 }
 .Header .right-section i:active {
-  background-color: #12a1b1;
+  background-color: #228B22;
   border-radius: 50%;
 }
 .Header .right-section .notifications {
@@ -270,7 +278,7 @@
   cursor: pointer;
 }
 .Header .right-section .notifications.active i {
-  background-color: rgba(111, 156, 161, 0.2745098039);
+  background-color: rgba(144, 238, 144, 0.25);
 }
 .Header .right-section .notifications.active .messgs {
   display: unset;
@@ -298,8 +306,8 @@
   background-color: white;
 }
 .Header .right-section .notifications .messgs li:hover {
-  background-color: rgba(211, 205, 205, 0.795);
-  color: #014b53;
+  background-color: rgba(144, 238, 144, 0.3);
+  color: #013220;
 }
 .Header .right-section .notifications .messgs li i {
   width: 100%;
@@ -327,9 +335,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease-in-out;
+  background-color: #006400;
 }
 .Header .right-section .sellButton img {
   border-radius: 30px;
+}
+.Header .right-section .sellButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 .Header .right-section .loginPage {
   display: flex;
@@ -342,7 +356,7 @@
   cursor: pointer;
 }
 .Header .right-section .loginPage.active {
-  background-color: rgba(111, 156, 161, 0.2745098039);
+  background-color: rgba(144, 238, 144, 0.25);
 }
 .Header .right-section .loginPage.active .ProfileOptions {
   display: unset;
@@ -362,7 +376,7 @@
 .Header .right-section .loginPage .profile-box h3 {
   text-decoration: none;
   color: white;
-  background-color: #002b30;
+  background-color: #006400;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -372,7 +386,7 @@
   cursor: pointer;
 }
 .Header .right-section .loginPage .profile-box h3:hover {
-  background-color: #014b53;
+  background-color: #228B22;
 }
 .Header .right-section .loginPage .profile-box .fa-angle-down {
   transition: transform ease-in-out 0.3s;
@@ -400,14 +414,14 @@
     align-items: center;
     grid-template-rows: 1fr 1fr;
     gap: 0.5rem;
-    border-bottom: 0.5px solid #002b30;
+    border-bottom: 0.5px solid #006400;
   }
   .Header.fixed {
     position: fixed;
   }
   .Header.active .logo .fa-bars {
     transform: rotate(90deg) scale(1.2);
-    background-color: rgba(0, 43, 48, 0.6156862745);
+    background-color: rgba(34, 139, 34, 0.75);
     color: white;
   }
   .Header.active .ProfileOptions.mobile {
@@ -415,6 +429,9 @@
   }
   .Header .logo {
     grid-area: 1/1/2/3;
+  }
+  .Header .logo img {
+    width: 3rem;
   }
   .Header .logo .fa-bars {
     display: block;
@@ -431,7 +448,7 @@
     padding: 0 0.25rem;
     justify-content: flex-end;
     height: 2rem;
-    border: 1px solid rgba(0, 47, 52, 0.3137254902);
+    border: 1px solid rgba(0, 100, 0, 0.4);
     max-width: 100%;
     width: -moz-max-content;
     width: max-content;
@@ -466,7 +483,7 @@
   }
   .Header .right-section i.fa-heart {
     transform: scale(1.5);
-    outline: 2px solid #002b30;
+    outline: 2px solid #006400;
     padding: 2.5px;
     border-radius: 50%;
   }
@@ -479,11 +496,11 @@
   }
   .Header .right-section .sellButton {
     position: fixed;
-    bottom: 2.5rem;
+    bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    outline: 0.5px solid rgb(158, 151, 151);
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+    outline: 1px solid rgb(158, 151, 151);
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
   }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -493,10 +510,13 @@
     grid-template-rows: 1fr 1fr;
     align-items: center;
     gap: 0.5rem;
-    border-bottom: 0.5px solid #002b30;
+    border-bottom: 0.5px solid #006400;
   }
   .Header .logo {
     grid-area: 1/1/2/2;
+  }
+  .Header .logo img {
+    width: 4rem;
   }
   .Header .placeSearch {
     grid-area: 1/2/2/3;
@@ -523,5 +543,8 @@
   }
   .Header .right-section .sellMenu {
     margin-right: 10px;
+  }
+  .Header .right-section .sellButton {
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
   }
 }/*# sourceMappingURL=Header.css.map */

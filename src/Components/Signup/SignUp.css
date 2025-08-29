@@ -34,10 +34,10 @@
 .SignUp .signIn-box img,
 .SignIn .signUp-box img,
 .SignIn .signIn-box img {
-  height: 7.5rem;
+  height: 5rem;
   -o-object-fit: contain;
      object-fit: contain;
-  margin: 0 auto;
+  margin: 1.5rem auto 0;
 }
 .SignUp .signUp-box form,
 .SignUp .signIn-box form,
@@ -66,6 +66,7 @@
   width: 100%;
   padding: 0.75rem;
   background-color: #002f34;
+  background-color: rgb(38, 134, 105);
   color: whitesmoke;
   font-weight: 900;
   margin-top: 0.5rem;
@@ -124,7 +125,7 @@
     gap: 1rem;
   }
   .SignUp .signUp-box img {
-    height: 8rem;
+    height: 5rem;
     -o-object-fit: cover;
        object-fit: cover;
   }
