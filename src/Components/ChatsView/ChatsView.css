@@ -1,24 +1,148 @@
 .ChatsView {
   width: 100%;
-  padding: 6rem 1rem 2rem;
+  padding: 6rem 4rem 2rem;
   min-height: 40vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
 }
-.ChatsView .box {
-  outline: 2px solid rgba(128, 128, 128, 0.692);
-  width: 30rem;
-  height: 15rem;
+.ChatsView .chats-list,
+.ChatsView .chat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 50%;
+  height: 75vh;
+  overflow: scroll;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 1rem;
+  gap: 0.5rem;
+}
+.ChatsView .chats-list::-webkit-scrollbar,
+.ChatsView .chat-box::-webkit-scrollbar {
+  display: none;
+}
+.ChatsView .chats-list .title,
+.ChatsView .chat-box .title {
+  background-color: rgb(154, 216, 135);
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.ChatsView .chats-list .title span,
+.ChatsView .chat-box .title span {
+  font-size: 12px;
+}
+.ChatsView .chats-list .cards,
+.ChatsView .chat-box .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ChatsView .chats-list .cards .card,
+.ChatsView .chat-box .cards .card {
+  padding: 0.71rem;
+  border-radius: 5px;
+  border: 1px solid rgba(44, 221, 44, 0.459);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: rgb(186, 230, 173);
+}
+.ChatsView .chats-list .cards .card img,
+.ChatsView .chat-box .cards .card img {
+  width: 3rem;
+  border: 2px solid palegreen;
+  background-color: white;
+  border-radius: 50%;
+}
+.ChatsView .chats-list .chats,
+.ChatsView .chat-box .chats {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+.ChatsView .chats-list .chats .chats-container,
+.ChatsView .chat-box .chats .chats-container {
+  background-color: rgba(152, 251, 152, 0.671);
+  border: 1px solid rgba(44, 221, 44, 0.459);
+  padding: 1rem;
+  flex: 1;
+  border-radius: 5px;
+  overflow: scroll;
+}
+.ChatsView .chats-list .chats .chats-container::-webkit-scrollbar,
+.ChatsView .chat-box .chats .chats-container::-webkit-scrollbar {
+  display: none;
+}
+.ChatsView .chats-list .chats .chats-container p,
+.ChatsView .chat-box .chats .chats-container p {
+  padding: 10px;
+  background-color: rgb(100, 199, 100);
+  margin-bottom: 1rem;
+  width: -moz-max-content;
+  width: max-content;
+  border-radius: 0 12.5px 12.5px;
+  min-width: 3rem;
+  max-width: 25rem;
+  color: rgb(34, 33, 33);
+}
+.ChatsView .chats-list .chats .chats-container p.self,
+.ChatsView .chat-box .chats .chats-container p.self {
+  margin-left: auto;
+  border-radius: 12.5px 12.5px 0;
+  background-color: rgba(119, 212, 82, 0.842);
+}
+.ChatsView .chats-list .chats .input-section,
+.ChatsView .chat-box .chats .input-section {
+  display: flex;
+  gap: 1rem;
+}
+.ChatsView .chats-list .chats .input-section input,
+.ChatsView .chat-box .chats .input-section input {
+  padding: 0.75rem;
+  flex: 1;
+  border-radius: 5px;
+  border: 1px solid rgba(112, 128, 144, 0.527);
+  background-color: palegreen;
+}
+.ChatsView .chats-list .chats .input-section input:focus,
+.ChatsView .chat-box .chats .input-section input:focus {
+  outline: 2px solid rgba(112, 128, 144, 0.527);
+}
+.ChatsView .chats-list .chats .input-section .icon,
+.ChatsView .chat-box .chats .input-section .icon {
+  width: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  border: 1px solid rgba(112, 128, 144, 0.527);
+  background-color: palegreen;
+}
+.ChatsView .chats-list .chats .input-section .icon:hover,
+.ChatsView .chat-box .chats .input-section .icon:hover {
+  cursor: pointer;
+  border: 2px solid rgba(112, 128, 144, 0.527);
+}
+.ChatsView .chats-list .no-selection,
+.ChatsView .chat-box .no-selection {
+  margin: auto;
 }
 
 @media screen and (max-width: 767px) {
   .ChatsView {
     padding: 10rem 1rem 1rem;
+    flex-direction: column;
+  }
+  .ChatsView .chats-list,
+  .ChatsView .chat-box {
+    width: 100%;
   }
 }
 @media (min-width: 768px) and (max-width: 1024px) {

@@ -1,19 +1,138 @@
 .ChatsView {
     width: 100%;
-    padding: 6rem 1rem 2rem;
+    padding: 6rem 4rem 2rem;
     min-height: 40vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
 
-    .box {
-        outline: 2px solid rgba(128, 128, 128, 0.692);
-        width: 30rem;
-        height: 15rem;
+    .chats-list,
+    .chat-box {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 5px;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 50%;
+        height: 75vh;
+        overflow: scroll;
+        border: 1px solid black;
+        border-radius: 10px;
+        padding: 1rem;
+        gap: .5rem;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .title {
+            background-color: rgb(154, 216, 135);
+            padding: 1rem;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+
+            span {
+                font-size: 12px;
+            }
+        }
+
+        .cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            .card {
+                padding: .71rem;
+                border-radius: 5px;
+                border: 1px solid rgba(44, 221, 44, 0.459);
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                background-color: rgb(186, 230, 173);
+
+                img {
+                    width: 3rem;
+                    border: 2px solid palegreen;
+                    background-color: white;
+                    border-radius: 50%;
+                }
+            }
+        }
+
+        .chats {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: .5rem;
+
+            .chats-container {
+                background-color: rgba(152, 251, 152, 0.671);
+                border: 1px solid rgba(44, 221, 44, 0.459);
+                padding: 1rem;
+                flex: 1;
+                border-radius: 5px;
+                overflow: scroll;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+
+                p {
+                    padding: 10px;
+                    background-color: rgb(100, 199, 100);
+                    margin-bottom: 1rem;
+                    width: max-content;
+                    border-radius: 0 12.5px 12.5px;
+                    min-width: 3rem;
+                    max-width: 25rem;
+                    color: rgb(34, 33, 33);
+
+                    &.self {
+                        margin-left: auto;
+                        border-radius: 12.5px 12.5px 0;
+                        background-color: rgba(119, 212, 82, 0.842);
+                    }
+                }
+            }
+
+            .input-section {
+                display: flex;
+                gap: 1rem;
+
+                input {
+                    padding: .75rem;
+                    flex: 1;
+                    border-radius: 5px;
+                    border: 1px solid rgba(112, 128, 144, 0.527);
+                    background-color: palegreen;
+
+                    &:focus {
+                        outline: 2px solid rgba(112, 128, 144, 0.527);
+                    }
+                }
+
+                .icon {
+                    width: 3rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 5px;
+                    border: 1px solid rgba(112, 128, 144, 0.527);
+                    background-color: palegreen;
+
+                    &:hover {
+                        cursor: pointer;
+                        border: 2px solid rgba(112, 128, 144, 0.527);
+                    }
+                }
+            }
+        }
+
+        .no-selection {
+            margin: auto;
+        }
+
     }
 }
 
@@ -22,6 +141,12 @@
 @media screen and (max-width:767px) {
     .ChatsView {
         padding: 10rem 1rem 1rem;
+        flex-direction: column;
+
+        .chats-list,
+        .chat-box {
+            width: 100%;
+        }
     }
 }
 

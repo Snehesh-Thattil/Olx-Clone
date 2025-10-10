@@ -202,7 +202,9 @@ function ViewItem() {
               <h2>{product?.sellerInfo.name}</h2>
             </div>
 
-            <button>Chat with seller</button>
+            {user?.uid === product.sellerInfo?.userId ?
+              <button onClick={() => navigate('/profile')}>View My Profile</button>
+              : <button onClick={() => navigate('/conversatons', { state: product.sellerInfo?.userId })}>Chat with seller</button>}
 
             <div className="phone">
               <i className="fa-solid fa-phone"></i>

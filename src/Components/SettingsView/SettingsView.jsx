@@ -46,6 +46,7 @@ function SettingsView() {
       await reauthenticateWithCredential(user, credential)
       await updatePassword(user, password.confirmPassword)
       alert("Password updated successfully!")
+      navigate('/')
       setPassword({ current: '', newPassword: '', confirmPassword: '' })
     }
     catch (error) {
