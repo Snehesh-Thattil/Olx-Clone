@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useMemo, useRef, useState } from 'react'
 import './ViewItem.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import VerifiedUserTag from '../../Assets/Images/verified-user-icon.png'
@@ -6,6 +6,7 @@ import featuredIconTag from '../../Assets/Images/FeaturedIconTag.png'
 import { ProductsContext } from '../../Store/ProductContext';
 import RelatedItems from './SubComponents/RelatedItems';
 import useDateFormat from '../../Hooks/useDateFormat';
+import useStartChat from '../../Hooks/useStartChat';
 import { AuthContext } from '../../Store/AuthContext';
 import { doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../../Firebase/firebase-config';
@@ -15,11 +16,12 @@ function ViewItem() {
   const [load, setLoad] = useState(false)
   const [showInfo, setShowInfo] = useState(false)
   const [currentImgIndex, SetCurrentImgIndex] = useState(0)
-  const [relatedItems, setRelatedItems] = useState([])
   const { products } = useContext(ProductsContext)
   const { user } = useContext(AuthContext)
+  const deleteBoxRef = useRef()
 
   const { formatDate } = useDateFormat()
+  const { start } = useStartChat()
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -29,22 +31,21 @@ function ViewItem() {
   const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
   const images = [product.coverImgURL, ...product.imgURLs]
 
-  const deleteBoxRef = useRef()
-
   // Finding similar products to display
-  useEffect(() => {
-    const result = products?.filter((item) => item.category === product.category && item.subcategory === product.subcategory)
-      .filter((item) => item.id !== product.id)?.slice(0, 10)
-    setRelatedItems(result)
+  const relatedItems = useMemo(() => {
+    if (!product || !products) return []
+    return products.filter((item) =>
+      item.id !== product.id &&
+      (
+        item.subcategory?.toLowerCase() === product.subcategory?.toLowerCase() ||
+        item.category?.toLowerCase() === product.category?.toLowerCase()
+      )
+    ).slice(0, 10)
   }, [product, products])
 
   // Image slide buttons action
-  const handleNext = () => {
-    SetCurrentImgIndex((prev) => prev === images.length - 1 ? 0 : prev + 1)
-  }
-  const handlePrev = () => {
-    SetCurrentImgIndex((prev) => prev === 0 ? images.length - 1 : prev - 1)
-  }
+  const handleNext = () => SetCurrentImgIndex((prev) => prev === images.length - 1 ? 0 : prev + 1)
+  const handlePrev = () => SetCurrentImgIndex((prev) => prev === 0 ? images.length - 1 : prev - 1)
 
   // Share button to share page
   const handleShare = async () => {
@@ -204,7 +205,7 @@ function ViewItem() {
 
             {user?.uid === product.sellerInfo?.userId ?
               <button onClick={() => navigate('/profile')}>View My Profile</button>
-              : <button onClick={() => navigate('/conversatons', { state: product.sellerInfo?.userId })}>Chat with seller</button>}
+              : <button onClick={() => start(user.id, product.sellerInfo.userId, product['ad-title'])}>Message as Interested</button>}
 
             <div className="phone">
               <i className="fa-solid fa-phone"></i>

@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ProductsProvider } from './Store/ProductContext';
 import { LoginBoxProvider } from './Store/LoginBoxContext';
 import { SearchProvider } from './Store/SearchContext';
+import { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,6 +17,7 @@ root.render(
           <LoginBoxProvider>
             <Router>
               <App />
+              <Toaster/>
             </Router>
           </LoginBoxProvider>
         </ProductsProvider>

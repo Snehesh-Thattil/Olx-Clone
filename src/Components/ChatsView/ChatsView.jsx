@@ -1,69 +1,165 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { BsSend } from 'react-icons/bs'
 import './ChatsView.css'
+import { collection, getDocs, onSnapshot, orderBy, query, where } from 'firebase/firestore'
+import { db } from '../../Firebase/firebase-config'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../Store/AuthContext'
+import toast from 'react-hot-toast'
+import useSendMessage from '../../Hooks/useSendMessage'
 
 function ChatsView() {
-    const [chatSelected, setChatSelected] = useState(true)
+    const location = useLocation()
+    const [chatSelected, setChatSelected] = useState(location?.state?.id || null)
+    const [conversations, setConversations] = useState([])
+    const [messages, setMessages] = useState([])
+    const { user } = useContext(AuthContext)
+    const textRef = useRef()
+    const messagesEndRef = useRef(null)
 
-    function handleSendMessage(e) {
+    const { send, loading } = useSendMessage()
+    const navigate = useNavigate()
+
+    // Real-time listener for conversations
+    useEffect(() => {
+        if (!user?.uid) return
+
+        const conversationsRef = collection(db, "conversations")
+        const q = query(conversationsRef, where("participants", "array-contains", user?.uid))
+
+        // Set up the listener
+        const unsubscribe = onSnapshot(q, async (snapshot) => {
+            try {
+                if (snapshot.empty) {
+                    return setConversations([])
+                }
+
+                // Fetch other user details in parallel
+                const conversationsData = await Promise.all(
+                    snapshot.docs.map(async (docSnap) => {
+                        const conversation = { id: docSnap.id, ...docSnap.data() }
+                        const otherUserId = conversation.participants.find(id => id !== user.id)
+
+                        const userRef = collection(db, "users")
+                        const q = query(userRef, where('id', '==', otherUserId))
+                        const userSnap = await getDocs(q)
+                        const otherUser = !userSnap.empty ? userSnap.docs[0].data() : null
+
+                        return {
+                            ...conversation,
+                            otherUser: otherUser ? { id: otherUserId, ...otherUser } : null,
+                        }
+                    })
+                )
+                setConversations(conversationsData)
+            }
+            catch (err) {
+                toast.error(`Error fetching conversations: ${err.message}`)
+            }
+        })
+
+        return () => unsubscribe()
+    }, [user])
+
+    // Real-time listener for messages
+    useEffect(() => {
+        if (!chatSelected) return
+
+        const convRef = collection(db, "conversations", chatSelected.id, "messages")
+        const q = query(convRef, orderBy('createdAt', 'asc'))
+
+        // Set up the listener
+        const unsubscribe = onSnapshot(q, async (snapshot) => {
+            try {
+                if (!snapshot.empty) {
+                    const msgDatas = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }))
+                    setMessages(msgDatas)
+                }
+                else {
+                    setMessages([])
+                }
+            }
+            catch (err) {
+                toast.error(`Error fetching chats ${err.message}`)
+            }
+        })
+
+        return () => unsubscribe()
+    }, [chatSelected])
+
+    // Handle message sending by the user
+    const handleSendMessage = async (e) => {
         e.preventDefault()
-        console.log('Working')
+        if (!textRef.current.value.trim()) return
+
+        send(chatSelected.id, user.id, textRef.current.value)
+        textRef.current.value = ''
     }
+
+    // Scroll nearest to the last message
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'nearest'
+        })
+    }, [messages])
 
     return (
         <div className='ChatsView'>
             <div className="chats-list">
                 <p className="title">Chats</p>
 
-                <div className="cards">
-                    <div className="card">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="" />
-                        <p>Snehesh Thattil</p>
+                {conversations.length > 0 ?
+                    <div className="cards">
+                        {conversations?.map((conv, index) => {
+                            return (
+                                <div className="card" key={index} onClick={() => setChatSelected(conv)}>
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="" />
+                                    <div className='details'>
+                                        <h3>{conv?.otherUser?.username}</h3>
+                                        <p>{conv?.lastMessage}</p>
+                                    </div>
+                                </div>
+                            )
+                        })}
                     </div>
-
-                    <div className="card">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="" />
-                        <p>Snehesh Thattil</p>
+                    :
+                    <div className='empty-list'>
+                        <h4> You don't have any conversation yet.</h4>
+                        <button onClick={() => navigate('/')}>Explore Something</button>
                     </div>
-
-                    <div className="card">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="" />
-                        <p>Snehesh Thattil</p>
-                    </div>
-
-                    <div className="card">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="" />
-                        <p>Snehesh Thattil</p>
-                    </div>
-
-                    <div className="card">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="" />
-                        <p>Snehesh Thattil</p>
-                    </div>
-                </div>
+                }
             </div>
 
             <div className="chat-box">
                 {chatSelected ?
                     <div className='chats'>
-                        <p className="title">Snehesh Thattil <span>Online</span> </p>
+                        <p className="title">{chatSelected.otherUser?.username}<span>Online</span> </p>
 
                         <div className="chats-container">
-                            <p className='self'>Hi</p>
-                            <p>Hello</p>
+                            {messages?.map((msg, index) => {
+                                return (
+                                    <p className={msg.senderId === user.uid ? 'self' : null} key={index}>{msg.text}</p>
+                                )
+                            })}
+                            <div ref={messagesEndRef} />
                         </div>
 
                         <form onSubmit={handleSendMessage} className="input-section">
-                            <input type="text" placeholder='Type your message ...' minLength={1} maxLength={50000} />
+                            <input type="text" ref={textRef} placeholder='Type your message ...' minLength={1} maxLength={750} />
 
                             <button type='submit' className="icon">
-                                <BsSend />
+                                {loading ? '...' : <BsSend />}
                             </button>
                         </form>
                     </div>
                     :
                     <div className="no-selection">
-                        <h2> Hi, Snehesh Thattil </h2>
+                        <h2> Hi, {user.displayName} </h2>
                         <h4> select a chat to start conversation </h4>
                     </div>
                 }

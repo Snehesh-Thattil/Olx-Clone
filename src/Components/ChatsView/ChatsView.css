@@ -59,6 +59,34 @@
   background-color: white;
   border-radius: 50%;
 }
+.ChatsView .chats-list .cards .card .details p,
+.ChatsView .chat-box .cards .card .details p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 28rem;
+}
+.ChatsView .chats-list .empty-list,
+.ChatsView .chat-box .empty-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.ChatsView .chats-list .empty-list button,
+.ChatsView .chat-box .empty-list button {
+  padding: 0.5rem;
+  background-color: rgba(0, 128, 0, 0.555);
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+}
+.ChatsView .chats-list .empty-list button:hover,
+.ChatsView .chat-box .empty-list button:hover {
+  border: 2px solid palegreen;
+}
 .ChatsView .chats-list .chats,
 .ChatsView .chat-box .chats {
   height: 100%;
@@ -144,9 +172,28 @@
   .ChatsView .chat-box {
     width: 100%;
   }
+  .ChatsView .chats-list .cards .card .details p,
+  .ChatsView .chat-box .cards .card .details p {
+    width: 13.5rem;
+  }
+  .ChatsView .chats-list .chats .chats-container p,
+  .ChatsView .chat-box .chats .chats-container p {
+    min-width: 3rem;
+    max-width: 15rem;
+  }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
   .ChatsView {
     padding: 10rem 1rem 2rem;
+    flex-direction: column;
+  }
+  .ChatsView .chat-box,
+  .ChatsView .chats-list {
+    width: 75%;
+    height: 40vh;
+  }
+  .ChatsView .chat-box .cards .card .details p,
+  .ChatsView .chats-list .cards .card .details p {
+    width: 25rem;
   }
 }/*# sourceMappingURL=ChatsView.css.map */

@@ -8,6 +8,7 @@ import { db, storage } from '../../Firebase/firebase-config'
 import { addDoc, collection, doc, getDoc, serverTimestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import DynamicFields from './SubComponents/DynamicFields'
+import toast from 'react-hot-toast'
 
 // Map subcategories to form names
 const FORM_NAME_MAP = {
@@ -173,12 +174,13 @@ function ListingForm() {
                 createdAt: serverTimestamp()
             })
 
-            console.log('Successfully uploaded files and details')
-            navigate('/')
+            toast.success('Hurrayy! Successfully listed your ad')
+            navigate('/my-ads')
         }
         catch (err) {
             alert(err.message)
             console.error("Error uploading details on firebase", err.message)
+            toast.error(`Oops, Something wrong happened! : ${err.message}`)
         }
         finally {
             setLoad(false)
