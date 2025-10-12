@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import './SettingsView.css'
 import { deleteUser, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth'
 import { getDatabase, ref as rtdbRef, serverTimestamp, set } from 'firebase/database'
-import { getFunctions, httpsCallable } from 'firebase/functions'
 import { auth } from '../../Firebase/firebase-config'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../Loader/Loader'
@@ -85,6 +84,7 @@ function SettingsView() {
 
       toast.success("User deleted successfully")
       navigate('/', { replace: true })
+      window.location.reload()
     }
     catch (error) {
       console.error("Error deleting user : ", error.message)
@@ -97,22 +97,33 @@ function SettingsView() {
 
   // Logout from all devices with express.js (ref: server.js)
   const logoutFromAllDevices = useCallback(async () => {
-    if (!userAuth) return toast.error("Error : No user logged in");
+    if (!userAuth) return toast.error("Error : No user logged in")
 
-    setLoading(true);
+    setLoading(true)
     try {
-      await updateUserStatus();
+      await updateUserStatus()
 
-      const functions = getFunctions()
-      const logoutAll = httpsCallable(functions, "logoutAllDevices")
-      const result = await logoutAll({ uid: userAuth.uid })
+      const idToken = await userAuth.getIdToken()
 
-      toast.success(result.data.message)
+      const response = await fetch("https://grab-logout-server.onrender.com/logout-all", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${idToken}`
+        },
+        body: JSON.stringify({ uid: userAuth.uid }),
+      })
+
+      if (!response.ok) throw new Error("Failed to log out")
+
+      const data = await response.json()
+      toast.success(data.message)
       navigate("/", { replace: true })
+      window.location.reload()
     }
     catch (err) {
       console.error("Error logging out from all devices:", err)
-      toast.error(`Failed to log out from all devices. ${err.message}`)
+      toast.error(`Failed to log out from all devices.${err.message}`)
     }
     finally {
       setLoading(false)
