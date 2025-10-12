@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { BsSend } from 'react-icons/bs'
 import './ChatsView.css'
+import toast from 'react-hot-toast'
+import { BsCircleFill, BsSend } from 'react-icons/bs'
 import { collection, getDocs, onSnapshot, orderBy, query, where } from 'firebase/firestore'
+import { getDatabase, onValue, ref as rtdbRef } from 'firebase/database'
 import { db } from '../../Firebase/firebase-config'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../Store/AuthContext'
-import toast from 'react-hot-toast'
 import useSendMessage from '../../Hooks/useSendMessage'
+import useTimeFormat from '../../Hooks/useTimeFormat'
 
 function ChatsView() {
     const location = useLocation()
     const [chatSelected, setChatSelected] = useState(location?.state?.id || null)
+    const [userStatus, setUserStatus] = useState(null)
     const [conversations, setConversations] = useState([])
     const [messages, setMessages] = useState([])
     const { user } = useContext(AuthContext)
@@ -18,7 +21,25 @@ function ChatsView() {
     const messagesEndRef = useRef(null)
 
     const { send, loading } = useSendMessage()
+    const { timeAgo } = useTimeFormat()
     const navigate = useNavigate()
+
+    // Subscribe to chatSelected user's online status
+    useEffect(() => {
+        console.log(chatSelected)
+        if (!chatSelected?.otherUser?.id) return
+
+        const otherId = chatSelected.otherUser.id
+        const db = getDatabase()
+        const statusRef = rtdbRef(db, `status/${otherId}`)
+
+        const unsubscribe = onValue(statusRef, (snapshot) => {
+            const val = snapshot.val()
+            setUserStatus(val || { state: 'offline', lastSeen: null })
+        }, (err) => console.error('status onValue error :', err))
+
+        return () => unsubscribe()
+    }, [chatSelected])
 
     // Real-time listener for conversations
     useEffect(() => {
@@ -108,6 +129,8 @@ function ChatsView() {
         })
     }, [messages])
 
+
+    // JSX
     return (
         <div className='ChatsView'>
             <div className="chats-list">
@@ -138,7 +161,14 @@ function ChatsView() {
             <div className="chat-box">
                 {chatSelected ?
                     <div className='chats'>
-                        <p className="title">{chatSelected.otherUser?.username}<span>Online</span> </p>
+                        <p className="title">{chatSelected.otherUser?.username}
+                            <span className="status">
+                                <BsCircleFill className={userStatus?.state} />
+                                {userStatus?.state === 'online' ? 'Online' :
+                                    userStatus?.lastSeen ? `Last seen ${timeAgo(userStatus.lastSeen)}` :
+                                        'Offline'}
+                            </span>
+                        </p>
 
                         <div className="chats-container">
                             {messages?.map((msg, index) => {

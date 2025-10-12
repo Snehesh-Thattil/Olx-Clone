@@ -2,9 +2,11 @@ import React, { useCallback, useContext } from 'react'
 import './ProfileOptions.css'
 import { AuthContext } from '../../Store/AuthContext'
 import { signOut } from 'firebase/auth'
+import { getDatabase, set, ref as rtdbRef, serverTimestamp } from 'firebase/database'
 import { auth } from '../../Firebase/firebase-config'
 import { useNavigate } from 'react-router-dom'
 import { LoginBoxContext } from '../../Store/LoginBoxContext'
+import toast from 'react-hot-toast'
 
 function ProfileOptions({ mobile }) {
     const { user } = useContext(AuthContext)
@@ -12,24 +14,39 @@ function ProfileOptions({ mobile }) {
     const navigate = useNavigate()
 
     // Signing out user
-    const handleSignOut = useCallback(() => {
-        signOut(auth)
-            .then(() => {
-                alert('signed out successfully')
-                navigate('/')
-                window.location.reload()
+    const handleSignOut = useCallback(async () => {
+        const db = getDatabase() // Realtime Databse
+
+        if (!auth.currentUser) return toast.error("No active user session found");
+
+        try {
+            const userStatusRef = rtdbRef(db, `status/${auth.currentUser.uid}`);
+
+            await set(userStatusRef, {
+                state: 'offline',
+                lastSeen: serverTimestamp()
             })
-            .catch((err) => console.log("Error signing out:", err.message))
+
+            await signOut(auth)
+            
+            toast.success('signed out successfully')
+            navigate("/", { replace: true })
+        }
+        catch (err) {
+            console.error("Error signing out:", err)
+            toast.error(`Error signing out user : ${err.message}`)
+        }
     }, [navigate])
 
-    // Verify user before proceeding certain clicks
-    const handleVerifyUser = (path) => {
+    // Ensures only logged-in users can navigate to certain routes.
+    const handleVerifyUser = useCallback((path) => {
         if (user?.uid || user?.id) {
-            navigate(path)
-        } else {
-            setLoginBox('Sign-up')
+            navigate(path);
         }
-    }
+        else {
+            setLoginBox("Sign-up");
+        }
+    }, [navigate, setLoginBox, user])
 
     // JSX
     return (

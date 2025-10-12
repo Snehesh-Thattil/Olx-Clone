@@ -1,86 +1,107 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { auth } from '../../Firebase/firebase-config'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import './SettingsView.css'
 import { deleteUser, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth'
+import { getDatabase, ref as rtdbRef, serverTimestamp, set } from 'firebase/database'
+import { auth } from '../../Firebase/firebase-config'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../Loader/Loader'
+import toast from 'react-hot-toast'
 
 function SettingsView() {
   const [action, setAction] = useState('')
   const [toggle, setToggle] = useState(false)
-  const [load, setLoad] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [password, setPassword] = useState({ current: '', newPassword: '', confirmPassword: '' })
-  const navigate = useNavigate()
-  const userAuth = auth.currentUser
 
+  const db = useMemo(() => getDatabase(), [])
+  const userAuth = auth.currentUser
+  const navigate = useNavigate()
+
+  // Handle scroll lock for modals
   useEffect(() => {
-    if (action === 'logout-all' || action === 'delete-acc') {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = "auto"
-    }
+    document.body.style.overflow =
+      action === "logout-all" || action === "delete-acc" ? "hidden" : "auto";
   }, [action])
 
-  // Change password of the user
-  const changePassword = async () => {
-    const user = auth.currentUser
-    if (!user) return
+  // Helper function to update user online status
+  const updateUserStatus = useCallback(async () => {
+    if (!userAuth) return;
+    const userStatusRef = rtdbRef(db, `status/${userAuth.uid}`);
 
-    setLoad(true)
+    await set(userStatusRef, {
+      state: 'offline',
+      lastSeen: serverTimestamp(),
+    })
+  }, [db, userAuth])
+
+  // Change password of the user
+  const changePassword = useCallback(async () => {
+    if (!userAuth) return toast.error('Error : No user logged in')
+
+    const { current, newPassword, confirmPassword } = password;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/
 
-    if (password.newPassword !== password.confirmPassword) {
-      alert("Passwords does not matching!")
-      setLoad(false)
-      return
-    }
+    if (newPassword !== confirmPassword)
+      return toast.error("Passwords do not match")
 
-    if (!passwordRegex.test(password.newPassword)) {
-      alert("Password must be at least 6 characters, with uppercase, lowercase, and a special character.")
-      setLoad(false)
-      return
-    }
+    if (!passwordRegex.test(newPassword))
+      return toast.error(
+        "Password must be at least 6 characters, with uppercase, lowercase, and a special character."
+      )
 
+    setLoading(true)
     try {
-      const credential = EmailAuthProvider.credential(user.email, password.current)
-      await reauthenticateWithCredential(user, credential)
-      await updatePassword(user, password.confirmPassword)
-      alert("Password updated successfully!")
-      navigate('/')
+      const credential = EmailAuthProvider.credential(userAuth.email, current)
+      await reauthenticateWithCredential(userAuth, credential)
+      await updatePassword(userAuth, confirmPassword)
+
+      toast.success("Password updated successfully!")
       setPassword({ current: '', newPassword: '', confirmPassword: '' })
+      navigate('/')
     }
     catch (error) {
-      console.error("Error updating password:", error.message)
+      toast.error(`Error updating password: ${error.message}`)
+      console.error(error)
     }
     finally {
-      setLoad(false)
+      setLoading(false)
     }
-  }
+  }, [password, userAuth, navigate])
 
   // Logout user from all devices
-  const handleDeleteUser = useCallback(async () => {
-    if (!userAuth) return alert("No user logged in")
+  const deleteUserAcc = useCallback(async () => {
+    if (!userAuth) return toast.error("Error : No user logged in")
     const password = prompt("Please enter your password to confirm account deletion")
-    if (!password) return alert("Password is required to proceed")
+    if (!password) return toast.error("Password is required to proceed")
 
+    setLoading(true)
     try {
+      await updateUserStatus()
+
       const credential = EmailAuthProvider.credential(userAuth.email, password)
       await reauthenticateWithCredential(userAuth, credential)
       await deleteUser(userAuth)
-      alert("User deleted successfully")
-      navigate('/')
+
+      toast.success("User deleted successfully")
+      navigate('/', { replace: true })
     }
     catch (error) {
-      console.error("Error deleting user:", error.message)
-      alert(error.message)
+      console.error("Error deleting user : ", error.message)
+      toast.error(`Error deleting user : ${error.message}`)
     }
-  }, [navigate, userAuth])
+    finally {
+      setLoading(false)
+    }
+  }, [navigate, userAuth, updateUserStatus])
 
   // Logout from all devices with express.js (ref: server.js)
-  const handleLogoutFromAllDevices = useCallback(async () => {
-    if (!userAuth) return alert("No user logged in")
+  const logoutFromAllDevices = useCallback(async () => {
+    if (!userAuth) return toast.error("Error : No user logged in")
 
+    setLoading(true)
     try {
+      await updateUserStatus()
+
       const response = await fetch("http://localhost:5000/logout-all", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -90,29 +111,34 @@ function SettingsView() {
       if (!response.ok) throw new Error("Failed to log out")
 
       const data = await response.json()
-      alert(data.message)
-      navigate("/")
-      window.location.reload()
+      toast.success(data.message)
+      navigate("/", { replace: true })
     }
     catch (err) {
       console.error("Error logging out from all devices:", err)
-      alert("Failed to log out from all devices.", err.message)
+      toast.error(`Failed to log out from all devices.${err.message}`)
     }
-  }, [navigate, userAuth])
+    finally {
+      setLoading(false)
+    }
+  }, [navigate, userAuth, updateUserStatus])
+
 
   // JSX
-  if (load) return <Loader />
+  if (loading) return <Loader />
   return (
     <div className='SettingsView'>
+      {/* Sidebar Options */}
       <div className="options">
-        <li className={action === 'privacy' ? 'active' : ''} onClick={() => setAction('privacy')}>Privacy</li>
-        <li className={action === 'logout-all' ? 'active' : ''} onClick={() => setAction('logout-all')}>Logout from all devices</li>
-        <li className={action === 'delete-acc' ? 'active' : ''} onClick={() => setAction('delete-acc')}>Delete account</li>
-        <li className={action === 'chat-safety' ? 'active' : ''} onClick={() => setAction('chat-safety')}>Chat safety tips</li>
+        {["privacy", "logout-all", "delete-acc", "chat-safety"].map((item) => (
+          <li key={item} className={action === item ? "active" : ""} onClick={() => setAction(item)}>
+            {item.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+          </li>
+        ))}
       </div>
 
+      {/* Content Area */}
       <div className="actions">
-
         {action === 'privacy' && <div className="change-pswrd">
           <h3>Change Password</h3>
           <div className="content">
@@ -134,7 +160,7 @@ function SettingsView() {
               value={password?.confirmPassword}
               onChange={(e) => setPassword((prev) => ({ ...prev, confirmPassword: e.target.value }))}
             />
-            <button onClick={changePassword} disabled={load}> {load ? "Changing..." : "Change Password"} </button>
+            <button onClick={changePassword} disabled={loading}> {loading ? "Changing..." : "Change Password"} </button>
           </div>
         </div>}
 
@@ -143,7 +169,7 @@ function SettingsView() {
             <h3>Logout from everywhere</h3>
             <p>You'll get logged out from all devices and browsers. Do you still want to continue?</p>
             <div className="buttons">
-              <button className='proceed' onClick={handleLogoutFromAllDevices}>Logout</button>
+              <button className='proceed' onClick={logoutFromAllDevices}>Logout</button>
               <button onClick={() => setAction('')}>Cancel</button>
             </div>
           </div>
@@ -154,7 +180,7 @@ function SettingsView() {
             <h3>Delete account</h3>
             <p>You are about to permanently delete your account. Are you sure about this?</p>
             <div className="buttons">
-              <button className='proceed' onClick={handleDeleteUser}>Delete</button>
+              <button className='proceed' onClick={deleteUserAcc}>Delete</button>
               <button onClick={() => setAction('')}>Cancel</button>
             </div>
           </div>
