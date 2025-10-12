@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import './SettingsView.css'
 import { deleteUser, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth'
 import { getDatabase, ref as rtdbRef, serverTimestamp, set } from 'firebase/database'
+import { getFunctions, httpsCallable } from 'firebase/functions'
 import { auth } from '../../Firebase/firebase-config'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../Loader/Loader'
@@ -96,27 +97,22 @@ function SettingsView() {
 
   // Logout from all devices with express.js (ref: server.js)
   const logoutFromAllDevices = useCallback(async () => {
-    if (!userAuth) return toast.error("Error : No user logged in")
+    if (!userAuth) return toast.error("Error : No user logged in");
 
-    setLoading(true)
+    setLoading(true);
     try {
-      await updateUserStatus()
+      await updateUserStatus();
 
-      const response = await fetch("http://localhost:5000/logout-all", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid: userAuth.uid }),
-      })
+      const functions = getFunctions()
+      const logoutAll = httpsCallable(functions, "logoutAllDevices")
+      const result = await logoutAll({ uid: userAuth.uid })
 
-      if (!response.ok) throw new Error("Failed to log out")
-
-      const data = await response.json()
-      toast.success(data.message)
+      toast.success(result.data.message)
       navigate("/", { replace: true })
     }
     catch (err) {
       console.error("Error logging out from all devices:", err)
-      toast.error(`Failed to log out from all devices.${err.message}`)
+      toast.error(`Failed to log out from all devices. ${err.message}`)
     }
     finally {
       setLoading(false)
